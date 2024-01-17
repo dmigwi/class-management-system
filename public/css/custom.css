@@ -1,0 +1,6 @@
+.bg-image{
+    background-size: cover;
+    background-color: #9e9e9e;
+    background-blend-mode: luminosity;
+    background-image: url("/images/bg-image.jpg");
+}

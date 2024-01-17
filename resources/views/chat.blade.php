@@ -1,6 +1,6 @@
 @extends("layouts.base")
 
-@section("title", "Home")
+@section("title", "Chat")
 
 @section("content")
 @endsection
