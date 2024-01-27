@@ -5,6 +5,11 @@
     background-image: url("/images/bg-image.jpg");
 }
 
-.bg-gold {
-    color: rgb(253 189 6);
+body {
+    max-height: 100vh;
+    /* overflow: auto; */
+}
+
+.bg-light-blue {
+    color: #02b0e2
 }
