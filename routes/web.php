@@ -13,11 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/', function () {
+    return view('login');
+});
+
 Route::get('/home', function () {
     return view('index');
 });
 
-Route::get('/', function () {
-    return view('login');
+Route::get('/admin', function () {
+    return view('admin');
+});
+
+Route::get('/attendance', function () {
+    return view('attendance');
+});
+
+Route::get('/chat', function () {
+    return view('chat');
 });
 

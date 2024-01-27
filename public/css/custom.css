@@ -4,3 +4,7 @@
     background-blend-mode: luminosity;
     background-image: url("/images/bg-image.jpg");
 }
+
+.bg-gold {
+    color: rgb(253 189 6);
+}

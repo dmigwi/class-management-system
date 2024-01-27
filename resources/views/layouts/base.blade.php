@@ -18,8 +18,8 @@
        
     </head> 
     <body @if(\Request::is('/'))  class="bg-image bg-clip-content" @endif>
-        <div class="relative py-16">
-            <div class="container relative m-auto px-6 md:px-12 xl:px-40">
+        <div class="relative py-px">
+            <div class="container relative m-auto px-4 md:px-12 xl:px-40">
                 <img src="images/cms.png" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
                 @yield('content')
                 @show
