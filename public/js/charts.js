@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
     (function () {
-      buildChart('#hs-single-area-chart', (mode) => ({
+      buildChart('#line-graph-charts', (mode) => ({
         chart: {
           height: 200,
           type: 'area',
@@ -13,8 +13,12 @@ window.addEventListener('load', () => {
         },
         series: [
           {
-            name: 'Classes Attended Per Week',
-            data: [180, 51, 60, 38, 88, 50, 40, 52, 88, 80, 60, 70]
+            name: 'Classes Available Per Week',
+            data: [2, 5, 6, 3, 8, 5, 4, 5, 8, 8, 6, 7]
+          },
+          {
+            name: 'Class Attended Per Week',
+            data: [2, 3, 6, 3, 4, 5, 4, 2, 4, 2, 4, 5]
           }
         ],
         legend: {
@@ -43,18 +47,18 @@ window.addEventListener('load', () => {
           type: 'category',
           tickPlacement: 'on',
           categories: [
-            '25 January 2024',
-            '26 January 2024',
-            '27 January 2024',
-            '28 January 2024',
-            '29 January 2024',
-            '30 January 2024',
-            '31 January 2024',
-            '1 February 2024',
-            '2 February 2024',
-            '3 February 2024',
-            '4 February 2024',
-            '5 February 2024'
+            '25 January 2023',
+            '26 January 2023',
+            '27 January 2023',
+            '28 January 2023',
+            '29 January 2023',
+            '30 January 2023',
+            '31 January 2023',
+            '1 February 2023',
+            '2 February 2023',
+            '3 February 2023',
+            '4 February 2023',
+            '5 February 2023'
           ],
           axisBorder: {
             show: false
@@ -111,7 +115,7 @@ window.addEventListener('load', () => {
             format: 'MMMM yyyy'
           },
           y: {
-            formatter: (value) => `${value >= 1000 ? `${value / 1000}k` : value}`
+            formatter: (value) => `$${value >= 1000 ? `${value / 1000}k` : value}`
           },
           custom: function (props) {
             const { categories } = props.ctx.opts.xaxis;
@@ -122,10 +126,10 @@ window.addEventListener('load', () => {
             return buildTooltip(props, {
               title: newTitle,
               mode,
-              valuePrefix: '',
               hasTextLabel: true,
-              markerExtClasses: '!rounded-sm',
-              wrapperExtClasses: 'min-w-[120px]'
+              wrapperExtClasses: 'min-w-[120px]',
+              labelDivider: ':',
+              labelExtClasses: 'ms-2'
             });
           }
         },

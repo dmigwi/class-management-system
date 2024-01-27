@@ -61,7 +61,23 @@
                         </div>
                         <div class="w-full bg-gray-100">
                             <div class="w-5/5 h-full text-xs text-center text-white">
-                                <div id="hs-single-area-chart"></div>
+                                <!-- Legend Indicator -->
+                                <div class="flex justify-center sm:justify-end items-center gap-x-4 mb-3 sm:mb-6">
+                                    <div class="inline-flex items-center">
+                                    <span class="w-2.5 h-2.5 inline-block bg-blue-600 rounded-sm me-2"></span>
+                                    <span class="text-sm text-gray-600 dark:text-neutral-400">
+                                        Classes Available Per Week
+                                    </span>
+                                    </div>
+                                    <div class="inline-flex items-center">
+                                    <span class="w-2.5 h-2.5 inline-block bg-purple-600 rounded-sm me-2"></span>
+                                    <span class="text-sm text-gray-600 dark:text-neutral-400">
+                                        Classes Attended Per Week
+                                    </span>
+                                    </div>
+                                </div>
+                                <!-- End Legend Indicator -->
+                                <div id="line-graph-charts"></div>
                             </div>
                         </div>
                     </a>
@@ -70,14 +86,12 @@
             <div class="flex items-center w-full space-x-4 h-80 md:w-1/3">
                 <div class="relative w-full px-4 py-6 bg-white shadow-lg  h-full dark:bg-gray-700">
                     <p class="text-xl font-bold text-black dark:text-white">
-                        Chart Key(s)
+                        Chart Details
                     </p>
-                    <p>
-                        1.
+                    <p> Title:
                         <span class="text-sm text-gray-400 dark:text-neutral-400">
                             Introduction to Programming
                         </span>
-                        <span class="w-2.5 h-2.5 inline-block bg-blue-600 rounded-sm me-2"></span>
                     </p>
                     <span class="absolute p-4 bg-green-500 rounded-full top-2 right-4">
                         <svg width="40" fill="currentColor" height="40" class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
