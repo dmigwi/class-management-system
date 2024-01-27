@@ -11,7 +11,7 @@
                     <path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z">
                     </path>
                 </svg>
-                From: Oct 30, 2023
+                From: 24 Jan, 2024
                 <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
                     </path>
@@ -23,7 +23,7 @@
                     <path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z">
                     </path>
                 </svg>
-                To: Feb 29, 2024
+                To: 5 Feb, 2024
                 <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
                     </path>
@@ -55,7 +55,7 @@
                                     </svg>
                                 </span>
                                 <p class="ml-2 text-sm font-semibold text-gray-700 border-b border-gray-200 dark:text-white">
-                                    Introduction to Programming class(es) Attendance between 30th Oct 2023 and 29th Feb 2024
+                                    Introduction to Programming class Attendance between 25th Jan 2024 and 5th Feb 2024
                                 </p>
                             </div>
                         </div>
@@ -85,14 +85,49 @@
             </div>
             <div class="flex items-center w-full space-x-4 h-80 md:w-1/3">
                 <div class="relative w-full px-4 py-6 bg-white shadow-lg  h-full dark:bg-gray-700">
-                    <p class="text-xl font-bold text-black dark:text-white">
-                        Chart Details
+                    <p class="text-xl font-bold text-black dark:text-white">Course Details</p>
+                    <p> Lecturer:
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">Dr. Iwona Dolinska</span>
                     </p>
                     <p> Title:
-                        <span class="text-sm text-gray-400 dark:text-neutral-400">
-                            Introduction to Programming
-                        </span>
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">Introduction to Programming</span>
                     </p>
+                    <p> ID:
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">CSE123-2023/2024</span>
+                    </p>
+                    <p> Students:
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">37</span>
+                    </p>
+                    <p> Duration:
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">20 Classes</span>
+                    </p>
+                    <p>Start Date:
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">23th Oct 2023</span>
+                    </p>
+                    <p>End Date:
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">20th Feb 2024</span>
+                    </p>
+
+                    <div class="flex items-end text-md">
+                        Mid-Term Exam Date:
+                        <span class="flex items-center text-sm pl-2 text-gray-400 dark:text-neutral-400">
+                            7th Dec 2023
+                            <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20" viewBox="0 0 520 520" fill="currentColor">
+                                <path d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z"/>
+                            </svg>
+                        </span>
+                    </div>
+
+                        <div class="flex items-end text-md">
+                            Final Exam Date:
+                            <span class="flex items-center text-sm pl-2 text-gray-400 dark:text-neutral-400">
+                                20th Feb 2024
+                                <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20" viewBox="0 0 520 520" fill="currentColor">
+                                    <path d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z"/>
+                                </svg>
+                            </span>
+                        </div>
+                    
                     <span class="absolute p-4 bg-green-500 rounded-full top-2 right-4">
                         <svg width="40" fill="currentColor" height="40" class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
                             <path d="M80 105c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15zM80 245c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm380 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h310c8 0 15-7 15-15zM80 385c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15z"/>

@@ -47,18 +47,18 @@ window.addEventListener('load', () => {
           type: 'category',
           tickPlacement: 'on',
           categories: [
-            '25 January 2023',
-            '26 January 2023',
-            '27 January 2023',
-            '28 January 2023',
-            '29 January 2023',
-            '30 January 2023',
-            '31 January 2023',
-            '1 February 2023',
-            '2 February 2023',
-            '3 February 2023',
-            '4 February 2023',
-            '5 February 2023'
+            '25 January 2024',
+            '26 January 2024',
+            '27 January 2024',
+            '28 January 2024',
+            '29 January 2024',
+            '30 January 2024',
+            '31 January 2024',
+            '1 February 2024',
+            '2 February 2024',
+            '3 February 2024',
+            '4 February 2024',
+            '5 February 2024'
           ],
           axisBorder: {
             show: false
