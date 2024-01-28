@@ -147,14 +147,13 @@
       </div>
   </button>
  
-  <div id="dropdown-menu" class="absolute hidden right-0 z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg  
+  <div id="dropdown-menu" class="absolute hidden z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg  
   overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
    ring-opacity-5 focus:outline-none h-40" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-btn" tabindex="-1">
       @foreach($courses as $course)
          @if ($course->title === $selected->title && $course->name === $selected->name)
             @continue
          @endif
-
          <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" type="button" role="menuitem" tabindex="-1" id="menu-item-0">
             <div class="flex sm:items-center justify-between py-2 w-fit">
                <div class="relative flex items-center space-x-4">
@@ -170,8 +169,8 @@
    </div>
  </div>
 
-   <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-
+   <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
+      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
    @foreach ($conversation as $data)
       @if ($data->role === "lecturer")
          <div class="flex items-end">
@@ -187,8 +186,8 @@
          </div>
       @endif
    @endforeach
-
    </div>
+
    <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
       <div class="relative flex">
          <span class="absolute inset-y-0 flex items-center">
