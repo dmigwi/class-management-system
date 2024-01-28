@@ -60,3 +60,12 @@ body {
 .w-fit {
     width: fit-content;
 }
+
+.bg-inherit	{
+    background-color: inherit !important;
+}
+
+.btn-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(56, 116, 250);
+}
