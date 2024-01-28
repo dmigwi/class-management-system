@@ -1,42 +1,4 @@
-<div class="flex-1 p:2 sm:p-6 justify-between flex flex-col h-full">
-   <div class="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-      <div class="relative flex items-center space-x-4">
-         <div class="block h-full-w-full">
-            {{-- <span class="absolute text-green-500 right-0 bottom-0">
-               <svg width="20" height="20">
-                  <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
-               </svg>
-            </span> --}}
-            <span class="lecturer-account pl-2"></span>
-         </div>
-         <div class="flex flex-col leading-tight">
-            <div class="text-2xl mt-1 flex items-center">
-               <span class="text-gray-700 mr-3">Anderson Vanhron</span>
-            </div>
-            <span class="text-lg text-gray-600">Junior Developer</span>
-         </div>
-      </div>
-      <div class="flex items-center space-x-2">
-         <button type="button" class="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-         </button>
-         <button type="button" class="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-            </svg>
-         </button>
-         <button type="button" class="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-            </svg>
-         </button>
-      </div>
-   </div>
-   <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-
-   <?php $conversation = [(object)[
+<?php $conversation = [(object)[
                "role" => "student",
                "message" => "Can be verified on any platform using docker",
                "timestamp" => "",
@@ -133,7 +95,28 @@
                "timestamp" => "",
                "status" => "Pending",
             ]];
-   ?>
+?>
+
+<div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
+   <button class="flex items-center px-4 py-2 text-grays-400 border bg-yellosw-500 text-md border-b-2 border-gray-300 rounded-md w-fit" type="date">
+      <div class="flex sm:items-center justify-between py-2 w-fit">
+         <div class="relative flex items-center space-x-4">
+            <div class=" relative flex flex-col leading-tight lecturer-account"></div>
+            <div class="flex flex-col leading-tight">
+               <div class="text-xl flex items-center text-gray-700">Introduction into Programming</div>
+               <div class="text-sm flex items-center text-light-blue mr-1">Dr. Jan Kowalski</div>
+            </div>
+         </div>
+      </div>
+      <div>
+         <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+            </path>
+         </svg>
+      </div>
+  </button>
+
+   <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
 
    @foreach ($conversation as $data)
       @if ($data->role === "lecturer")

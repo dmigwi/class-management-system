@@ -42,7 +42,6 @@
                                 </svg>
                             </span>
                             <span class="mx-2 text-sm font-normal">Attendance</span>
-                            {{-- <span class="w-4 h-2 p-1 ml-4 text-xs text-gray-400 bg-gray-200 rounded-lg">0</span> --}}
                         </a>
                         <a @class([
                             "flex items-center justify-start w-full p-3 mb-2 text-gray-800 transition-colors duration-200 dark:text-white",
@@ -55,7 +54,8 @@
                                     </path>
                                 </svg>
                             </span>
-                            <span class="mx-2 text-sm font-normal">Chat With Lecturer</span>
+                            <span class="mx-2 text-sm font-normal">Chat a Lecturer</span>
+                            <div class="flex items-center px-2 text-xs bg-blue-light text-white rounded-lg">34</div>
                         </a>
                         @if (!$isAdmin)
                             <a @class([
