@@ -98,7 +98,16 @@
 ?>
 
 @php
+    $selected  = (object)[
+         "title" => "Introduction into Programming",
+         "name" => "Dr. Jan Kowalski",
+   ];
+
     $courses =[
+      (object)[
+         "title" => "Introduction into Programming",
+         "name" => "Dr. Jan Kowalski",
+      ],
       (object)[
          "title" => "Computational Sampling Methods",
          "name" => "Dr. Adam Kowalski",
@@ -119,14 +128,14 @@
 @endphp
 
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
-  <div class="hs-dropdown relative inline-block text-left max-w-xs">
-   <button id="dropdown-btn" class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
+  <div class="hs-dropdown relative inline-block text-left max-w-xs" onclick="toggleDropdown()">
+   <button id="dropdown-btn" type="button" class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
       <div class="flex sm:items-center justify-between py-2">
          <div class="relative flex items-center space-x-4">
             <div class=" relative flex flex-col leading-tight lecturer-account"></div>
             <div class="flex flex-col leading-tight">
-               <div class="text-sm flex items-center text-gray-700">Introduction into Programming</div>
-               <div class="text-sm flex items-center text-light-blue mr-1">Dr. Jan Kowalski</div>
+               <div class="text-sm flex items-center text-gray-700">{{$selected->title}}</div>
+               <div class="text-sm flex items-center text-light-blue mr-1">{{$selected->name}}</div>
             </div>
          </div>
       </div>
@@ -138,11 +147,15 @@
       </div>
   </button>
  
-  <div class="relative right-0 z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black 
-  overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch
-   ring-opacity-5 focus:outline-none h-40" id="hs-dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-btn" tabindex="-1">
+  <div id="dropdown-menu" class="absolute hidden right-0 z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg  
+  overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
+   ring-opacity-5 focus:outline-none h-40" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-btn" tabindex="-1">
       @foreach($courses as $course)
-         <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" role="menuitem" tabindex="-1" id="menu-item-0">
+         @if ($course->title === $selected->title && $course->name === $selected->name)
+            @continue
+         @endif
+
+         <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" type="button" role="menuitem" tabindex="-1" id="menu-item-0">
             <div class="flex sm:items-center justify-between py-2 w-fit">
                <div class="relative flex items-center space-x-4">
                   <div class=" relative flex flex-col leading-tight lecturer-account"></div>
@@ -217,7 +230,9 @@
 <script>
 	const el = document.getElementById('messages')
 	el.scrollTop = el.scrollHeight
-</script>
 
-<script src="https://preline.co/assets/vendor/preline-ts/dist/index.js"></script>
-<script src="/js/dropdown.js"></script>
+   function toggleDropdown() {
+        const dropdown = document.getElementById("dropdown-menu");
+        dropdown.classList.toggle("hidden");
+    }
+</script>
