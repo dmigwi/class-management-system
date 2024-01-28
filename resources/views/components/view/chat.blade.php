@@ -97,13 +97,35 @@
             ]];
 ?>
 
+@php
+    $courses =[
+      (object)[
+         "title" => "Computational Sampling Methods",
+         "name" => "Dr. Adam Kowalski",
+      ],
+      (object)[
+         "title" => "Artificial intelligence",
+         "name" => "Dr. Selckut Cankurt",
+      ],
+      (object)[
+         "title" => "Masters Project Diploma",
+         "name" => "Prof. Edip Senyurek",
+      ],
+      (object)[
+         "title" => "Calculus 1",
+         "name" => "Dr. Jan Kowalski",
+      ],
+   ]
+@endphp
+
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
-   <button class="flex items-center px-4 py-2 text-grays-400 border bg-yellosw-500 text-md border-b-2 border-gray-300 rounded-md w-fit" type="date">
-      <div class="flex sm:items-center justify-between py-2 w-fit">
+  <div class="hs-dropdown relative inline-block text-left max-w-xs">
+   <button id="dropdown-btn" class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
+      <div class="flex sm:items-center justify-between py-2">
          <div class="relative flex items-center space-x-4">
             <div class=" relative flex flex-col leading-tight lecturer-account"></div>
             <div class="flex flex-col leading-tight">
-               <div class="text-xl flex items-center text-gray-700">Introduction into Programming</div>
+               <div class="text-sm flex items-center text-gray-700">Introduction into Programming</div>
                <div class="text-sm flex items-center text-light-blue mr-1">Dr. Jan Kowalski</div>
             </div>
          </div>
@@ -115,6 +137,25 @@
          </svg>
       </div>
   </button>
+ 
+  <div class="relative right-0 z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black 
+  overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch
+   ring-opacity-5 focus:outline-none h-40" id="hs-dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="dropdown-btn" tabindex="-1">
+      @foreach($courses as $course)
+         <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" role="menuitem" tabindex="-1" id="menu-item-0">
+            <div class="flex sm:items-center justify-between py-2 w-fit">
+               <div class="relative flex items-center space-x-4">
+                  <div class=" relative flex flex-col leading-tight lecturer-account"></div>
+                  <div class="flex flex-col leading-tight">
+                     <div class="text-sm flex items-center text-gray-700">{{$course->title}}</div>
+                     <div class="text-sm flex items-center text-light-blue mr-1">{{$course->name}}</div>
+                  </div>
+               </div>
+            </div>
+         </button>
+      @endforeach
+   </div>
+ </div>
 
    <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
 
@@ -177,3 +218,6 @@
 	const el = document.getElementById('messages')
 	el.scrollTop = el.scrollHeight
 </script>
+
+<script src="https://preline.co/assets/vendor/preline-ts/dist/index.js"></script>
+<script src="/js/dropdown.js"></script>
