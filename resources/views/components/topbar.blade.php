@@ -8,23 +8,34 @@
         </button>
     </div>
     <img src="images/cms.png" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
-    <div class="relative z-20 flex flex-col justify-center h-full px-3 md:w-full">
-        <div class="relative flex items-center justify-end w-full space-x-4">
-            <button class="flex items-center p-2 text-gray-700 bg-white rounded-full shadow hover:text-gray-700 text-md">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M912 1696q0-16-16-16-59 0-101.5-42.5t-42.5-101.5q0-16-16-16t-16 16q0 73 51.5 124.5t124.5 51.5q16 0 16-16zm816-288q0 52-38 90t-90 38h-448q0 106-75 181t-181 75-181-75-75-181h-448q-52 0-90-38t-38-90q50-42 91-88t85-119.5 74.5-158.5 50-206 19.5-260q0-152 117-282.5t307-158.5q-8-19-8-39 0-40 28-68t68-28 68 28 28 68q0 20-8 39 190 28 307 158.5t117 282.5q0 139 19.5 260t50 206 74.5 158.5 85 119.5 91 88z">
-                    </path>
-                </svg>
-            </button>
-            <span class="w-1 h-8 bg-gray-300 rounded-lg"></span>
-            <button class="flex items-center text-black-500 dark:text-white text-md">
-                Charlie Rector
-                <img alt="profile picture" src="/images/account.png" class="mx-auto object-cover rounded-full h-10 w-10 "/>
-                <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
-                    </path>
-                </svg>
-            </button>
+    <div class="relative space-x-4 z-20 flex justify-end h-full px-3 w-full" onclick="accountDropdown()">
+      <button class="flex items-center justify-end text-black-500 dark:text-white text-md">
+        <span class="pr-2"> Charlie Rector</span>
+        <span class="mx-auto object-cover rounded-full h-10 w-10 student-account pl-2"></span>
+        <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+            </path>
+        </svg>
+      </button>
+
+      <div id="account-dropdown-menu" class="absolute hidden divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black
+      overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch 
+        ring-opacity-5 focus:outline-none h-fit" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-btn" tabindex="-1">
+          <button class="text-gray-700 block px-4 py-0 text-sm w-full" type="button" role="menuitem" tabindex="-1" id="menu-item-0">
+            <div class="flex sm:items-center justify-between py-2 w-fit">
+              <span class="relative flex items-center space-x-4"> Sign out </span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" class="mx-2" fill="currentColor" viewBox="0 0 520 520">
+                <path d="M210 485v-30c0-8-7-15-15-15H95c-8 0-15-7-15-15V95c0-8 7-15 15-15h100c8 0 15-7 15-15V35c0-8-7-15-15-15H60a40 40 0 0 0-40 40v400a40 40 0 0 0 40 40h135c8 0 15-7 15-15zm286-215c6-6 6-15 0-21L361 114c-6-6-15-6-21 0l-21 21c-6 6-6 15 0 21l56 56c6 6 2 17-7 17H155c-8 0-15 6-15 14v30c0 8 7 16 15 16h212c9 0 13 11 7 17l-56 56c-6 6-6 15 0 21l21 21c6 6 15 6 21 0l136-134z"/>
+              </svg>
+            </div>
+          </button>
         </div>
     </div>
 </div>
+
+<script>
+   function accountDropdown() {
+        const dropdown = document.getElementById("account-dropdown-menu");
+        dropdown.classList.toggle("hidden");
+    }
+</script>

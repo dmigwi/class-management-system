@@ -20,7 +20,6 @@
     <body @if(\Request::is('/'))  class="bg-image bg-clip-content" @endif>
         <div class="relative py-px h-screen">
             <div class="container relative m-auto px-4 md:px-12 xl:px-10 h-5/6">
-                {{-- <img src="images/cms.png" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" /> --}}
                 <x-topbar/>
                 @yield('content')
                 @show

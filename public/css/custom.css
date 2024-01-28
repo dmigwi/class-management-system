@@ -10,6 +10,62 @@ body {
     /* overflow: auto; */
 }
 
-.bg-light-blue {
+.text-light-blue {
     color: #02b0e2
+}
+
+.bg-blue-light{
+    background-color: #02b0e2
+}
+
+.scrollbar-w-2::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+}
+
+.scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+    --bg-opacity: 1;
+    background-color: #f7fafc;
+    background-color: rgba(247, 250, 252, var(--bg-opacity));
+}
+
+.scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+    /* --bg-opacity: 1; */
+    background-color: #02b0e2;
+    /* background-color: rgba(237, 242, 247, var(--bg-opacity)); */
+}
+
+.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem;
+}
+
+.student-account {
+    width: 40px;
+    height: 40px;
+    border: blue;
+    border-style: dotted;
+    background-size: contain;
+    background-image: url('/images/student-account.gif');
+}
+
+.lecturer-account {
+    width: 40px;
+    height: 40px;
+    border: #02b0e2;
+    border-style: dotted;
+    background-size: contain;
+    background-image: url('/images/lecturer-account.gif');
+}
+
+.w-fit {
+    width: fit-content;
+}
+
+.bg-inherit	{
+    background-color: inherit !important;
+}
+
+.btn-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(56, 116, 250);
 }
