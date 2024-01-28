@@ -18,8 +18,8 @@
             </button>
             <span class="w-1 h-8 bg-gray-300 rounded-lg"></span>
             <button class="flex items-center text-black-500 dark:text-white text-md">
-                Charlie Rector
-                <img alt="profile picture" src="/images/account.png" class="mx-auto object-cover rounded-full h-10 w-10 "/>
+                <span class="pr-2"> Charlie Rector</span>
+                <span class="mx-auto object-cover rounded-full h-10 w-10 student-account pl-2"></span>
                 <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
                     </path>

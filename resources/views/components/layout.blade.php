@@ -6,7 +6,7 @@
                     <div>
                         <a @class([
                             "flex items-center justify-start w-full p-3 mb-2 text-gray-800 transition-colors duration-200 dark:text-white",
-                            "bg-light-blue" => ($attributes->get('page') === 'home'|| $attributes->get('page') === 'admin'),
+                            "text-light-blue" => ($attributes->get('page') === 'home'|| $attributes->get('page') === 'admin'),
                             ])
                             @if ($attributes->get('page') !== 'home' && $attributes->get('page') !== 'admin') href="/home" @endif>
                             <span class="text-left">
@@ -19,7 +19,7 @@
                         </a>
                         <a @class([
                             "flex items-center justify-start w-full p-3 mb-2 text-gray-800 transition-colors duration-200 dark:text-white",
-                            "bg-light-blue" => ($attributes->get('page') === 'attendance'),
+                            "text-light-blue" => ($attributes->get('page') === 'attendance'),
                             ])
                             @if ($attributes->get('page') !== 'attendance') href="/attendance" @endif>
                             <span class="text-left">
@@ -33,7 +33,7 @@
                         </a>
                         <a @class([
                             "flex items-center justify-start w-full p-3 mb-2 text-gray-800 transition-colors duration-200 dark:text-white",
-                            "bg-light-blue" => ($attributes->get('page') === 'chat'),
+                            "text-light-blue" => ($attributes->get('page') === 'chat'),
                             ])
                             @if ($attributes->get('page') !== 'chat') href="/chat" @endif>
                             <span class="text-left">
