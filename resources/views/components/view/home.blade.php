@@ -123,10 +123,9 @@
                     <a href="#" class="block w-full h-full">
                         <div class="flex items-center justify-between px-4 py-6 space-x-4">
                             <div class="flex items-center">
-                                <span class="relative p-5 bg-blue-light rounded-full">
-                                    <svg width="40" fill="currentColor" height="40"
-                                        class="absolute h-5 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                        viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+                                <span class="relative p-4 bg-blue-light rounded-full">
+                                    <svg class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                        width="40" height="40" fill="currentColor" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M20 455a40 40 0 0 0 40 40h424c9 0 16-7 16-16v-28c0-9-7-16-16-16H95c-8 0-15-7-15-15V41c0-9-7-16-16-16H36c-9 0-16 7-16 16v414zm477-314a30 30 0 0 0-30-30c-9 0-16 4-22 9l-86 86-59-56-1-1-2-2-2-1-3-2-2-1-4-1-2-1-6-1-6 1-2 1-4 1-2 1-3 2-2 2-3 2-114 115a30 30 0 0 0-10 22 30 30 0 0 0 30 30c7 0 14-3 19-7l98-97 57 56 3 2 2 2 3 2 2 1 4 1 2 1 6 1 6-1h2l4-1 2-1 3-2 2-1 1-1 1-1 1-1 108-107c5-6 9-13 9-22z" />
                                     </svg>
@@ -162,9 +161,8 @@
             <div class="flex items-center w-full space-x-4 h-80 md:w-1/3">
                 <div class="relative w-full px-4 py-6 bg-white shadow-lg  h-full dark:bg-gray-700">
                     <span class="absolute p-4 bg-blue-light rounded-full top-2 right-4">
-                        <svg width="40" fill="currentColor" height="40"
-                            class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                            width="40" height="40" fill="currentColor" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M80 105c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15zM80 245c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm380 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h310c8 0 15-7 15-15zM80 385c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15z" />
                         </svg>

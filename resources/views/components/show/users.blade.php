@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @php
 $users = [(object)[
         "id"=>"1",
@@ -8,9 +7,6 @@ $users = [(object)[
         "lastname"=>"Smith",
         "role"=>"student",
         "email"=>"jane.doe@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"U.K",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"2",
@@ -20,9 +16,6 @@ $users = [(object)[
         "lastname"=>"",
         "role"=>"lecturer",
         "email"=>"john.brown@gmail.com",
-        "faculty"=>"Languages",
-        "country"=>"U.S.A",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"3",
@@ -32,9 +25,6 @@ $users = [(object)[
         "lastname"=>"Smith",
         "role"=>"student",
         "email"=>"john.black@gmail.com",
-        "faculty"=>"Tourism",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"4",
@@ -44,9 +34,6 @@ $users = [(object)[
         "lastname"=>"Green",
         "role"=>"lecturer",
         "email"=>"jamie.green@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"Germany",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"5",
@@ -56,9 +43,6 @@ $users = [(object)[
         "lastname"=>"King",
         "role"=>"Lecturer",
         "email"=>"edward.king@gmail.com",
-        "faculty"=>"Tourism",
-        "country"=>"Ireland",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"6",
@@ -68,9 +52,6 @@ $users = [(object)[
         "lastname"=>"Red",
         "role"=>"student",
         "email"=>"fantasia.red@gmail.com",
-        "faculty"=>"Languages",
-        "country"=>"Belarus",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"7",
@@ -80,9 +61,6 @@ $users = [(object)[
         "lastname"=>"",
         "role"=>"Lecturer",
         "email"=>"jan.kowalski@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"8",
@@ -92,9 +70,6 @@ $users = [(object)[
         "lastname"=>"Cankurt",
         "role"=>"student",
         "email"=>"adam.cancurt@gmail.com",
-        "faculty"=>"Marketing",
-        "country"=>"Sweden",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"9",
@@ -104,9 +79,6 @@ $users = [(object)[
         "lastname"=>"Austins",
         "role"=>"Lecturer",
         "email"=>"mary.jane@gmail.com",
-        "faculty"=>"Architecture",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"10",
@@ -116,9 +88,7 @@ $users = [(object)[
         "lastname"=>"Smith",
         "role"=>"student",
         "email"=>"david.waweru@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
+=======
       ]];
 @endphp
 <div id="add-new-user" class="w-full ">
@@ -126,7 +96,7 @@ $users = [(object)[
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Of Users</p>
+            <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Users</p>
             <div class="relative flex items-center justify-end w-full pb-4 pr-20 mx-auto text-gray-600">
                 <input
                     class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 w-full rounded-lg text-sm focus:outline-none"
@@ -167,10 +137,7 @@ $users = [(object)[
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->role}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->email}}</td>
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
-                                    <dialog id="user-{{$user->id}}" class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
-                                        <x-show.user :data="$user"/>
-                                    </dialog>
-                                    <button type="button" onclick="document.getElementById('user-{{$user->id}}').showModal()"
+                                    <button type="button"
                                         class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
                                             viewBox="0 0 520 520" fill="currentColor">
@@ -205,92 +172,7 @@ $users = [(object)[
                         </tbody>
                     </table>
 
-                    <nav class="flex items-center justify-center">
-                        <ul class="flex bg-transparent">
-                            <li>
-                                <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                      text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">
-                                    <span
-                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
-                                            viewBox="0 0 520 520" fill="currentColor">
-                                            <path d="M342 477 134 272c-6-6-6-16 0-22L342 45c6-6 16-6 22 0l22 22c6 6 6 16 0 22L221 250c-6 6-6 
-                            16 0 22l163 161c6 6 6 16 0 22l-22 22c-5 5-14 5-20 0z" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-blue-light p-0 text-sm 
-                          text-white shadow-md shadow-pink-500/20 transition duration-150 ease-in-out" href="#">1</a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                          text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                            text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
-                            </li>
-                            <li>
-                                <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                        transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
-                                    <span
-                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
-                                            viewBox="0 0 520 520" fill="currentColor">
-                                            <path d="m179 44 207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 
-                            6-16 0-22L136 88c-6-6-6-16 0-22l22-22c6-5 15-5 21 0z" />
-                                        </svg>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-=======
-<div id="add-new-user" class="w-full ">
-  <div
-      class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
-      w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
-      <p class="text-xl font-bold text-gray-800 w-max pb-4">View Users</p>
-      <div class="flex flex-col">
-          <div class="-m-1.5 overflow-x-auto">
-              <div class="p-1.5 min-w-full inline-block align-middle">
-                  <div class="overflow-hidden">
-                      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                          <thead>
-                              <tr>
-                                  <th scope="col"
-                                      class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Name
-                                  </th>
-                                  <th scope="col"
-                                      class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Role
-                                  </th>
-                                  <th scope="col"
-                                      class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Email
-                                  </th>
-                                  <th scope="col"
-                                      class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action
-                                  </th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Dr. John
-                                      Brown</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Lecture</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">john.brown@gmail.com
-                                  </td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                      <button type="button"
-                                          class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none ">Delete</button>
-                                  </td>
-                              </tr>
-
+<<<<<<< HEAD
                               <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
                                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Mr. Jim
                                       Green</td>
@@ -345,4 +227,52 @@ $users = [(object)[
       </div>
   </div>
 >>>>>>> e2b9d1f (Format the tags alignment)
+=======
+                    <nav class="flex items-center justify-center">
+                        <ul class="flex bg-transparent">
+                            <li>
+                                <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
+                      text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">
+                                    <span
+                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                                            viewBox="0 0 520 520" fill="currentColor">
+                                            <path d="M342 477 134 272c-6-6-6-16 0-22L342 45c6-6 16-6 22 0l22 22c6 6 6 16 0 22L221 250c-6 6-6 
+                            16 0 22l163 161c6 6 6 16 0 22l-22 22c-5 5-14 5-20 0z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-blue-light p-0 text-sm 
+                          text-white shadow-md shadow-pink-500/20 transition duration-150 ease-in-out" href="#">1</a>
+                            </li>
+                            <li>
+                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
+                          text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
+                            </li>
+                            <li>
+                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
+                            text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
+                            </li>
+                            <li>
+                                <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
+                        transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
+                                    <span
+                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                                            viewBox="0 0 520 520" fill="currentColor">
+                                            <path d="m179 44 207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 
+                            6-16 0-22L136 88c-6-6-6-16 0-22l22-22c6-5 15-5 21 0z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+>>>>>>> 0a48022 (Add users details list table)
 </div>
