@@ -96,7 +96,7 @@
                "status" => "Pending",
             ]];
 
-        $selected = (object)[
+<?php $selected = (object)[
                 "title" => "Introduction into Programming",
                 "name" => "Dr. Jan Kowalski",
                 ];
@@ -122,9 +122,7 @@
                 "title" => "Calculus 1",
                 "name" => "Dr. Jan Kowalski",
                 ]];
-        
-        $role = $attributes->get('role');
-    ?>
+?>
 
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
     <div class="hs-dropdown relative inline-block text-left max-w-xs" onclick="toggleDropdown()">
@@ -132,57 +130,43 @@
             class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
             <div class="flex sm:items-center justify-between py-2">
                 <div class="relative flex items-center space-x-4">
-                    <div @class([
-                                'relative flex flex-col leading-tight',
-                                'student-account' => ($role !== "student"),
-                                'lecturer-account' => ($role === "student"),
-                                 ])></div>
+                    <div class=" relative flex flex-col leading-tight lecturer-account"></div>
                     <div class="flex flex-col leading-tight">
                         <div class="text-sm flex items-center text-gray-700">{{$selected->title}}</div>
-                        <div @class([
-                                    'text-sm flex items-center mr-1', 
-                                    'text-student' => ($role !== "student"),
-                                    'text-lecturer' => ($role === "student"),
-                                    ])>{{$selected->name}}</div>
+                        <div class="text-sm flex items-center text-light-blue mr-1">{{$selected->name}}</div>
                     </div>
                 </div>
             </div>
             <div>
                 <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+                    <path
+                        d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
                     </path>
                 </svg>
             </div>
         </button>
 
         <div id="dropdown-menu" class="absolute hidden z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg  
-            overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
-            ring-opacity-5 focus:outline-none h-40" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-btn" tabindex="-1">
+  overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
+   ring-opacity-5 focus:outline-none h-40" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-btn"
+            tabindex="-1">
             @foreach($courses as $course)
-                @if ($course->title === $selected->title && $course->name === $selected->name)
-                @continue
+            @if ($course->title === $selected->title && $course->name === $selected->name)
+            @continue
             @endif
-                <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" type="button" role="menuitem"
-                    tabindex="-1" id="menu-item-0">
-                    <div class="flex sm:items-center justify-between py-2 w-fit">
-                        <div class="relative flex items-center space-x-4">
-                            <div @class([
-                                'relative flex flex-col leading-tight',
-                                'student-account' => ($role !== "student"),
-                                'lecturer-account' => ($role === "student"),
-                                 ])></div>
-                            <div class="flex flex-col leading-tight">
-                                <div class="text-sm flex items-center text-gray-700">{{$course->title}}</div>
-                                <div @class([
-                                    'text-sm flex items-center', 
-                                    'text-student' => ($role !== "student"),
-                                    'text-lecturer' => ($role === "student"),
-                                    ])>{{$course->name}}</div>
-                            </div>
+            <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" type="button" role="menuitem"
+                tabindex="-1" id="menu-item-0">
+                <div class="flex sm:items-center justify-between py-2 w-fit">
+                    <div class="relative flex items-center space-x-4">
+                        <div class=" relative flex flex-col leading-tight lecturer-account"></div>
+                        <div class="flex flex-col leading-tight">
+                            <div class="text-sm flex items-center text-gray-700">{{$course->title}}</div>
+                            <div class="text-sm flex items-center text-light-blue mr-1">{{$course->name}}</div>
                         </div>
                     </div>
-                </button>
+                </div>
+            </button>
             @endforeach
         </div>
     </div>
@@ -190,32 +174,41 @@
     <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
       scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach ($conversation as $data)
-            @if (Str::lower($data->role) === $role)
-                <div class="flex items-end">
-                    <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-blue-light text-white">
-                        {{ $data->message }}
-                    </span>
-                </div>
-            @else
-                <div class="flex justify-end items-end">
-                    <span
-                        class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none bg-gray-300 text-gray-600">
-                        {{ $data->message }}
-                        <span class="flex items-end">
-                            <x-utils.status :status='$data->status ?? "Pending"'/>
-                        </span>
-                    </span>
-                </div>
-            @endif
+        @if ($data->role === "lecturer")
+        <div class="flex items-end">
+            <span
+                class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                {{ $data->message }}
+            </span>
+        </div>
+        @else
+        <div class="flex justify-end items-end">
+            <span
+                class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-light text-white">
+                {{ $data->message }}
+            </span>
+        </div>
+        @endif
         @endforeach
     </div>
 
     <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
         <div class="relative flex">
-            <input type="text" placeholder="Write your message!" name="message"
-                class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3">
+            <span class="absolute inset-y-0 flex items-center">
+                <button type="button"
+                    class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="h-6 w-6 text-gray-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                        </path>
+                    </svg>
+                </button>
+            </span>
+            <input type="text" placeholder="Write your message!"
+                class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3">
             <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
-                <button type="button" disabled
+                <button type="button"
                     class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         class="h-6 w-6 text-gray-600">
@@ -224,7 +217,7 @@
                         </path>
                     </svg>
                 </button>
-                <button type="button" disabled
+                <button type="button"
                     class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         class="h-6 w-6 text-gray-600">
@@ -235,7 +228,7 @@
                             d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
                 </button>
-                <button type="button" disabled
+                <button type="button"
                     class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                         class="h-6 w-6 text-gray-600">
@@ -249,8 +242,8 @@
                     <span class="font-bold">Send</span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                         class="h-6 w-6 ml-2 transform rotate-90">
-                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 
-                            1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z">
+                        <path
+                            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z">
                         </path>
                     </svg>
                 </button>

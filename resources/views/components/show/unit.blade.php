@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="flex flex-col w-full h-fit ">
     @php
         $unit = $attributes->get('data')
@@ -58,4 +59,8 @@
             </div>
         </div>
     </div>
+=======
+<div>
+    <!-- Well begun is half done. - Aristotle -->
+>>>>>>> e2b9d1f (Format the tags alignment)
 </div>

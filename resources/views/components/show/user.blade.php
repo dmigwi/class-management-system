@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 @php
     $user = $attributes->get('data');
@@ -65,3 +66,8 @@
         </div>
     </div>
 </div>
+=======
+<div>
+    <!-- When there is no desire, all things are at peace. - Laozi -->
+</div>
+>>>>>>> e2b9d1f (Format the tags alignment)
