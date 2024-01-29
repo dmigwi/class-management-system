@@ -70,7 +70,6 @@ $units = [(object)[
         "year"=>"2023/2024",
       ]];
 @endphp
-
 <div id="add-new-user" class="w-full ">
     <div
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
@@ -103,45 +102,46 @@ $units = [(object)[
                         </thead>
                         <tbody>
                             @forelse ($units as $unit)
-                                <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                    <td class="px-4 py-1 text-sm text-gray-800">{{$unit->name}}</td>
-                                    <td class="px-4 py-1 text-sm text-gray-800">{{$unit->code}}</td>
-                                    <td class="px-4 py-1 text-sm text-gray-800">{{$unit->semester}}</td>
-                                    <td class="px-4 py-1 text-sm text-gray-800">{{$unit->year}}</td>
-                                    <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
-                                        <dialog id="unit-{{$unit->id}}" class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
-                                            <x-show.unit :data="$unit"/>
-                                        </dialog>
-                                        <button type="button" onclick="document.getElementById('unit-{{$unit->id}}').showModal()"
-                                            class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
-                                                viewBox="0 0 520 520" fill="currentColor">
-                                                <path
-                                                    d="M518 251a288 288 0 0 0-516 0 20 20 0 0 0 0 18 288 288 0 0 0 516 0 20 20 0 0 0 0-18zM260 370c-61 0-110-49-110-110s49-110 110-110 110 49 110 110-49 110-110 110zm0-180c-39 0-70 31-70 70s31 70 70 70 70-31 70-70-31-70-70-70z" />
-                                            </svg>
-                                        </button>
-                                        <button type="button"
-                                            class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
-                                            <?xml version="1.0" ?><svg class="feather feather-edit" fill="none" height="24"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" viewBox="0 0 24 24" width="20" height="20"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                            </svg>
-                                        </button>
-                                        <button type="button"
-                                            class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
-                                                viewBox="0 0 52 52" fill="currentColor">
-                                                <path
-                                                    d="M45.5 10H33V6a4 4 0 0 0-4-4h-6a4 4 0 0 0-4 4v4H6.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5h39c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5zM23 7c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v3h-6zm18.5 13h-31c-.8 0-1.5.7-1.5 1.5V45a5 5 0 0 0 5 5h24a5 5 0 0 0 5-5V21.5c0-.8-.7-1.5-1.5-1.5zM23 42c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1zm10 0c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1z" />
-                                            </svg>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->name}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->code}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->semester}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->year}}</td>
+                                <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
+                                    <dialog id="unit-{{$unit->id}}" class="h-auto w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
+                                        <x-show.user :data="$unit"/>
+                                    </dialog>
+                                    <button type="button" onclick="document.getElementById('unit-{{$unit->id}}').showModal()"
+                                        class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
+                                            viewBox="0 0 520 520" fill="currentColor">
+                                            <path
+                                                d="M518 251a288 288 0 0 0-516 0 20 20 0 0 0 0 18 288 288 0 0 0 516 0 20 20 0 0 0 0-18zM260 370c-61 0-110-49-110-110s49-110 110-110 110 49 110 110-49 110-110 110zm0-180c-39 0-70 31-70 70s31 70 70 70 70-31 70-70-31-70-70-70z" />
+                                        </svg>
+                                    </button>
+                                    <button type="button"
+                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                                        <?xml version="1.0" ?><svg class="feather feather-edit" fill="none" height="24"
+                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" viewBox="0 0 24 24" width="20" height="20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                        </svg>
+                                    </button>
+                                    <button type="button"
+                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                                            viewBox="0 0 52 52" fill="currentColor">
+                                            <path
+                                                d="M45.5 10H33V6a4 4 0 0 0-4-4h-6a4 4 0 0 0-4 4v4H6.5c-.8 0-1.5.7-1.5 1.5v3c0 .8.7 1.5 1.5 1.5h39c.8 0 1.5-.7 1.5-1.5v-3c0-.8-.7-1.5-1.5-1.5zM23 7c0-.6.4-1 1-1h4c.6 0 1 .4 1 1v3h-6zm18.5 13h-31c-.8 0-1.5.7-1.5 1.5V45a5 5 0 0 0 5 5h24a5 5 0 0 0 5-5V21.5c0-.8-.7-1.5-1.5-1.5zM23 42c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1zm10 0c0 .6-.4 1-1 1h-2c-.6 0-1-.4-1-1V28c0-.6.4-1 1-1h2c.6 0 1 .4 1 1z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
                             @empty
-                                <p class="px-4 py-1 text-sm text-gray-800">No data found! Please modify your search query</p>
+                            <p class="px-4 py-1 text-sm text-gray-800">No data found! Please modify your search
+                                parameters</p>
                             @endforelse
                         </tbody>
                     </table>

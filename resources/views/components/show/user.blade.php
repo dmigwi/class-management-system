@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-
-@php
-    $user = $attributes->get('data');
-    $units = ["Introduction to Computer Programming",
-        "Introduction to Computer Systems",
-        "Advanced Programming Concepts",
-        "Introduction to Computational Theory",
-    ];
-@endphp
-
 <div class="flex flex-col w-full h-fit ">
+    @php
+        $user = $attributes->get('data')
+    @endphp
+
     <div class="flex w-full h-auto justify-center items-center">
         <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold text-light-blue">
             User Details
@@ -31,23 +24,23 @@
             </div>
             <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/5 text-start uppercase">Role:</span> 
-                <span>{{$user->role ?? "Not Set"}}</span>
+                <span>{{$user->role ?? "Not Found"}}</span>
             </div>
             <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/5 text-start uppercase">Dept.:</span> 
-                <span>{{$user->faculty ?? "Not Set" }}</span>
+                <span>{{$user->department ?? "Not Found" }}</span>
             </div>
             <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/5 text-start uppercase">Email:</span> 
-                <span>{{$user->email ?? "Not Set" }}</span>
+                <span>{{$user->email ?? "Not Found" }}</span>
             </div>
             <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/5 text-start uppercase">Phone:</span> 
-                <span>{{$user->phone ?? "Not Set"}}</span>
+                <span>{{$user->phone ?? "Not Found"}}</span>
             </div>
             <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/5 text-start uppercase">Country:</span> 
-                <span>{{$user->country ?? "Not Set"}}</span>
+                <span>{{$user->country ?? "Not Found"}}</span>
             </div>
         </div>
         <div class="w-1/2 text-gray-900 text-sm font-medium flex items-center justify-end">
@@ -56,18 +49,21 @@
                     Units Allocated
                 </span>
                 <span class="w-full block">
-                    @forelse ($units as $unit)
-                        <li class="px-4 text-start py-2">{{$unit}}</li>
-                    @empty
-                        No Units Allocated yet!
-                    @endforelse
+                    <li class="px-4 text-start py-2">
+                        Introduction to Computer Programming
+                    </li>
+                    <li class="px-4 text-start py-2">
+                        Introduction to Computer Systems
+                    </li>
+                    <li class="px-4 text-start py-2">
+                        Advanced Programming Concepts
+                    </li>
+                    <li class="px-4 text-start py-2">
+                        Introduction to Computational Theory
+                    </li>
                 </span>
             </div>
         </div>
     </div>
 </div>
-=======
-<div>
-    <!-- When there is no desire, all things are at peace. - Laozi -->
-</div>
->>>>>>> e2b9d1f (Format the tags alignment)
+
