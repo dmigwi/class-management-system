@@ -109,13 +109,10 @@
                 </select>
             </div>
 
-            <button class="flex items-center pl-2 py-2 text-grays-500 border-2 rounded-lg text-sm btn-primary"
-                type="text">
+            <button class="flex items-center pl-2 py-2 text-grays-500 border-2 rounded-lg text-sm btn-primary" type="text">
                 <span class="">Search</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="ml-1 mr-2 border-black-500"
-                    height="15" width="15" viewBox="0 0 520 520">
-                    <path
-                        d="M496 453 362 320a189 189 0 1 0-340-92 190 190 0 0 0 298 135l133 133a14 14 0 0 0 21 0l21-21a17 17 0 0 0 1-22ZM210 338a129 129 0 1 1 130-130 129 129 0 0 1-130 130Z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="ml-1 mr-2 border-black-500" height="15" width="15" viewBox="0 0 520 520">
+                    <path d="M496 453 362 320a189 189 0 1 0-340-92 190 190 0 0 0 298 135l133 133a14 14 0 0 0 21 0l21-21a17 17 0 0 0 1-22ZM210 338a129 129 0 1 1 130-130 129 129 0 0 1-130 130Z"/>
                 </svg>
             </button>
         </form>
@@ -126,11 +123,9 @@
                     <a href="#" class="block w-full h-full">
                         <div class="flex items-center justify-between px-4 py-6 space-x-4">
                             <div class="flex items-center">
-                                <span class="relative p-4 bg-blue-light rounded-full">
-                                    <svg class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                        width="40" height="40" fill="currentColor" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M20 455a40 40 0 0 0 40 40h424c9 0 16-7 16-16v-28c0-9-7-16-16-16H95c-8 0-15-7-15-15V41c0-9-7-16-16-16H36c-9 0-16 7-16 16v414zm477-314a30 30 0 0 0-30-30c-9 0-16 4-22 9l-86 86-59-56-1-1-2-2-2-1-3-2-2-1-4-1-2-1-6-1-6 1-2 1-4 1-2 1-3 2-2 2-3 2-114 115a30 30 0 0 0-10 22 30 30 0 0 0 30 30c7 0 14-3 19-7l98-97 57 56 3 2 2 2 3 2 2 1 4 1 2 1 6 1 6-1h2l4-1 2-1 3-2 2-1 1-1 1-1 1-1 108-107c5-6 9-13 9-22z" />
+                                <span class="relative p-5 bg-blue-light rounded-full">
+                                    <svg width="40" fill="currentColor" height="40" class="absolute h-5 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 455a40 40 0 0 0 40 40h424c9 0 16-7 16-16v-28c0-9-7-16-16-16H95c-8 0-15-7-15-15V41c0-9-7-16-16-16H36c-9 0-16 7-16 16v414zm477-314a30 30 0 0 0-30-30c-9 0-16 4-22 9l-86 86-59-56-1-1-2-2-2-1-3-2-2-1-4-1-2-1-6-1-6 1-2 1-4 1-2 1-3 2-2 2-3 2-114 115a30 30 0 0 0-10 22 30 30 0 0 0 30 30c7 0 14-3 19-7l98-97 57 56 3 2 2 2 3 2 2 1 4 1 2 1 6 1 6-1h2l4-1 2-1 3-2 2-1 1-1 1-1 1-1 108-107c5-6 9-13 9-22z"/>
                                     </svg>
                                 </span>
                                 <p class="ml-2 text-sm font-semibold text-gray-700 border-b border-gray-200 dark:text-white">
@@ -163,13 +158,11 @@
             <div class="flex items-center w-full space-x-4 h-80 md:w-1/3">
                 <div class="relative w-full px-4 py-6 bg-white shadow-lg  h-full dark:bg-gray-700">
                     <span class="absolute p-4 bg-blue-light rounded-full top-2 right-4">
-                        <svg class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            width="40" height="40" fill="currentColor" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M80 105c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15zM80 245c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm380 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h310c8 0 15-7 15-15zM80 385c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15z" />
+                        <svg width="40" fill="currentColor" height="40" class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M80 105c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15zM80 245c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm380 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h310c8 0 15-7 15-15zM80 385c0-8-7-15-15-15H35c-8 0-15 7-15 15v30c0 8 7 15 15 15h30c8 0 15-7 15-15zm420 0c0-8-7-15-15-15H135c-8 0-15 7-15 15v30c0 8 7 15 15 15h350c8 0 15-7 15-15z"/>
                         </svg>
                     </span>
-
+                    
                     <p class="text-xl font-bold text-black dark:text-white">Course Details</p>
                     @if ($role == "student")
                         <p> 
@@ -231,9 +224,8 @@
                                     <path
                                         d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z" />
                                 </svg>
-                            @endif
-                        </span>
-                    </div>
+                            </span>
+                        </div>
                 </div>
             </div>
         </div>

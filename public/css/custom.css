@@ -82,6 +82,7 @@ body {
 }
 
 .btn-primary {
+<<<<<<< HEAD
     opacity: 1.0;
     transition: 0.3s;
     color: #fff;
@@ -135,3 +136,8 @@ dialog::backdrop {
         transform: translateX(0);
     }
 } 
+=======
+    color: #fff;
+    background-color: #02b0e2;
+}
+>>>>>>> 36ceace (Add the new user and new unit input forms)
