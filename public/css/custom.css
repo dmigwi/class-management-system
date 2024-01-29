@@ -11,11 +11,15 @@ body {
 }
 
 .text-light-blue {
-    color: #02b0e2
+    color: #02b0e2;
+}
+
+.border-blue-light {
+    border-color: #02b0e2;
 }
 
 .bg-blue-light{
-    background-color: #02b0e2
+    background-color: #02b0e2;
 }
 
 .scrollbar-w-2::-webkit-scrollbar {
@@ -66,6 +70,35 @@ body {
 }
 
 .btn-primary {
+    opacity: 1.0;
+    transition: 0.3s;
     color: #fff;
     background-color: #02b0e2;
+}
+
+.btn-primary:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    opacity: 1.0;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.text-center {
+    text-align: center;
 }
