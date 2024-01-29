@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -15,12 +16,13 @@
         <!-- Styles -->
         <link rel="stylesheet" type="text/css" href="css/app.css">
         <link rel="stylesheet" type="text/css" href="css/custom.css">
-       
-    </head> 
-    <body @if(\Request::is('/'))  class="bg-image bg-clip-content" @endif>
+
+    </head>
+
+    <body @if(\Request::is('/')) class="bg-image bg-clip-content" @endif>
         <div class="relative py-px h-screen">
             <div class="container relative m-auto px-4 md:px-12 xl:px-10 h-5/6">
-                <x-topbar/>
+                <x-topbar />
                 @yield('content')
                 @show
             </div>
@@ -30,7 +32,8 @@
     {{-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"> </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script> --}}
-        <!-- Include the Tailwind JS file -->
-        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+    <!-- Include the Tailwind JS file -->
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     {{-- <script src="{{ URL::asset('./js/app.js') }} "></script> --}}
+
 </html>
