@@ -1,3 +1,11 @@
+@php
+     $courses = [
+            "Introduction to Computer Programming",
+            "Introduction to Computer Systems",
+            "Advanced Programming Concepts",
+        ];
+@endphp
+
 <div id="add-new-user" class="w-full ">
     <form
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
@@ -18,7 +26,7 @@
                             <option>Dr.</option>
                             <option>Prof.</option>
                             <option>Eng.</option>
-                            <option>Sir.</option>
+                            <option>Sir</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -30,29 +38,25 @@
                 </div>
 
                 <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="first-name">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="firstname">
                         First Name
                     </label>
-                    <input
-                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        name="firstname" id="first-name" type="text" placeholder="Jane" required>
-                    {{-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> --}}
+                    <input name="firstname" id="firstname" type="text" placeholder="Jane" required
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
                 </div>
                 <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="middle-name">
                         Middle Name
                     </label>
-                    <input
-                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="middle-name" name="middlename" type="text" placeholder="Doe">
+                    <input id="middlename" name="middlename" type="text" placeholder="Doe"
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
                 <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="last-name">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="lastname">
                         Last Name
                     </label>
-                    <input
-                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="last-name" name="lastname" type="text" placeholder="Smith" required>
+                    <input id="lastname" name="lastname" type="text" placeholder="Smith" required
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-2">
@@ -60,9 +64,8 @@
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
                         Password
                     </label>
-                    <input
-                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        name="password" id="password" type="password" placeholder="*********" required>
+                    <input name="password" id="password" type="password" placeholder="*********" required
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                     <p class="text-gray-600 text-xs italic mb-2">Make it as long and as crazy as you'd like</p>
                 </div>
                 <div class="w-fit px-3 mb-6 md:mb-0">
@@ -70,12 +73,11 @@
                         Role
                     </label>
                     <div class="relative">
-                        <select
-                            class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="role" name="role">
-                            <option>Student</option>
-                            <option>Lecturer</option>
-                            <option>Admin</option>
+                        <select id="role" name="role"
+                            class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option value="Student">Student</option>
+                            <option value="Lecturer">Lecturer</option>
+                            <option value="Admin">Admin</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -86,17 +88,24 @@
                     </div>
                 </div>
                 <div class="w-fit px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="department">
-                        Department
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="faculty">
+                        Faculty
                     </label>
                     <div class="relative">
-                        <select
-                            class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="department" name="department">
-                            <option>Engineering Department</option>
-                            <option>Business Department</option>
-                            <option>Philology Department</option>
-                            <option>Languages Department</option>
+                        <select id="faculty" name="faculty"
+                            class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option value="Business And International Relations">
+                                Business And International Relations
+                            </option>
+                            <option value="Computer Engineering, Graphics Design And Architecture">
+                                Computer Engineering, Graphics Design And Architecture
+                            </option>
+                            <option value="Philology And Journalism">
+                                Philology And Journalism
+                            </option>
+                            <option value="Polish And Foreign Languages">
+                                Polish And Foreign Languages
+                            </option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -113,13 +122,11 @@
                         Country Of Origin
                     </label>
                     <div class="relative">
-                        <select
-                            class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="grid-state">
-                            <x-country />
+                        <select id="country"
+                            class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <x-utils.country />
                         </select>
-                        <div
-                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                             </svg>
@@ -131,9 +138,8 @@
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                         Email
                     </label>
-                    <input
-                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="email" name="email" type="text" placeholder="jane.doe@gmail.com">
+                    <input id="email" name="email" type="text" placeholder="jane.doe@gmail.com"
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
 
                 <div class="w-full md:w-1/5 px-3 mb-6 md:mb-0">
@@ -141,9 +147,8 @@
                         for="phone-number">
                         Phone Number
                     </label>
-                    <input
-                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="phone-number" type="text" placeholder="+48 726 902 210">
+                    <input id="phone" name="phone" type="text" placeholder="+48 726 902 210"
+                        class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
             </div>
 
@@ -155,47 +160,26 @@
                     <div
                         class="relative block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <ul class="max-w-sm flex flex-col max-h-40 overflow-scroll">
-                            <li class="inline-flex items-center gap-x-2 py-2 px-2 -mt-px">
-                                <div class="relative flex items-start w-full">
-                                    <div class="flex items-center h-5">
-                                        <input type="checkbox" class="border-gray-200 mx-1 rounded disabled:opacity-50">
+                            @forelse ($courses as $unit)
+                                <li class="inline-flex items-center gap-x-2 py-2 px-2 -mt-px">
+                                    <div class="relative flex items-start w-full">
+                                        <div class="flex items-center h-5">
+                                            <input type="checkbox" class="border-gray-200 mx-1 rounded disabled:opacity-50">
+                                        </div>
+                                        <label class="ms-3.5 block w-full text-sm text-gray-600">$unit</label>
                                     </div>
-                                    <label class="ms-3.5 block w-full text-sm text-gray-600">
-                                        Introduction to programming
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li class="inline-flex items-center gap-x-2 py-2 px-2 -mt-px">
-                                <div class="relative flex items-start w-full">
-                                    <div class="flex items-center h-5">
-                                        <input type="checkbox" class="border-gray-200 mx-1 rounded disabled:opacity-50">
-                                    </div>
-                                    <label class="ms-3.5 block w-full text-sm text-gray-600">
-                                        Computational Mathematics
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li class="inline-flex items-center gap-x-2 py-2 px-2 -mt-px">
-                                <div class="relative flex items-start w-full">
-                                    <div class="flex items-center h-5">
-                                        <input type="checkbox" class="border-gray-200 mx-1 rounded disabled:opacity-50">
-                                    </div>
-                                    <label class="ms-3.5 block w-full text-sm text-gray-600">
-                                        Calculus 1
-                                    </label>
-                                </div>
-                            </li>
+                                </li>
+                            @empty
+                                No Units Available!
+                            @endforelse
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="flex items-center justify-center py-3 space-x-12 text-sm md:space-x-24">
                 <div class="flex items-center text-xs">
-                    <button
-                        class="flex items-center justify-center py-2 text-grays-500 border-1 rounded-lg btn-primary w-40"
-                        type="text">
+                    <button type="submit"
+                        class="flex items-center justify-center py-2 text-grays-500 border-1 rounded-lg btn-primary w-40">
                         <span class="">Submit</span>
                     </button>
                 </div>
