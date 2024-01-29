@@ -7,6 +7,9 @@ $users = [(object)[
         "lastname"=>"Smith",
         "role"=>"student",
         "email"=>"jane.doe@gmail.com",
+        "department"=>"Engineering",
+        "country"=>"U.K",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"2",
@@ -16,6 +19,9 @@ $users = [(object)[
         "lastname"=>"",
         "role"=>"lecturer",
         "email"=>"john.brown@gmail.com",
+        "department"=>"Languages",
+        "country"=>"U.S.A",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"3",
@@ -25,6 +31,9 @@ $users = [(object)[
         "lastname"=>"Smith",
         "role"=>"student",
         "email"=>"john.black@gmail.com",
+        "department"=>"Tourism",
+        "country"=>"Poland",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"4",
@@ -34,6 +43,9 @@ $users = [(object)[
         "lastname"=>"Green",
         "role"=>"lecturer",
         "email"=>"jamie.green@gmail.com",
+        "department"=>"Engineering",
+        "country"=>"Germany",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"5",
@@ -43,6 +55,9 @@ $users = [(object)[
         "lastname"=>"King",
         "role"=>"Lecturer",
         "email"=>"edward.king@gmail.com",
+        "department"=>"Tourism",
+        "country"=>"Ireland",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"6",
@@ -52,6 +67,9 @@ $users = [(object)[
         "lastname"=>"Red",
         "role"=>"student",
         "email"=>"fantasia.red@gmail.com",
+        "department"=>"Languages",
+        "country"=>"Belarus",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"7",
@@ -61,6 +79,9 @@ $users = [(object)[
         "lastname"=>"",
         "role"=>"Lecturer",
         "email"=>"jan.kowalski@gmail.com",
+        "department"=>"Engineering",
+        "country"=>"Poland",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"8",
@@ -70,6 +91,9 @@ $users = [(object)[
         "lastname"=>"Cankurt",
         "role"=>"student",
         "email"=>"adam.cancurt@gmail.com",
+        "department"=>"Marketing",
+        "country"=>"Sweden",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"9",
@@ -79,6 +103,9 @@ $users = [(object)[
         "lastname"=>"Austins",
         "role"=>"Lecturer",
         "email"=>"mary.jane@gmail.com",
+        "department"=>"Architecture",
+        "country"=>"Poland",
+        "phone"=>"+48 456 789 234",
       ],
       (object)[
         "id"=>"10",
@@ -88,6 +115,9 @@ $users = [(object)[
         "lastname"=>"Smith",
         "role"=>"student",
         "email"=>"david.waweru@gmail.com",
+        "department"=>"Engineering",
+        "country"=>"Poland",
+        "phone"=>"+48 456 789 234",
       ]];
 @endphp
 <div id="add-new-user" class="w-full ">
@@ -95,7 +125,7 @@ $users = [(object)[
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Users</p>
+            <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Of Users</p>
             <div class="relative flex items-center justify-end w-full pb-4 pr-20 mx-auto text-gray-600">
                 <input
                     class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 w-full rounded-lg text-sm focus:outline-none"
@@ -136,7 +166,10 @@ $users = [(object)[
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->role}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->email}}</td>
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
-                                    <button type="button"
+                                    <dialog id="user-{{$user->id}}" class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
+                                        <x-show.user :data="$user"/>
+                                    </dialog>
+                                    <button type="button" onclick="document.getElementById('user-{{$user->id}}').showModal()"
                                         class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
                                             viewBox="0 0 520 520" fill="currentColor">

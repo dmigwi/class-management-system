@@ -119,9 +119,10 @@
         </div>
         <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-1">
             <!-- Add New Users Card -->
-            {{-- <x-forms.users/>
-            <x-forms.units/> --}}
+            {{-- <x-form.user/> --}}
+            {{-- <x-form.unit/> --}}
             <x-show.users />
+            {{-- <x-show.units/> --}}
 
         </div>
 
