@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UnitSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,8 +26,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
             
         DB::table('users')->insert([
@@ -44,8 +44,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -62,8 +62,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -80,8 +80,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -98,8 +98,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -116,8 +116,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -134,8 +134,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
         
         DB::table('users')->insert([
@@ -152,8 +152,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
         
         DB::table('users')->insert([
@@ -170,8 +170,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -188,8 +188,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",    
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",    
             ]);
         }
 }
