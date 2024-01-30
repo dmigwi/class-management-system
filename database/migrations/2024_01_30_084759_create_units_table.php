@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('instructor');
+            $table->unsignedBigInteger('instructor')->nullable();
             $table->char('name');
             $table->char('code')->unique();
             $table->char('semester');
             $table->char('year');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->tinyInteger('duration');
-            $table->timestamp('midterm_exam');
-            $table->timestamp('final_exam');
+            $table->timestamp('midterm_exam')->nullable();
+            $table->timestamp('final_exam')->nullable();
             $table->timestamps();
             $table->foreign('instructor')->nullable()->constrained()->references('id')->on('users')->onDelete('set null');
             $table->index('code');

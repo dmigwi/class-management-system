@@ -20,6 +20,7 @@ return new class extends Migration
             $table->char('password');
             $table->enum('role', ['admin', 'student', 'instructor']);
             $table->char('email')->unique();
+            $table->char('phone');
             $table->string('faculty');
             $table->char('country');
             $table->boolean('is_confirm_password');
