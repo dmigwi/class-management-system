@@ -192,15 +192,18 @@
         @foreach ($conversation as $data)
             @if (Str::lower($data->role) === $role)
                 <div class="flex items-end">
-                    <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                    <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-blue-light text-white">
                         {{ $data->message }}
                     </span>
                 </div>
             @else
                 <div class="flex justify-end items-end">
                     <span
-                        class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-light text-white">
+                        class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none bg-gray-300 text-gray-600">
                         {{ $data->message }}
+                        <span class="flex items-end">
+                            <x-utils.status :status='$data->status ?? "Pending"'/>
+                        </span>
                     </span>
                 </div>
             @endif
