@@ -143,6 +143,10 @@
                                 value="Polish And Foreign Languages">
                                 Polish And Foreign Languages
                             </option>
+                            <option @checked(Str::lower($user->faculty ?? '')==="administration")
+                                value="Administration">
+                                Administration
+                            </option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
