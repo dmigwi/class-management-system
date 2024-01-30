@@ -190,8 +190,13 @@
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->students ?? "Not Found"}}</span>
                     </p>
                     <p>  
-                        <span class="text-start capitalize">Classes:</span>
-                        <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->duration ?? "Not Found"}}</span>
+                        <span class="text-start capitalize">Duration:</span>
+                        <span class="text-sm text-gray-400 dark:text-neutral-400">
+                            <span>
+                                <span>{{$selectedCourse->duration ?? "No Set"}}</span>
+                                <span>Classes</span>
+                            </span>
+                        </span>
                     </p>
                     <p> 
                         <span class="text-start capitalize">Start Date:</span>

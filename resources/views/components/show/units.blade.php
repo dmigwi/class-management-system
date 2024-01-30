@@ -70,6 +70,7 @@ $units = [(object)[
         "year"=>"2023/2024",
       ]];
 @endphp
+
 <div id="add-new-user" class="w-full ">
     <div
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg

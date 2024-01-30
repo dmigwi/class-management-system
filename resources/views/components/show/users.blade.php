@@ -204,62 +204,6 @@ $users = [(object)[
                         </tbody>
                     </table>
 
-<<<<<<< HEAD
-                              <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Mr. Jim
-                                      Green</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Student</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">jim.green@gmail.com
-                                  </td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                      <button type="button"
-                                          class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none ">Delete</button>
-                                  </td>
-                              </tr>
-
-                              <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Mr. Joe
-                                      Black</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Student</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">joe.black@gmail.com
-                                  </td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                      <button type="button"
-                                          class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none ">Delete</button>
-                                  </td>
-                              </tr>
-
-                              <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Dr. Edward
-                                      King</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Lecturer</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">edward.king@gmail.com
-                                  </td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                      <button type="button"
-                                          class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none ">Delete</button>
-                                  </td>
-                              </tr>
-
-                              <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Jim Red
-                                  </td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">student</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">jim.red@gmail.com</td>
-                                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                      <button type="button"
-                                          class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none ">Delete</button>
-                                  </td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
->>>>>>> e2b9d1f (Format the tags alignment)
-=======
                     <nav class="flex items-center justify-center">
                         <ul class="flex bg-transparent">
                             <li>
@@ -306,5 +250,4 @@ $users = [(object)[
             </div>
         </div>
     </div>
->>>>>>> 0a48022 (Add users details list table)
 </div>

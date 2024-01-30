@@ -1,15 +1,15 @@
 @php
-    $page = Str::lower($attributes->get('page') ?? "home");
+    $page = Str::lower($account->page);
     $isHome = $page === "home";
     $isAttendance = $page === "attendance";
     $isChat = $page === "chat";
 
-    $role = Str::lower($attributes->get('role') ?? "student");
+    $role = Str::lower($account->role);
     $isStudent = $role === "student";
     $isLecturer = $role === "lecturer";
     $isAdmin = $role === "admin";
 
-    $notifications = "10"
+    $notifications = "10";
 @endphp
 
 <div class="relative bg-gray-100 dark:bg-gray-800 h-full overflow-scroll">
