@@ -74,16 +74,16 @@
 
         @switch($attributes->get('page'))
             @case('admin')
-                <x-view.admin/>
+                <x-view.admin :role='$role'/>
                 @break
             @case('chat')
-                <x-view.chat/>
+                <x-view.chat :role='$role'/>
                 @break
             @case('attendance')
-                <x-view.attendance/>
+                <x-view.attendance :role='$role'/>
                 @break
             @default
-                <x-view.home/>
+                <x-view.home :role='$role'/>
         @endswitch
     </div>
 </div>

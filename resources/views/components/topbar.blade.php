@@ -1,3 +1,8 @@
+@php
+    $role = $attributes->get('role');
+    $name = "Charlie Rector"
+@endphp
+
 <div class="z-40 flex items-center justify-between w-full h-16 py-10">
   <div class="block ml-6 lg:hidden">
       <button class="flex items-center p-2 text-gray-500 bg-white rounded-full shadow text-md">
@@ -12,8 +17,12 @@
   <img src="images/cms.png" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
   <div class="relative space-x-4 z-20 flex justify-end h-full px-3 w-full" onclick="accountDropdown()">
       <button class="flex items-center justify-end text-black-500 dark:text-white text-md">
-          <span class="pr-2"> Charlie Rector</span>
-          <span class="mx-auto object-cover rounded-full h-10 w-10 student-account pl-2"></span>
+          <span class="pr-2">{{$name}}</span>
+          <span  @class([
+            'mx-auto object-cover rounded-full h-10 w-10 pl-2', 
+            'student-account' => ($role === "student"),
+            'lecturer-account' => ($role !== "student"),
+            ])></span>
           <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
               xmlns="http://www.w3.org/2000/svg">
               <path

@@ -43,10 +43,18 @@ body {
     border-radius: 0.25rem;
 }
 
+.text-student {
+    color: #02b0e2;
+}
+
+.text-lecturer {
+    color: blue;
+}
+
 .student-account {
     width: 40px;
     height: 40px;
-    border: blue;
+    border: #02b0e2;
     border-style: dotted;
     background-size: contain;
     background-image: url('/images/student-account.gif');
@@ -55,7 +63,7 @@ body {
 .lecturer-account {
     width: 40px;
     height: 40px;
-    border: #02b0e2;
+    border: blue;
     border-style: dotted;
     background-size: contain;
     background-image: url('/images/lecturer-account.gif');
