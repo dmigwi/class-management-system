@@ -1,15 +1,14 @@
 
-<div class="flex flex-col w-full h-fit ">
-    @php
-        $user = $attributes->get('data')
-        $courses = [
-            "Introduction to Computer Programming",
-            "Introduction to Computer Systems",
-            "Advanced Programming Concepts",
-            "Introduction to Computational Theory",
-        ];
-    @endphp
+@php
+    $user = $attributes->get('data');
+    $units = ["Introduction to Computer Programming",
+        "Introduction to Computer Systems",
+        "Advanced Programming Concepts",
+        "Introduction to Computational Theory",
+    ];
+@endphp
 
+<div class="flex flex-col w-full h-fit ">
     <div class="flex w-full h-auto justify-center items-center">
         <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold text-light-blue">
             User Details
@@ -57,7 +56,7 @@
                 </span>
                 <span class="w-full block">
                     @forelse ($units as $unit)
-                        <li class="px-4 text-start py-2">$unit</li>
+                        <li class="px-4 text-start py-2">{{$unit}}</li>
                     @empty
                         No Units Allocated yet!
                     @endforelse

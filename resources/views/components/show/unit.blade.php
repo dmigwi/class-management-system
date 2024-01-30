@@ -30,6 +30,21 @@
                 <span>{{$unit->year ?? "Not Set" }}</span>
             </div>
             <div class="flex items-center justify-start space-x-2">
+                <span class="w-1/4 text-start uppercase">Start Date:</span> 
+                <span>{{$unit->start_date ?? "Not Set"}}</span>
+            </div>
+            <div class="flex items-center justify-start space-x-2">
+                <span class="w-1/4 text-start uppercase">End Date:</span> 
+                <span>{{$unit->end_date ?? "Not Set"}}</span>
+            </div>
+            <div class="flex items-center justify-start space-x-2">
+                <span class="w-1/4 text-start uppercase">Duration:</span> 
+                <span>
+                    <span>{{$unit->duration ?? "No Set"}}</span>
+                    <span>Classes</span>
+                </span>
+            </div>
+            <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/4 text-start uppercase">Mid-Term Exam Date:</span> 
                 <span>{{$unit->midterm_exam ?? "Not Set"}}</span>
             </div>
