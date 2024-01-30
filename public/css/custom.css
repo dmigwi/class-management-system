@@ -11,11 +11,15 @@ body {
 }
 
 .text-light-blue {
-    color: #02b0e2
+    color: #02b0e2;
+}
+
+.border-blue-light {
+    border-color: #02b0e2;
 }
 
 .bg-blue-light{
-    background-color: #02b0e2
+    background-color: #02b0e2;
 }
 
 .scrollbar-w-2::-webkit-scrollbar {
@@ -39,19 +43,31 @@ body {
     border-radius: 0.25rem;
 }
 
+.text-student {
+    color: #02b0e2;
+}
+
+.text-lecturer {
+    color: blue;
+}
+
 .student-account {
     width: 40px;
     height: 40px;
-    border: blue;
+    border: #02b0e2;
     border-style: dotted;
     background-size: contain;
     background-image: url('/images/student-account.gif');
 }
 
+.text-lime-green {
+    color: limegreen;
+}
+
 .lecturer-account {
     width: 40px;
     height: 40px;
-    border: #02b0e2;
+    border: blue;
     border-style: dotted;
     background-size: contain;
     background-image: url('/images/lecturer-account.gif');
@@ -66,6 +82,56 @@ body {
 }
 
 .btn-primary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(56, 116, 250);
+    opacity: 1.0;
+    transition: 0.3s;
+    color: #fff;
+    background-color: #02b0e2;
 }
+
+.btn-primary:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    opacity: 1.0;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* dialog[open] {
+    animation: appear .15s cubic-bezier(0, 1.8, 1, 1.8);
+  } */
+  
+dialog::backdrop {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(54, 54, 54, 0.5));
+    backdrop-filter: blur(3px);
+}
+    
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateX(-3rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+} 
