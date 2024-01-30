@@ -30,11 +30,12 @@
                     "start_date" => "23/09/2023",
                     "end_date" => "20/02/2024",
                     "students" => 32,
+                    "duration" => 12,
                     "midterm_exam" => "7/12/2023",
                     "final_exam" => "20/02/2024",
-                ]
+            ];
 
-    $cards  = (object)[
+    $cardsData  = (object)[
             "last_message" => "Excuse me Sir, My grades on your",
             "sent_at" => "13:45 12/Jan/2024",
             "sent_to" => "Dr. Jan Kowalski",
@@ -43,7 +44,9 @@
             "time_signed_in" => " 13:45 12/01/2024",
             "start_time" => "13:30 12/01/2024",
             "end_time" => "15:30 12/01/2024",
-        ]
+        ];
+
+    $role = $attributes ->get('role');
 @endphp
 
 <div class="flex flex-col w-full md:space-y-4 h-full">
@@ -97,7 +100,7 @@
                 <select class="focus:outline-none bg-inherit mx-1" name="class" id="class">
                     <option value="">--Select a Unit---</option>
                     @forelse ($courses as $course)
-                        <option value="{{$course->code}}" @checked($course->code === ($selectedCourse->code ?? "N"))>
+                        <option value="{{$course->code}}" @checked($course->code === $selectedCourse->code ?? "N")>
                             {{$course->unit}}
                         </option>
                     @empty
@@ -168,56 +171,62 @@
                     </span>
 
                     <p class="text-xl font-bold text-black dark:text-white">Course Details</p>
+                    @if ($role == "student")
+                        <p> 
+                            <span class="text-start capitalize">Instructor:</span>
+                            <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->lecturer ?? "Not Found"}}</span>
+                        </p>
+                    @endif
                     <p> 
-                        <span class="text-start uppercase">Instructor:</span>
-                        <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->lecturer ?? "Not Found"}}</span>
-                    </p>
-                    <p> 
-                        <span class="text-start uppercase">Name:</span>
+                        <span class="text-start capitalize">Name:</span>
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->unit ?? "Not Found"}}</span>
                     </p>
                     <p> 
-                        <span class="text-start uppercase">Code:</span>
+                        <span class="text-start capitalize">Code:</span>
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->code ?? "Not Found"}}</span>
                     </p>
                     <p> 
-                        <span class="text-start uppercase">Students:</span>
+                        <span class="text-start capitalize">Students:</span>
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->students ?? "Not Found"}}</span>
                     </p>
                     <p>  
-                        <span class="text-start uppercase">Classes:</span>
+                        <span class="text-start capitalize">Classes:</span>
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->duration ?? "Not Found"}}</span>
                     </p>
                     <p> 
-                        <span class="text-start uppercase">Start Date:</span>
+                        <span class="text-start capitalize">Start Date:</span>
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->start_date ?? "Not Found"}}</span>
                     </p >
                     <p>
-                        <span class="text-start uppercase">End Date:</span>
+                        <span class="text-start capitalize">End Date:</span>
                         <span class="text-sm text-gray-400 dark:text-neutral-400">{{$selectedCourse->end_date ?? "Not Found"}}</span>
                     </p>
 
                     <div class="flex items-end text-md">
-                        <span class="text-start uppercase">Mid-Term Exam Date:</span>
+                        <span class="text-start capitalize">Mid-Term Exam:</span>
                         <span class="flex items-center text-sm pl-2 text-gray-400 dark:text-neutral-400">
-                            {{$selectedCourse->unit ?? "Not Set"}}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20"
-                                viewBox="0 0 520 520" fill="currentColor">
-                                <path
-                                    d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z" />
-                            </svg>
+                            {{$selectedCourse->midterm_exam ?? "Not Set"}}
+                            @if ($role == "lecturer")
+                                <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20"
+                                    viewBox="0 0 520 520" fill="currentColor">
+                                    <path
+                                        d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z" />
+                                </svg>
+                            @endif
                         </span>
                     </div>
 
                     <div class="flex items-end text-md">
-                        <span class="text-start uppercase">Final Exam Date:</span>
+                        <span class="text-start capitalize">Final Exam:</span>
                         <span class="flex items-center text-sm pl-2 text-gray-400 dark:text-neutral-400">
-                            {{$selectedCourse->unit ?? "Not Set"}}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20"
-                                viewBox="0 0 520 520" fill="currentColor">
-                                <path
-                                    d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z" />
-                            </svg>
+                            {{$selectedCourse->final_exam ?? "Not Set"}}
+                            @if ($role == "lecturer")
+                                <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20"
+                                    viewBox="0 0 520 520" fill="currentColor">
+                                    <path
+                                        d="m95 334 89 89c4 4 10 4 14 0l222-223c4-4 4-10 0-14l-88-88a10 10 0 0 0-14 0L95 321c-4 4-4 10 0 13zM361 57a10 10 0 0 0 0 14l88 88c4 4 10 4 14 0l25-25a38 38 0 0 0 0-55l-47-47a40 40 0 0 0-57 0zM21 482c-2 10 7 19 17 17l109-26c4-1 7-3 9-5l2-2c2-2 3-9-1-13l-90-90c-4-4-11-3-13-1l-2 2a20 20 0 0 0-5 9z" />
+                                </svg>
+                            @endif
                         </span>
                     </div>
                 </div>
@@ -232,20 +241,20 @@
                     </p>
                     <div class="flex items-end my-6 space-x-2">
                         <p class="text-xl font-bold text-black dark:text-white">
-                            {{$card->last_message... ?? "Not Found"}}
+                            {{$cardsData->last_message ?? "Not Found"}} @if ($cardsData->last_message) ... @endif
                         </p>
                     </div>
                     <div class="dark:text-white">
                         <div
                             class="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
                             <p> Sent To:</p>
-                            <div class="flex items-end text-xs">{{$card->sent_to ?? "Not Found"}}</div>
+                            <div class="flex items-end text-xs">{{$cardsData->sent_to ?? "Not Found"}}</div>
                         </div>
                         <div
                             class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Sent At:</p>
                             <div class="flex items-end text-xs">
-                                {{$card->sent_at ?? "Not Found"}}
+                                {{$cardsData->sent_at ?? "Not Found"}}
                             </div>
                         </div>
                         <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
@@ -253,8 +262,8 @@
                             <div class="flex items-end text-xs text-green-500">
 
                                 <span class="flex items-center">
-                                    {{$card->status ?? "Pending"}}
-                                    <x-utils.status :status='{{$card->status ?? "Pending"}}'/>
+                                    {{$cardsData->status ?? "Pending"}}
+                                    <x-utils.status :status='$cardsData->status ?? "Pending"'/>
                                 </span>
                             </div>
                         </div>
@@ -269,7 +278,7 @@
                     </p>
                     <div class="flex items-end my-6 space-x-2">
                         <p class="text-xl font-bold text-black dark:text-white">
-                            {{$card->last_attended ?? "Not Found"}}
+                            {{$cardsData->last_attended ?? "Not Found"}}
                         </p>
                     </div>
                     <div class="dark:text-white">
@@ -279,7 +288,7 @@
                                 Signed In On:
                             </p>
                             <div class="flex items-end text-xs">
-                                {{$card->time_signed_in ?? "Not Found"}}
+                                {{$cardsData->time_signed_in ?? "Not Found"}}
                             </div>
                         </div>
                         <div
@@ -288,7 +297,7 @@
                                 Start Time:
                             </p>
                             <div class="flex items-end text-xs">
-                                {{$card->start_time ?? "Not Found"}}
+                                {{$cardsData->start_time ?? "Not Found"}}
                             </div>
                         </div>
                         <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
@@ -296,7 +305,7 @@
                                 End Time:
                             </p>
                             <div class="flex items-end text-xs">
-                                {{$card->end_time ?? "Not Found"}}
+                                {{$cardsData->end_time ?? "Not Found"}}
                             </div>
                         </div>
                     </div>

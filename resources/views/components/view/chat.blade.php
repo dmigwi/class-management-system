@@ -96,7 +96,7 @@
                "status" => "Pending",
             ]];
 
-<?php $selected = (object)[
+        $selected = (object)[
                 "title" => "Introduction into Programming",
                 "name" => "Dr. Jan Kowalski",
                 ];
@@ -122,7 +122,9 @@
                 "title" => "Calculus 1",
                 "name" => "Dr. Jan Kowalski",
                 ]];
-?>
+        
+        $role = $attributes->get('role');
+    ?>
 
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
     <div class="hs-dropdown relative inline-block text-left max-w-xs" onclick="toggleDropdown()">
@@ -130,15 +132,28 @@
             class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
             <div class="flex sm:items-center justify-between py-2">
                 <div class="relative flex items-center space-x-4">
-                    <div class=" relative flex flex-col leading-tight lecturer-account"></div>
+                    <div @class([
+                                'relative flex flex-col leading-tight',
+                                'student-account' => ($role !== "student"),
+                                'lecturer-account' => ($role === "student"),
+                                 ])></div>
                     <div class="flex flex-col leading-tight">
-            <div class="text-sm flex items-center text-gray-700">{{$selected->title}}</div>
-            <div class="text-sm flex items-center text-light-blue mr-1">{{$selected->name}}</div>
-            <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
-                xmlns="http://www.w3.org/2000/svg">
-                <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
-                </path>
-            </svg>
+                        <div class="text-sm flex items-center text-gray-700">{{$selected->title}}</div>
+                        <div @class([
+                                    'text-sm flex items-center mr-1', 
+                                    'text-student' => ($role !== "student"),
+                                    'text-lecturer' => ($role === "student"),
+                                    ])>{{$selected->name}}</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+                    </path>
+                </svg>
+            </div>
         </button>
 
         <div id="dropdown-menu" class="absolute hidden z-auto mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg  
@@ -152,10 +167,18 @@
                     tabindex="-1" id="menu-item-0">
                     <div class="flex sm:items-center justify-between py-2 w-fit">
                         <div class="relative flex items-center space-x-4">
-                            <div class=" relative flex flex-col leading-tight lecturer-account"></div>
+                            <div @class([
+                                'relative flex flex-col leading-tight',
+                                'student-account' => ($role !== "student"),
+                                'lecturer-account' => ($role === "student"),
+                                 ])></div>
                             <div class="flex flex-col leading-tight">
                                 <div class="text-sm flex items-center text-gray-700">{{$course->title}}</div>
-                                <div class="text-sm flex items-center text-light-blue mr-1">{{$course->name}}</div>
+                                <div @class([
+                                    'text-sm flex items-center', 
+                                    'text-student' => ($role !== "student"),
+                                    'text-lecturer' => ($role === "student"),
+                                    ])>{{$course->name}}</div>
                             </div>
                         </div>
                     </div>
@@ -167,7 +190,7 @@
     <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
       scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         @foreach ($conversation as $data)
-            @if (strtolower($data->role) === "lecturer")
+            @if (Str::lower($data->role) === $role)
                 <div class="flex items-end">
                     <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                         {{ $data->message }}
@@ -186,19 +209,8 @@
 
     <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
         <div class="relative flex">
-            <span class="absolute inset-y-0 flex items-center">
-                <button type="button" disabled
-                    class="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6 text-gray-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
-                        </path>
-                    </svg>
-                </button>
-            </span>
             <input type="text" placeholder="Write your message!" name="message"
-                class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3">
+                class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3">
             <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
                 <button type="button" disabled
                     class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">

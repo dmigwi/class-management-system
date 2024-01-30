@@ -1,20 +1,24 @@
 @php
-    $status = $attributes.get('status')
+    $status = $attributes->get('status')
 @endphp
 
 @switch(Str::lower($status))
     @case("read")
-        <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500"
-            viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
-            <path d="M191 425 26 259c-6-6-6-16 0-22l22-22c6-6 16-6 22 0l124 125a10 10 0 0 0 
-                    15 0L452 95c6-6 16-6 22 0l22 22c6 6 6 16 0 22L213 425c-6 7-16 7-22 0z" />
+        <svg height="20" class="h-3 text-green-500"  fill="currentColor" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" fill-rule="evenodd" id="Action-/-7---Action,-check,-communication,-double,-mark-icon" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+                <line id="Path" stroke="currentColor" stroke-width="2" x1="2" x2="9.5" y1="9.95371699" y2="18"/>
+                <line id="Path" stroke="currentColor" stroke-width="2" x1="14" x2="17.5" y1="11" y2="5.5"/>
+                <polyline id="Path" points="8.00128269 10 15 18 22.5 6.5" stroke="currentColor" stroke-width="2"/>
+            </g>
         </svg>
         @break
     @case("delivered")
-        <svg width="20" fill="currentColor" height="20" class="h-3 text-gray-500"
-            viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg">
-            <path d="M191 425 26 259c-6-6-6-16 0-22l22-22c6-6 16-6 22 0l124 125a10 10 0 0 0 
-                    15 0L452 95c6-6 16-6 22 0l22 22c6 6 6 16 0 22L213 425c-6 7-16 7-22 0z" />
+        <svg height="20" class="h-3 text-gray-500" fill="currentColor" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" fill-rule="evenodd" id="Action-/-7---Action,-check,-communication,-double,-mark-icon" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+                <line id="Path" stroke="currentColor" stroke-width="2" x1="2" x2="9.5" y1="9.95371699" y2="18"/>
+                <line id="Path" stroke="currentColor" stroke-width="2" x1="14" x2="17.5" y1="11" y2="5.5"/>
+                <polyline id="Path" points="8.00128269 10 15 18 22.5 6.5" stroke="currentColor" stroke-width="2"/>
+            </g>
         </svg>
         @break
     @default
