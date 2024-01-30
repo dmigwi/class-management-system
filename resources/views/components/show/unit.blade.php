@@ -22,6 +22,10 @@
                 <span>{{$unit->name ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start space-x-2">
+                <span class="w-1/4 text-start uppercase">Instructor:</span> 
+                <span>{{$unit->lecturer ?? "Not Set"}}</span>
+            </div>
+            <div class="flex items-center justify-start space-x-2">
                 <span class="w-1/4 text-start uppercase">Semester:</span> 
                 <span>{{$unit->semester ?? "Not Set" }}</span>
             </div>
