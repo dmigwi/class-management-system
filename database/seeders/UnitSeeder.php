@@ -16,8 +16,8 @@ class UnitSeeder extends Seeder
             "id" => 1,
             "name" => "Administrator",
             "code" => "0000",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -26,8 +26,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-244",
             "semester" => "1",
             "year" => "2022/2023",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -36,8 +36,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-235",
             "semester" => "2",
             "year" => "2023/2024",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -46,8 +46,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-236",
             "semester" => "2",
             "year" => "2023/2024",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -57,8 +57,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-240",
             "semester" => "1",
             "year" => "2023/2024",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -67,8 +67,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-250",
             "semester" => "2",
             "year" => "2022/2023",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -77,8 +77,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-312",
             "semester" => "1",
             "year" => "2023/2024",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -87,8 +87,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-324",
             "semester" => "Summer",
             "year" => "2022/2023",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -97,8 +97,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-340",
             "semester" => "1",
             "year" => "2023/2024",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
@@ -107,8 +107,8 @@ class UnitSeeder extends Seeder
             "code" => "CSE-404",
             "semester" => "Summer",
             "year" => "2023/2024",
-            "created_at" => "1706620720",
-            "updated_at" => "1706620720", 
+            "created_at" => "2024-01-30 14:17:24",
+            "updated_at" => "2024-01-30 14:17:24", 
         ]);
     }
 }

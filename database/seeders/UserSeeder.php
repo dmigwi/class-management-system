@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UnitSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,7 +18,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "John",
                 "middlename" => "Doe",
                 "lastname" => "Smith",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "admin",
                 "email" => "john.doe@gmail.com",
                 "faculty" => "Administration",
@@ -26,8 +26,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
             
         DB::table('users')->insert([
@@ -36,7 +36,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "John",
                 "middlename" => "Brown",
                 "lastname" => "",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "instructor",
                 "email" => "john.brown@gmail.com",
                 "faculty" => "Polish And Foreign Languages",
@@ -44,8 +44,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -54,7 +54,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "John",
                 "middlename" => "Black",
                 "lastname" => "Smith",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "john.black@gmail.com",
                 "faculty" => "Philology And Journalism",
@@ -62,8 +62,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -72,7 +72,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "Jamie",
                 "middlename" => "Smith",
                 "lastname" => "Green",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "instructor",
                 "email" => "jamie.green@gmail.com",
                 "faculty" => "Computer Engineering, Graphics Design And Architecture",
@@ -80,8 +80,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -90,7 +90,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "Edward",
                 "middlename" => "Woodward",
                 "lastname" => "King",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "edward.king@gmail.com",
                 "faculty" => "Philology And Journalism",
@@ -98,8 +98,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -108,7 +108,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "Fantasia",
                 "middlename" => "Jim",
                 "lastname" => "Red",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "fantasia.red@gmail.com",
                 "faculty" => "Polish And Foreign Languages",
@@ -116,8 +116,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -126,7 +126,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "Jan",
                 "middlename" => "Kowalski",
                 "lastname" => "",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "jan.kowalski@gmail.com",
                 "faculty" => "Business And International Relations",
@@ -134,8 +134,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
         
         DB::table('users')->insert([
@@ -144,7 +144,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "Adam",
                 "middlename" => "Selcut",
                 "lastname" => "Cankurt",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "adam.cancurt@gmail.com",
                 "faculty" => "Business And International Relations",
@@ -152,8 +152,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
         
         DB::table('users')->insert([
@@ -162,7 +162,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "Mary",
                 "middlename" => "Jane",
                 "lastname" => "Austins",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "mary.jane@gmail.com",
                 "faculty" => "Computer Engineering, Graphics Design And Architecture",
@@ -170,8 +170,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",      
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",      
             ]);
                 
         DB::table('users')->insert([
@@ -180,7 +180,7 @@ class UnitSeeder extends Seeder
                 "firstname" => "David",
                 "middlename" => "Waweru",
                 "lastname" => "Smith",
-                "password" => "changeme",
+                "password" => '$2y$12$h7NXGpf4CeQw4cGSwezRs.jkZSrdSc3nBP9rFzgwUc3NoaN8xb.cy',
                 "role" => "student",
                 "email" => "david.waweru@gmail.com",
                 "faculty" => "Computer Engineering, Graphics Design And Architecture",
@@ -188,8 +188,8 @@ class UnitSeeder extends Seeder
                 "phone" => "+48 456 789 234",
                 "is_confirm_password" => true,
                 "remember_token" => "",
-                "created_at" => "1706620720",
-                "updated_at" => "1706620720",    
+                "created_at" => "2024-01-30 14:17:24",
+                "updated_at" => "2024-01-30 14:17:24",    
             ]);
         }
 }
