@@ -18,9 +18,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'title',
+        'firstname',
+        'middlename',
         'password',
+        'role',
+        'email',
+        'phone',
+        'faculty',
+        'country',
+        'is_confirm_password',
     ];
 
     /**
@@ -39,7 +46,10 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function units(){
+        return $this->belongsToMany('App\Models\Unit');
+    }
 }
