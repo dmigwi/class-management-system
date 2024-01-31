@@ -19,6 +19,12 @@ class AttendanceController extends Controller
             $user = Auth::user();
             $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)['id' => Auth::id(), 'role' => $user->role, 'name' => $name, 'page' => "Attendance"];
+
+            if ($user->role === "instructor") {
+               $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
+               $data->setattributes('units', $units);
+            }
+
             return view('index', ["account" => $data]);
         }
         return view('login');
@@ -27,8 +33,7 @@ class AttendanceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    { 
+    public function create() { 
        
     }
 
@@ -63,6 +68,12 @@ class AttendanceController extends Controller
                 'timer_id' => $timer->id,
                 'start_time'=>$timer->created_at,
             ];
+
+            if ($user->role === "instructor") {
+                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);;
+                $data->setattributes('units', $units);
+             }
+
             return view('attendance', ["account" => $data]);
         }
         return view('login');
@@ -149,6 +160,12 @@ class AttendanceController extends Controller
                 'code' => $request->code, 
                 'stop_time'=> $now,
             ];
+
+            if ($user->role === "instructor") {
+                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);;
+                $data->setattributes('units', $units);
+             }
+
             return view('attendance', ["account" => $data]);
         }
         return view('login');
