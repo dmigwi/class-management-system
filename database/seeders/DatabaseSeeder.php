@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UnitSeeder::class,
             ChatSeeder::class,
             AttendanceSeeder::class,
+            TimerSeeder::class,
             UserUnitSeeder::class,
         ]);
     }
