@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -12,19 +11,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            
-            $page = "Home";
-            if ($user->role == "admin") {
-                $page = 'Admin';
-            }
-
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            $data = (object)['id' =>  $user->id, 'role' => $user->role, 'name' => $name, 'page' => $page];
-            return view('index', ["account" => $data]);
-        }
-        return view('login');
+        return view('index');
     }
 
     /**

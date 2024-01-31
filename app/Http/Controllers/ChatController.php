@@ -12,13 +12,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            $data = (object)['id' => Auth::id(), 'role' => $user->role, 'name' => $name, 'page' => "Chat"];
-            return view('index', ["account" => $data]);
-        }
-        return view('login');
+        return view('chat');
     }
 
     /**

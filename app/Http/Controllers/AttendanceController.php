@@ -12,13 +12,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            $data = (object)['id' => Auth::id(), 'role' => $user->role, 'name' => $name, 'page' => "Attendance"];
-            return view('index', ["account" => $data]);
-        }
-        return view('login');
+        return view('attendance');
     }
 
     /**
