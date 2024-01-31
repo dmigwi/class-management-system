@@ -60,8 +60,8 @@
 </div>
 
 <script>
-   function accountDropdown() {
-        const dropdown = document.getElementById("account-dropdown-menu");
-        dropdown.classList.toggle("hidden");
+    function accountDropdown() {
+      const dropdown = document.getElementById("account-dropdown-menu");
+      dropdown.classList.toggle("hidden");
     }
 </script>
