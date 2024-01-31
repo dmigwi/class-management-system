@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -32,25 +33,16 @@ class AuthController extends Controller
             return back()->withErrors(['status' => 'Missing required field(s)']);
         }
 
-        // Retrieve the validated input...
-        $validated = (object)$validator->validated();
-        
-        $user = DB::table('users')->where('id', $validated->id)->first();
-        $isPassMatching = Hash::check($validated->password, $user->password);
-
-        if (!is_null($user) && $isPassMatching) {
-
-            if ($user->is_confirm_password) {
+       if (Auth::attempt($validator->validated())) {
+            if ( Auth::user()->is_confirm_password) {
                 // Trigger password reset using the same form.
                 return back()->withInput($request->only('id'));
             }
-
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            session(["id" => $user->id, "role" => $user-> role, "name" => $name]);
-
+        
+            $request->session()->regenerateToken();
             return redirect()->intended('dashboard');
-        }
-
+       }
+        
         // User authentication failed.
         return back()->withErrors([
             'status' => 'Credentials provided do not match our records']);
@@ -60,27 +52,28 @@ class AuthController extends Controller
      * Update the specified resource in storage.
      */
     public function passwordreset(Request $request) {
-        /* 
-        Validation
-        */
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'id' => 'required',
             'password' => 'required|confirmed|min:8',
         ]);
+       
+        if ($validator->fails()) {
+            return back()->withErrors(['status' => 'Missing required field(s), pwd (min-8 chars)']);
+        }
 
-        /*
-        Database Update
-        */
-        $user = User::find($request->id);
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $data = (object)$validator->validated();
+        $hashed = Hash::make($data->password);
+        if (Hash::needsRehash($hashed)){
+            $hashed = Hash::make($data->password);
+        }
 
-        Auth::login($user);
+        User::where('id', $data->id)->update(['password' => $hashed, 
+                            'is_confirm_password' => false]);
 
-        return redirect(RouteServiceProvider::HOME);
+        Auth::loginUsingId($data->id);
+        $request->session()->regenerateToken();
+
+        return redirect()->intended('dashboard');
     }
 
      /**
