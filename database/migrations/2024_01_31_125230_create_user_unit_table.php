@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('user_unit', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('timer_id');
+            $table->unsignedBigInteger('unit_id');
             $table->timestamp('created_at')->useCurrent();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('timer_id')->references('id')->on('start_stop')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
         });
     }
 

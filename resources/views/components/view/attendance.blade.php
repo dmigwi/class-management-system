@@ -2,6 +2,7 @@
     $unitSelected = "CSE-204-2022/2023";
     $isAttendanceOpen = true;
     $role = "instructor";
+    $userId = 2;
     $courses = [
         (object)[
                 "unit" => "Introduction to Computer Programming",
@@ -49,10 +50,14 @@
                             <form id="stop-form" action="{{ route('end.attendance') }}" method="POST" style="display: none;">
                                 {{method('PUT')}}
                                 @csrf
+                                <input name="id" value="{{$userId}}" style="display: none;">
+                                <input name="code" value="{{$unitSelected}}" style="display: none;">
                             </form>
                             <a href="{{ route('end.attendance') }}" onclick="event.preventDefault(); document.getElementById('start-form').submit();">
                         @else 
                             <form id="start-form" action="{{ route('start.attendance') }}" method="POST" style="display: none;">
+                                <input name="id" value="{{$userId}}" style="display: none;">
+                                <input name="code" value="{{$unitSelected}}" style="display: none;">
                                 @csrf
                             </form>
                             <a href="{{ route('start.attendance') }}" onclick="event.preventDefault(); document.getElementById('start-form').submit();">
@@ -74,7 +79,11 @@
                         {!! QrCode::size(580)->generate(url()->current().'?c='.$unitSelected); !!}
                     </div>
                 @else
-                    <h2 class="text-xl font-semibold items-center text-light-blue dark:text-white">Class Attendance not yet open!</h2>
+                    @if ($errors)
+                        <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
+                    @else
+                        <h2 class="text-xl font-semibold items-center text-light-blue dark:text-white">Class Attendance not yet open!</h2>
+                    @endif
                 @endif
             @else 
                 <dialog id="attendance" class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md" open>
