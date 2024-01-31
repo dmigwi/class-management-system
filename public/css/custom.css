@@ -1,4 +1,4 @@
-.bg-image{
+.bg-image {
     background-size: cover;
     background-color: #9e9e9e;
     background-blend-mode: luminosity;
@@ -31,7 +31,7 @@ body {
     border-color: #02b0e2;
 }
 
-.bg-blue-light{
+.bg-blue-light {
     background-color: #02b0e2;
 }
 
@@ -64,6 +64,27 @@ body {
     color: blue;
 }
 
+.scrollbar-w-2::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+}
+
+.scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+    --bg-opacity: 1;
+    background-color: #f7fafc;
+    background-color: rgba(247, 250, 252, var(--bg-opacity));
+}
+
+.scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+    /* --bg-opacity: 1; */
+    background-color: #02b0e2;
+    /* background-color: rgba(237, 242, 247, var(--bg-opacity)); */
+}
+
+.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem;
+}
+
 .student-account {
     width: 40px;
     height: 40px;
@@ -90,7 +111,7 @@ body {
     width: fit-content;
 }
 
-.bg-inherit	{
+.bg-inherit {
     background-color: inherit !important;
 }
 
@@ -99,16 +120,6 @@ body {
     transition: 0.3s;
     color: #fff;
     background-color: #02b0e2;
-}
-
-.btn-primary:hover {
-    opacity: 0.5;
-    transition: 0.3s;
-}
-
-.btn-primary {
-    opacity: 1.0;
-    transition: 0.3s;
 }
 
 .btn-primary:hover {
@@ -131,12 +142,12 @@ body {
 /* dialog[open] {
     animation: appear .15s cubic-bezier(0, 1.8, 1, 1.8);
   } */
-  
+
 dialog::backdrop {
     background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(54, 54, 54, 0.5));
     backdrop-filter: blur(3px);
 }
-    
+
 @keyframes appear {
     from {
         opacity: 0;
@@ -147,4 +158,4 @@ dialog::backdrop {
         opacity: 1;
         transform: translateX(0);
     }
-} 
+}

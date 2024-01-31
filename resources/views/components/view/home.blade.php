@@ -22,7 +22,6 @@
                 "unit" => "Calculus 1",
                 "code" => "CSE-123-2022/2023",
                 ]];
-
     $selectedCourse = (object)[
                     "unit" => "Introduction to Computer Programming",
                     "code" => "CSE-142-2022/2023",
@@ -34,7 +33,6 @@
                     "midterm_exam" => "7/12/2023",
                     "final_exam" => "20/02/2024",
             ];
-
     $cardsData  = (object)[
             "last_message" => "Excuse me Sir, My grades on your",
             "sent_at" => "13:45 12/Jan/2024",
@@ -45,7 +43,6 @@
             "start_time" => "13:30 12/01/2024",
             "end_time" => "15:30 12/01/2024",
         ];
-
     $role = $attributes ->get('role');
 @endphp
 
@@ -66,10 +63,10 @@
                     </path>
                 </svg>
                 <span class="mx-1">From:</span>
-                <input id="from-datepicker" class="focus:outline-none bg-inherit md:w-24" type="text"
-                    placeholder="Select a Date..." value="2024-01-23" data-input>
+                <input id="from-datepicker" class="focus:outline-none bg-inherit md:w-24" type="text" placeholder="Select Date.." value="2024-01-23" data-input>
                 <svg width="20" height="20" class="text-black-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z"></path>
+                    <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+                    </path>
                 </svg>
             </div>
 
@@ -81,21 +78,17 @@
                     </path>
                 </svg>
                 <span class="mx-1">To:</span>
-                <input id="to-datepicker" class="focus:outline-none bg-inherit md:w-24" type="text"
-                    placeholder="Select Date.." value="2024-02-05" data-input>
-                <svg width="20" height="20" class="text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
-                    </path>
-                </svg>
-            </div>
-
-            <div class="flex items-center pl-2 py-2 text-grays-500 rounded-r-lg border-2 text-md" type="text">
+                <input id="to-datepicker" class="focus:outline-none bg-inherit md:w-24" type="text" placeholder="Select Date.." value="2024-02-05" data-input>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="border-black-500" height="20"
                     width="20" viewBox="0 0 520 520">
                     <path
                         d="M449 20H71a51 51 0 0 0-51 51v377c0 29 23 52 51 52h377c28 0 51-23 51-51V71a50 50 0 0 0-50-51zM157 397c0 9-8 17-17 17h-17c-9 0-17-8-17-17v-94c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V174c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V123c0-9 8-17 17-17h17c9 0 17 8 17 17zm85 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V234c0-9 8-17 17-17h17c9 0 17 8 17 17z" />
+                </svg>
+            </div>
+
+            <div class="flex items-center pl-2 py-2 text-grays-500 rounded-r-lg border-2 text-md" type="text">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="border-black-500" height="20" width="20" viewBox="0 0 520 520">
+                    <path d="M449 20H71a51 51 0 0 0-51 51v377c0 29 23 52 51 52h377c28 0 51-23 51-51V71a50 50 0 0 0-50-51zM157 397c0 9-8 17-17 17h-17c-9 0-17-8-17-17v-94c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V174c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V123c0-9 8-17 17-17h17c9 0 17 8 17 17zm85 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V234c0-9 8-17 17-17h17c9 0 17 8 17 17z"/>
                 </svg>
                 <select class="focus:outline-none bg-inherit mx-1" name="class" id="class">
                     <option value="">--Select a Unit---</option>
@@ -109,13 +102,10 @@
                 </select>
             </div>
 
-            <button class="flex items-center pl-2 py-2 text-grays-500 border-2 rounded-lg text-sm btn-primary"
-                type="text">
+            <button class="flex items-center pl-2 py-2 text-grays-500 border-2 rounded-lg text-sm btn-primary" type="text">
                 <span class="">Search</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="ml-1 mr-2 border-black-500"
-                    height="15" width="15" viewBox="0 0 520 520">
-                    <path
-                        d="M496 453 362 320a189 189 0 1 0-340-92 190 190 0 0 0 298 135l133 133a14 14 0 0 0 21 0l21-21a17 17 0 0 0 1-22ZM210 338a129 129 0 1 1 130-130 129 129 0 0 1-130 130Z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="border-black-500" height="15" width="15" viewBox="0 0 520 520">
+                    <path d="M496 453 362 320a189 189 0 1 0-340-92 190 190 0 0 0 298 135l133 133a14 14 0 0 0 21 0l21-21a17 17 0 0 0 1-22ZM210 338a129 129 0 1 1 130-130 129 129 0 0 1-130 130Z"/>
                 </svg>
             </button>
         </form>
