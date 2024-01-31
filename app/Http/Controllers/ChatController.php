@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -11,7 +12,13 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return view('chat');
+        if (Auth::check()) {
+            $user = Auth::user();
+            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
+            $data = (object)['id' => Auth::id(), 'role' => $user->role, 'name' => $name, 'page' => "Chat"];
+            return view('index', ["account" => $data]);
+        }
+        return view('login');
     }
 
     /**

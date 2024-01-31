@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -11,7 +12,13 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        return view('attendance');
+        if (Auth::check()) {
+            $user = Auth::user();
+            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
+            $data = (object)['id' => Auth::id(), 'role' => $user->role, 'name' => $name, 'page' => "Attendance"];
+            return view('index', ["account" => $data]);
+        }
+        return view('login');
     }
 
     /**
