@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,24 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', function () {
-    return view('login');
-});
-
-Route::get('/home', function () {
-    return view('index');
-});
-
-Route::get('/admin', function () {
-    return view('admin');
-});
-
-Route::get('/attendance', function () {
-    return view('attendance');
-});
-
-Route::get('/chat', function () {
-    return view('chat');
+Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/dashboard', [HomeController::class, 'index'])->middleware('auth')->name('dashboard');
+    Route::get('/chat', [ChatController::class, 'index'])->middleware('auth');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->middleware('auth');
 });
 
