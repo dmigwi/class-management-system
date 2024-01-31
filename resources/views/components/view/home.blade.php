@@ -211,7 +211,7 @@
                         <span class="text-start capitalize">Mid-Term Exam:</span>
                         <span class="flex items-center text-sm pl-2 text-gray-400 dark:text-neutral-400">
                             {{$selectedCourse->midterm_exam ?? "Not Set"}}
-                            @if ($role == "lecturer")
+                            @if ($role == "instructor")
                                 <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20"
                                     viewBox="0 0 520 520" fill="currentColor">
                                     <path
@@ -225,7 +225,7 @@
                         <span class="text-start capitalize">Final Exam:</span>
                         <span class="flex items-center text-sm pl-2 text-gray-400 dark:text-neutral-400">
                             {{$selectedCourse->final_exam ?? "Not Set"}}
-                            @if ($role == "lecturer")
+                            @if ($role == "instructor")
                                 <svg xmlns="http://www.w3.org/2000/svg" class="pl-2" height="20" width="20"
                                     viewBox="0 0 520 520" fill="currentColor">
                                     <path
