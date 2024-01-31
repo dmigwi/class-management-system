@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['web']], function () {
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('auth.login');
     Route::put('/passwordreset', [AuthController::class, 'passwordreset'])->name('password.reset');
+    Route::post('/logout', [AuthController::class, 'destroy'])->name('log.out');
 });

@@ -3,6 +3,19 @@
     background-color: #9e9e9e;
     background-blend-mode: luminosity;
     background-image: url("/images/bg-image.jpg");
+    background-size: cover;
+}
+
+@media screen and (max-width:768px) {
+    .bg-image {
+        min-height: 300px;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .bg-image {
+        min-height: 200px;
+    }
 }
 
 body {
