@@ -19,7 +19,7 @@
 
     </head>
 
-    <body @if(\Request::is('/')) class="bg-image bg-clip-content" @endif>
+    <body @guest class="bg-image bg-clip-content" @endguest>
         <div class="relative py-px h-screen">
             <div class="container relative m-auto px-4 md:px-12 xl:px-10 h-5/6">
                 @yield('topbar')
