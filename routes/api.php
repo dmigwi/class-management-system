@@ -21,10 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['web']], function () {
+    Route::post('/logout', [AuthController::class, 'destroy'])->name('log.out');
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('auth.login');
     Route::put('/passwordreset', [AuthController::class, 'passwordreset'])->name('password.reset');
-    Route::post('/logout', [AuthController::class, 'destroy'])->name('log.out');
-    Route::post('/startattendance', [AttendanceController::class, 'create'])->name('start.attendance');
-    Route::put('/endattendance', [AttendanceController::class, 'update'])->name('end.attendance');
-    Route::post('/signattendance', [AttendanceController::class, 'attendance'])->name('sign.attendance');
+    Route::post('/startattendance', [AttendanceController::class, 'store'])->name('start.attendance');
+    Route::post('/endattendance', [AttendanceController::class, 'update'])->name('end.attendance');
+    Route::post('/signattendance', [AttendanceController::class, 'edit'])->name('sign.attendance');
 });
