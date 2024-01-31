@@ -97,9 +97,9 @@
                     <div class="relative">
                         <select id="role" name="role"
                             class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option value="Student" @checked(Str::lower($user->role ?? '')==="student")>Student</option>
-                            <option value="Lecturer" @checked(Str::lower($user->role ?? '')==="lecturer")>Lecturer</option>
-                            <option value="Admin" @checked(Str::lower($user->role ?? '')==="admin")>Admin</option>
+                            <option value="student" @checked(Str::lower($user->role ?? '')==="student")>Student</option>
+                            <option value="instructor" @checked(Str::lower($user->role ?? '')==="instructor")>Lecturer</option>
+                            <option value="admin" @checked(Str::lower($user->role ?? '')==="admin")>Admin</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
