@@ -6,7 +6,7 @@
 
     $role = Str::lower($account->role);
     $isStudent = $role === "student";
-    $isLecturer = $role === "lecturer";
+    $isLecturer = $role === "instructor";
     $isAdmin = $role === "admin";
 
     $notifications = "10";
