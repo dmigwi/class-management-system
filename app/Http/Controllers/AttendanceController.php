@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\Timer;
 use App\Models\Attendance;
@@ -30,7 +32,7 @@ class AttendanceController extends Controller
                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
             }
 
-           return view('index', ["account" => $data, "units" => $units]);
+           return view('index',  ["account" => $data, "units" => $units]);
         }
         return view('login');
     }
@@ -50,41 +52,42 @@ class AttendanceController extends Controller
         if (Auth::check()) {
             $id = Auth::id();
             $validator = Validator::make($request->all(), [
-                'id' => 'required|same:'.$id,
+                'id' => 'required',
                 'code' => 'required',
             ]);
            
             if ($validator->fails()) {
-                return back()->withErrors(['status' => 'Mismatch in required field(s)']);
+                return back()->withErrors(['status' => 'Missing in required field(s)']);
             }
 
-            $unit = Unit::where('instructor', $id)->where('code', $request->code)->first();
+            $unit = Unit::where('instructor', $request->id)->where('code', $request->code)->first();
             if (empty($unit)) {
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
             }
 
-            $timer = DB::table('start_stop')->insert([
+            $timer = DB::table('start_stop')->insertGetId([
                 "instructor" => $id,
                 "unit_id" => $unit->id,
+                "stopped_at" => null,
             ]);
 
             $user = Auth::user();
+            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
                 'id' => Auth::id(),
                 'role' => $user->role, 
                 'name' => $name, 
                 'page' => "Attendance",
                 'code' => $request->code, 
-                'timer_id' => $timer->id,
-                'start_time'=>$timer->created_at,
+                'timer_id' => $timer,
             ];
 
+            $unit = [];
             if ($user->role === "instructor") {
-                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);;
-                $data['units'] = $units;
+                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
              }
 
-            return view('index', ["account" => $data]);
+             return redirect('/attendance')->with(["account" => $data, "units" => $units]);
         }
         return view('login');
     }
@@ -111,17 +114,18 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'Missing required field']);
             }
 
-            $unit = Unit::where('instructor', $id)->where('code', $request->code)->first();
+            $unit = Unit::where('instructor', $request->id)->where('code', $request->code)->first();
             if (empty($unit)) {
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
             }
 
-            $timer = Timer::where("instructor", $request->c)->first();
+            $timer = DB::table('start_stop')->where("instructor", $request->c)->first();
             if (empty($timer) || $timer->stopped_at != null) {
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
 
             $user = Auth::user();
+            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             Attendance::insert([
                 'id' => Auth::id(),
                 'role' => $user->role, 
@@ -131,7 +135,7 @@ class AttendanceController extends Controller
                 "sender" => Auth::id(),
             ]);
 
-            return view('attendance');
+            return redirect('/attendance');
         }
         return view('login');
     }
@@ -143,7 +147,7 @@ class AttendanceController extends Controller
         if (Auth::check()) {
             $id = Auth::id();
             $validator = Validator::make($request->all(), [
-                'id' => 'required|same:'.$id,
+                'id' => 'required',
                 'code' => 'required',
             ]);
            
@@ -151,12 +155,12 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'Mismatch in required field(s)']);
             }
 
-            $unit = Unit::where('instructor', $id)->where('code', $request->code)->first();
+            $unit = Unit::where('instructor', $request->id)->where('code', $request->code)->first();
             if (empty($unit)) {
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
             }
 
-            $timer = Timer::where('instructor', $id)
+            $timer = DB::table('start_stop')->where('instructor', $id)
                             ->where("unit_id", $unit->id)
                             ->where("stopped_at", null)
                             ->first();
@@ -166,9 +170,10 @@ class AttendanceController extends Controller
             }
 
             $now =date('Y-m-d H:i:s');
-            $timer->update(['stopped_at', $now]);
+            $timer->update(['stopped_at' => $now]);
 
             $user = Auth::user();
+            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
                 'id' => $id, 
                 'role' => $user->role,
@@ -178,12 +183,12 @@ class AttendanceController extends Controller
                 'stop_time'=> $now,
             ];
 
+            $unit = [];
             if ($user->role === "instructor") {
-                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);;
-                $data['units'] = $units;
+                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
              }
 
-            return view('attendance', ["account" => $data]);
+            return redirect('/attendance')->with(["account" => $data, "units" => $units]);
         }
         return view('login');
     }

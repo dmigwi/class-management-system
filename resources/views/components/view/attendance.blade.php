@@ -7,26 +7,6 @@
     $role = $account->role;
     $userId = $account->id;
     $courses = $units ?? [];
-        // (object)[
-        //         "unit" => "Introduction to Computer Programming",
-        //         "code" => "CSE-142-2022/2023",
-        //         ],
-        // (object)[
-        //         "unit" => "Introduction to Computer Systems",
-        //         "code" => "CSE-204-2022/2023",
-        //         ],
-        // (object)[
-        //         "unit" => "Advanced Programming Concepts",
-        //         "code" => "CSE-320-2022/2023",
-        //         ],
-        // (object)[
-        //         "unit" => "Artificial Intelligence",
-        //         "code" => "CSE-320-2022/2023",
-        //         ],
-        // (object)[
-        //         "unit" => "Calculus 1",
-        //         "code" => "CSE-123-2022/2023",
-        //         ]];
 @endphp
 
 <div class="py-16 h-full">
@@ -37,29 +17,29 @@
                 <span class="flex items-center justify-between space-x-2">
                     <div class="inline-block relative w-full">
                         @if (!$isAttendanceOpen)
-                            <form id="start-form" action="{{ route('start.attendance') }}" method="POST" style="display: none;">
+                            <form type="hidden" id="start-form" action="{{ route('start.attendance') }}" method="POST">
                         @else 
-                            <form id="stop-form" action="{{ route('end.attendance') }}" method="POST" style="display: none;">
+                            <form type="hidden" id="stop-form" action="{{ route('end.attendance') }}" method="POST">
                         @endif
                             @csrf
-                            <input name="id" value="{{$userId}}" style="display: none;">
-                            <select  name="code" class="block w-full bg-white border border-gray-400 hover:border-gray-500
-                                px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                                @forelse ($courses as $course)
-                                    <option value="{{$course->code}}">"{{$course->unit}}"</option>
-                                @empty
-                                    <option>---No courses yet available---</option>
-                                @endforelse
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                                </svg>
-                            </div>
+                            <input type="hidden" id="sender-id" name="id" value="{{$userId}}">
+                            <input type="hidden" id="course-code" name="code" value="">
                         </form>
+                        <select id="select-cours" name="code" class="block w-full bg-white border border-gray-400 hover:border-gray-500
+                            px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                            onchange="onSelectChange();">
+                            <option value="">--Select a Unit---</option>
+                            @forelse ($courses as $course)
+                                <option value="{{$course->code}}" @checked($course->code === $unitSelected)>
+                                    {{$course->name}}
+                                </option>
+                            @empty
+                                <option value="" @checked(true)>--No Units Available---</option>
+                            @endforelse
+                        </select>
                     </div>
-                    <div class="flex items-center text-xl">
-                        @if (!is_null($courses))
+                    <div class="flex items-center text-md">
+                        @if (count($courses) > 0)
                             @if (!$isAttendanceOpen)
                                 <a href="{{ route('start.attendance') }}" onclick="event.preventDefault(); document.getElementById('start-form').submit();">
                             @else 
@@ -85,7 +65,7 @@
                         <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
                     @else
                         <h2 class="flex items-center justify-center text-xl font-semibold text-light-blue dark:text-white">
-                            @if (!is_null($courses))
+                            @if (count($courses) > 0)
                                 <span>Class attendance sign in is not yet open!</span>
                             @else
                                 <span>No classes allocated to you yet!</span>
@@ -136,3 +116,10 @@
       </div>
   </div>
 </div>
+
+<script>
+    function onSelectChange() {
+        var e = document.getElementById("select-cours");
+        document.getElementById("course-code").value = e.options[e.selectedIndex].value;
+    }
+</script>

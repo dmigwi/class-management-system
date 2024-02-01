@@ -45,7 +45,7 @@
                         class="focus:outline-none block w-full rounded-md border border-gray-200 dark:border-gray-600 bg-transparent px-4 py-3 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-cyan-300"
                         type="password" name="password" id="password" autocomplete="current-password" required />
                     <a class="-mr-2 p-2 ">
-                        @if ($errors)
+                        @if ($errors->first("status"))
                             <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
                         @endif
                     </a>
