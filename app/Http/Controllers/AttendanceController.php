@@ -87,7 +87,7 @@ class AttendanceController extends Controller
                 $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
              }
 
-             return redirect('/attendance')->with(["account" => $data, "units" => $units]);
+            return redirect('/attendance')->with("account", $data)->with("units", $units);
         }
         return view('login');
     }
@@ -124,18 +124,22 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
 
+            Attendance::insert([
+                "unit_id" => $timer->id,
+                "sender" => $id,
+            ]);
+
             $user = Auth::user();
             $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            Attendance::insert([
-                'id' => Auth::id(),
+            $data = (object)[
+                'id' => $id,
                 'role' => $user->role, 
                 'name' => $name, 
                 'page' => "Attendance",
-                "unit_id" => $timer->id,
-                "sender" => Auth::id(),
-            ]);
+                'status' => "success", 
+            ];
 
-            return redirect('/attendance');
+            return redirect('/attendance')->with("account", $data);
         }
         return view('login');
     }
@@ -188,7 +192,7 @@ class AttendanceController extends Controller
                 $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
              }
 
-            return redirect('/attendance')->with(["account" => $data, "units" => $units]);
+            return redirect('/attendance')->with("account", $data)->with("units", $units);
         }
         return view('login');
     }

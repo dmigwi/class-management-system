@@ -1,12 +1,13 @@
 @php
-    $unitSelected = $account->code ?? '';
-    $timerId = $account->timer_id ?? '';
-    $startTime = $account->start_time ?? '';
-    $isAttendanceOpen = $account->isopen ?? false;
-    $signer = $account->sender ?? null;
+    $account = session('account') ?? $account;
+    $units = session('units') ?? $units;
+    $unitSelected = $account->code ?? null;
+    $timerId = $account->timer_id ?? null;
+    $isAttendanceOpen = !is_null($timerId);
     $role = $account->role;
     $userId = $account->id;
     $courses = $units ?? [];
+    $status = $account->status;
 @endphp
 
 <div class="py-16 h-full">
@@ -23,11 +24,11 @@
                         @endif
                             @csrf
                             <input type="hidden" id="sender-id" name="id" value="{{$userId}}">
-                            <input type="hidden" id="course-code" name="code" value="">
+                            <input type="hidden" id="course-code" name="code" value="{{$unitSelected}}">
                         </form>
                         <select id="select-cours" name="code" class="block w-full bg-white border border-gray-400 hover:border-gray-500
                             px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                            onchange="onSelectChange();">
+                            onchange="onSelectChange();" @disabled($isAttendanceOpen)>
                             <option value="">--Select a Unit---</option>
                             @forelse ($courses as $course)
                                 <option value="{{$course->code}}" @checked($course->code === $unitSelected)>
@@ -58,7 +59,7 @@
                 </span>
                 @if ($isAttendanceOpen)
                     <div class="visible-print text-center">
-                        {!! QrCode::size(580)->generate(url()->current().'?c='.$unitSelected); !!}
+                        {!! QrCode::size(580)->generate(route('sign.attendance').'?c='.$timerId); !!}
                     </div>
                 @else
                     @if ($errors->first("status"))
@@ -77,13 +78,13 @@
                 <dialog id="attendance" class="h-fit w-11/12 md:w-1/2 p-5 bg-white border-2 border-gray-200 rounded-md" open>
                     <div class="flex w-full h-auto justify-center items-center">
                         <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold text-light-blue">
-                            @if ($errors->first("status"))
-                                <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
+                            @if ($status === "success")
+                                <span class="text-3xl text-green-500">Congratulations. You are signed in!!!</span>
                             @else
-                                @if(is_null($signer))
-                                    <span class="text-3xl text-gray-500">No class to sign in yet!</span>
+                                @if ($errors->first("status"))
+                                    <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
                                 @else
-                                    <span class="text-3xl text-green-500">Congratulations. You are signed in!!!</span>
+                                    <span class="text-3xl text-gray-500">No class to sign in yet!</span>
                                 @endif
                             @endif
                         </div>
