@@ -43,9 +43,9 @@
                     </div>
                     <input
                         class="focus:outline-none block w-full rounded-md border border-gray-200 dark:border-gray-600 bg-transparent px-4 py-3 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-cyan-300"
-                        type="password" name="password" id="password" autocomplete="current-password" required />
+                        type="password" name="password" id="password" autocomplete="password" required />
                     <a class="-mr-2 p-2 ">
-                        @if ($errors->first("status"))
+                        @if (!is_null($errors ?? null) && $errors->first("status"))
                             <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
                         @endif
                     </a>
@@ -58,7 +58,7 @@
                         </div>
                         <input
                             class="focus:outline-none block w-full rounded-md border border-gray-200 dark:border-gray-600 bg-transparent px-4 py-3 text-gray-600 transition duration-300 invalid:ring-2 invalid:ring-red-400 focus:ring-2 focus:ring-cyan-300"
-                            type="password" name="password_confirmation" id="password_confirmation" required />
+                            type="password" name="password_confirmation" id="password_confirmation" autocomplete="password" required />
                     </div>
                 @endif
                 

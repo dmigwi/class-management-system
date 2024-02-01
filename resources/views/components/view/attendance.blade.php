@@ -7,7 +7,7 @@
     $role = $account->role;
     $userId = $account->id;
     $courses = $units ?? [];
-    $status = $account->status;
+    $status = $account->status ?? '';
 @endphp
 
 <div class="py-16 h-full">
@@ -62,7 +62,7 @@
                         {!! QrCode::size(580)->generate(route('sign.attendance').'?c='.$timerId); !!}
                     </div>
                 @else
-                    @if ($errors->first("status"))
+                     @if (!is_null($errors ?? null) && $errors->first("status"))
                         <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
                     @else
                         <h2 class="flex items-center justify-center text-xl font-semibold text-light-blue dark:text-white">
@@ -81,7 +81,7 @@
                             @if ($status === "success")
                                 <span class="text-3xl text-green-500">Congratulations. You are signed in!!!</span>
                             @else
-                                @if ($errors->first("status"))
+                                 @if (!is_null($errors ?? null) && $errors->first("status"))
                                     <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
                                 @else
                                     <span class="text-3xl text-gray-500">No class to sign in yet!</span>

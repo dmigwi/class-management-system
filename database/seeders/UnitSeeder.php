@@ -43,6 +43,7 @@ class UnitSeeder extends Seeder
         DB::table('units')->insert([
             "id" => 4,
             "name" => "Discrete Structures",
+            "instructor" => 4,
             "code" => "CSE-236",
             "semester" => "2",
             "year" => "2023/2024",

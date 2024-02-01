@@ -26,7 +26,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('/passwordreset', [AuthController::class, 'passwordreset'])->name('password.reset');
     Route::post('/startattendance', [AttendanceController::class, 'store'])->name('start.attendance');
     Route::post('/endattendance', [AttendanceController::class, 'update'])->name('end.attendance');
+    Route::get('/setattendance', [AttendanceController::class, 'attendance'])->name('set.attendance');
 });
-
-// Once signed into to their accounts users can be all to sign the attendance for the specified class.
-Route::get('/signattendance', [AttendanceController::class, 'edit'])->middleware('guest')->name('sign.attendance');

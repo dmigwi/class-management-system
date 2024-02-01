@@ -27,7 +27,7 @@ class AttendanceController extends Controller
                 'page' => "Attendance",
             ];
 
-            $unit = [];
+            $units = [];
             if ($user->role === "instructor") {
                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
             }
@@ -82,7 +82,7 @@ class AttendanceController extends Controller
                 'timer_id' => $timer,
             ];
 
-            $unit = [];
+            $units = [];
             if ($user->role === "instructor") {
                 $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
              }
@@ -104,30 +104,40 @@ class AttendanceController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id) {
+        //
+    }
+
+    /**
+     * Handles the attendance signing functionality
+     */
+    public function attendance(Request $request) {
         if (Auth::check()) {
             $id = Auth::id();
-            $validator = Validator::make($request->all(), [
-                'c' => 'required',
-            ]);
+            $validator = Validator::make($request->all(), ['c' => 'required']);
            
             if ($validator->fails()) {
                 return back()->withErrors(['status' => 'Missing required field']);
             }
 
-            $unit = Unit::where('instructor', $request->id)->where('code', $request->code)->first();
-            if (empty($unit)) {
-                return back()->withErrors(['status' => 'You are not allocated this unit.']);
-            }
-
-            $timer = DB::table('start_stop')->where("instructor", $request->c)->first();
+            $timer = DB::table('start_stop')->where("id", $request->c)->first();
             if (empty($timer) || $timer->stopped_at != null) {
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
 
-            Attendance::insert([
+            $unitAssignment = DB::table('user_unit')->where('user_id', $id)
+                    ->where('unit_id', $timer->unit_id)->first();
+            if (empty($unitAssignment)) {
+                return back()->withErrors(['status' => 'You are not allocated this unit.']);
+            }
+
+            $id = Attendance::insertGetId([
                 "unit_id" => $timer->id,
                 "sender" => $id,
             ]);
+
+            if ($id === 0) {
+                return back()->withErrors(['status' => 'signing attendance failed']);
+            }
 
             $user = Auth::user();
             $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
@@ -187,7 +197,7 @@ class AttendanceController extends Controller
                 'stop_time'=> $now,
             ];
 
-            $unit = [];
+            $units = [];
             if ($user->role === "instructor") {
                 $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
              }
