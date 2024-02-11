@@ -27,7 +27,7 @@ Route::group(['middleware' => ['web']], function () {
         ->name('attendance');
     });
 
-Route::group(['middleware' => ['auth.session', 'guest']], function () {
+Route::group(['middleware' => ['guest']], function () {
     // Once signed into to their accounts users sign the attendance for the specified class.
     Route::get('/signattendance/{id}', [AttendanceController::class, 'attendance'])
         ->name('sign.attendance');

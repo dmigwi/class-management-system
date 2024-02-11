@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Controllers\AttendanceController;
 use Spatie\Url\Url;
 
-use Illuminate\Support\Facades\Log;
-
 class RedirectIfAuthenticated
 {
     /**
@@ -23,19 +21,14 @@ class RedirectIfAuthenticated
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         $guards = empty($guards) ? [null] : $guards;
-        $previousURL = Url::fromString($request->session()->previousUrl());
-        $currentURL = Url::fromString($request->url());
-
-        Log::info("Previous URL = ".$previousURL);
-        Log::info("Current URL = ".$currentURL);
+        $previousURL = Url::fromString($request->session()->previousUrl() ?? '');
+        $currentURL = Url::fromString($request->url() ?? '');
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 if ($previousURL->getSegment(1) == 'signattendance'){
-                    Log::info("Param c=".$previousURL->getSegment(2) ?? -1);
                     return AttendanceController::attendance($previousURL->getSegment(2) ?? -1);
                 } elseif ($currentURL->getSegment(1) == 'signattendance'){
-                    Log::info("Param c=".$currentURL->getSegment(2) ?? -1);
                     return AttendanceController::attendance($currentURL->getSegment(2) ?? -1);
                 } 
                 return redirect(RouteServiceProvider::HOME);  
