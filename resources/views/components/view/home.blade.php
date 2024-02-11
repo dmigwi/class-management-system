@@ -356,7 +356,7 @@
 <script src="https://preline.co/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
 <script src="https://preline.co/assets/vendor/lodash/lodash.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="/js/charts.js"></script>
+<script src="{{url('/js/charts.js')}}"></script>
 
 <script>
     flatpickr("#from-datepicker", {});

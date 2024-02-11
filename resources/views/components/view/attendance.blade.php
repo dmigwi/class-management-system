@@ -59,7 +59,7 @@
                 </span>
                 @if ($isAttendanceOpen)
                     <div class="visible-print text-center">
-                        {!! QrCode::size(580)->generate(route('sign.attendance').'?c='.$timerId); !!}
+                        {!! QrCode::size(580)->generate(route('sign.attendance').'/'.$timerId); !!}
                     </div>
                 @else
                      @if (!is_null($errors ?? null) && $errors->first("status"))
@@ -77,16 +77,21 @@
             @else 
                 <dialog id="attendance" class="h-fit w-11/12 md:w-1/2 p-5 bg-white border-2 border-gray-200 rounded-md" open>
                     <div class="flex w-full h-auto justify-center items-center">
-                        <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold text-light-blue">
-                            @if ($status === "success")
-                                <span class="text-3xl text-green-500">Congratulations. You are signed in!!!</span>
-                            @else
-                                 @if (!is_null($errors ?? null) && $errors->first("status"))
-                                    <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
-                                @else
-                                    <span class="text-3xl text-gray-500">No class to sign in yet!</span>
-                                @endif
-                            @endif
+                        <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold">
+                            @switch($status)
+                                @case("success")
+                                    <span class="text-3xl text-green-500">Congratulations! You are signed in.</span>
+                                    @break
+                                @case('already-exists')
+                                    <span class="text-3xl text-yellow-500">You are already signed in!</span>
+                                    @break
+                                @default
+                                    @if (!is_null($errors ?? null) && $errors->first("status"))
+                                        <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
+                                    @else
+                                        <span class="text-3xl text-gray-500">No class to sign in yet!</span>
+                                    @endif
+                            @endswitch
                         </div>
                         <div onclick="document.getElementById('attendance').close();" class="flex w-1/12 h-auto justify-center cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>

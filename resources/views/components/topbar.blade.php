@@ -16,7 +16,7 @@
         </button>
     </div>
   @endauth
-  <img src="images/cms.png" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
+  <img src="{{url('images/cms.png')}}" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
 
     @auth
     <div class="relative space-x-4 z-20 flex justify-end h-full px-3 w-full" onclick="accountDropdown()">

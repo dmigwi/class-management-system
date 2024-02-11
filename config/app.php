@@ -4,9 +4,6 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
-
-    'log' => env('APP_LOG', 'daily'),
-
     /*
     |--------------------------------------------------------------------------
     | Application Name

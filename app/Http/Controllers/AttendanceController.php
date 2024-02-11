@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\Timer;
 use App\Models\Attendance;
+use \Illuminate\Database\QueryException;
+
+use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
@@ -38,10 +41,10 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new attendance if the student is already authenticated.
      */
-    public function create() { 
-       
+    public function create(Request $request, int $timer_id) { 
+       return $this->attendance($timer_id);
     }
 
     /**
@@ -111,6 +114,7 @@ class AttendanceController extends Controller
      * Handles the attendance signing functionality
      */
     public static function attendance(int $timer_id) {
+        Log::info("1st = ".$timer_id);
         if (Auth::check()) {
             $validator = Validator::make(['id' => $timer_id], ['id' => 'required']);
            
@@ -130,13 +134,18 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
             }
 
-            $id = Attendance::insertGetId([
-                "timer_id" => $timer->id,
-                "sender" => $id,
-            ]);
+            $success = "success";
+            try {
+                $attendanceID = Attendance::insertGetId([
+                    "timer_id" => $timer->id,
+                    "sender" => $id,
+                ]);
 
-            if ($id === 0) {
-                return back()->withErrors(['status' => 'signing attendance failed']);
+                if ($attendanceID === 0) {
+                    return back()->withErrors(['status' => 'signing attendance failed']);
+                }
+            } catch(QueryException $e){
+                $success = "already-exists";
             }
 
             $user = Auth::user();
@@ -146,7 +155,7 @@ class AttendanceController extends Controller
                 'role' => $user->role, 
                 'name' => $name, 
                 'page' => "Attendance",
-                'status' => "success", 
+                'status' => $success, 
             ];
 
             return redirect('/attendance')->with("account", $data);
