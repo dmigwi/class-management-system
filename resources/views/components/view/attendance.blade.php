@@ -2,8 +2,8 @@
     $account = session('account') ?? $account;
     $units = session('units') ?? $units;
     $unitSelected = $account->code ?? null;
-    $timerId = $account->timer_id ?? null;
-    $isAttendanceOpen = !is_null($timerId);
+    $timerId = $account->timer_id ?? -1;
+    $isAttendanceOpen = $timerId > 0;
     $role = $account->role;
     $userId = $account->id;
     $courses = $units ?? [];
@@ -31,11 +31,11 @@
                             onchange="onSelectChange();" @disabled($isAttendanceOpen)>
                             <option value="">--Select a Unit---</option>
                             @forelse ($courses as $course)
-                                <option value="{{$course->code}}" @checked($course->code === $unitSelected)>
+                                <option value="{{$course->code}}"  @selected($course->code === $unitSelected)>
                                     {{$course->name}}
                                 </option>
                             @empty
-                                <option value="" @checked(true)>--No Units Available---</option>
+                                <option value="" @selected(true)>--No Units Available---</option>
                             @endforelse
                         </select>
                     </div>
@@ -59,7 +59,10 @@
                 </span>
                 @if ($isAttendanceOpen)
                     <div class="visible-print text-center">
-                        {!! QrCode::size(580)->generate(route('sign.attendance').'/'.$timerId); !!}
+                        {!! QrCode::size(560)->generate(route('sign.attendance', $timerId)); !!}
+                    </div>
+                    <div class="text-xl text-light-blue font-normal md:font-bold italic text-center">
+                        {{route('sign.attendance', $timerId)}}
                     </div>
                 @else
                      @if (!is_null($errors ?? null) && $errors->first("status"))

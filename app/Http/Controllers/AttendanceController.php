@@ -11,7 +11,7 @@ use App\Models\Timer;
 use App\Models\Attendance;
 use \Illuminate\Database\QueryException;
 
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
 {
@@ -33,6 +33,20 @@ class AttendanceController extends Controller
             $units = [];
             if ($user->role === "instructor") {
                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
+
+               // Prevents running timers for more than 1 unit per instructor.
+               $timer_id = DB::table('start_stop')->select('id', 'unit_id')
+                                    ->where("instructor", Auth::id())
+                                    ->where("stopped_at", null)->first();
+
+                if (!is_null($timer_id)) {
+                    $data->timer_id = $timer_id->id;
+
+                   $openUnit = Unit::where('instructor', Auth::id())
+                                ->where("id", $timer_id->unit_id)
+                                -> select('code')->first();
+                    $data->code = $openUnit->code;
+                }
             }
 
            return view('index',  ["account" => $data, "units" => $units]);
@@ -114,7 +128,6 @@ class AttendanceController extends Controller
      * Handles the attendance signing functionality
      */
     public static function attendance(int $timer_id) {
-        Log::info("1st = ".$timer_id);
         if (Auth::check()) {
             $validator = Validator::make(['id' => $timer_id], ['id' => 'required']);
            
@@ -193,7 +206,7 @@ class AttendanceController extends Controller
             }
 
             $now =date('Y-m-d H:i:s');
-            $timer->update(['stopped_at' => $now]);
+            DB::table('start_stop')->where('id', $timer->id)->update(['stopped_at' => $now]);
 
             $user = Auth::user();
             $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;

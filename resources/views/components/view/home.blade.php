@@ -93,11 +93,11 @@
                 <select class="focus:outline-none bg-inherit mx-1" name="class" id="class">
                     <option value="">--Select a Unit---</option>
                     @forelse ($courses as $course)
-                        <option value="{{$course->code}}" @checked($course->code === $selectedCourse->code ?? "N")>
+                        <option value="{{$course->code}}" @selected($course->code === $selectedCourse->code ?? "N")>
                             {{$course->unit}}
                         </option>
                     @empty
-                        <option value="" @checked(true)>--No Units Available---</option>
+                        <option value="" @selected(true)>--No Units Available---</option>
                     @endforelse
                 </select>
             </div>
