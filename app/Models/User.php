@@ -47,6 +47,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'password' => 'hashed',
+        'is_confirm_password' => 'boolean',
     ];
 
     public function units(){

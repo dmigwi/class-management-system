@@ -19,14 +19,14 @@ use App\Http\Controllers\AttendanceController;
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/chat', [ChatController::class, 'index'])->name('chat');
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
-});
-
-// Route::group(['middleware' => ['auth', 'guest']], function () {
-// });
-// Once signed into to their accounts users sign the attendance for the specified class.
-Route::get('/signattendance', [AttendanceController::class, 'attendance'])->middleware('guest')->name('sign.attendance');
-
-
+    Route::get('/chat', [ChatController::class, 'index'])
+        ->name('chat');
+    Route::get('/dashboard', [HomeController::class, 'index'])
+        ->name('dashboard');
+    Route::get('/attendance', [AttendanceController::class, 'index'])
+        ->name('attendance');
+    });
+    // Once signed into to their accounts users sign the attendance for the specified class.
+    Route::get('/signattendance', [AttendanceController::class, 'attendance'])
+        ->middleware('guest')
+        ->name('sign.attendance');

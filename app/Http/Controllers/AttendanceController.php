@@ -110,20 +110,20 @@ class AttendanceController extends Controller
     /**
      * Handles the attendance signing functionality
      */
-    public function attendance(Request $request) {
+    public static function attendance(int $timer_id) {
         if (Auth::check()) {
-            $id = Auth::id();
-            $validator = Validator::make($request->all(), ['c' => 'required']);
+            $validator = Validator::make(['id' => $timer_id], ['id' => 'required']);
            
             if ($validator->fails()) {
                 return back()->withErrors(['status' => 'Missing required field']);
             }
 
-            $timer = DB::table('start_stop')->where("id", $request->c)->first();
+            $timer = DB::table('start_stop')->where("id", $timer_id)->first();
             if (empty($timer) || $timer->stopped_at != null) {
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
 
+            $id = Auth::id();
             $unitAssignment = DB::table('user_unit')->where('user_id', $id)
                     ->where('unit_id', $timer->unit_id)->first();
             if (empty($unitAssignment)) {
@@ -131,7 +131,7 @@ class AttendanceController extends Controller
             }
 
             $id = Attendance::insertGetId([
-                "unit_id" => $timer->id,
+                "timer_id" => $timer->id,
                 "sender" => $id,
             ]);
 
