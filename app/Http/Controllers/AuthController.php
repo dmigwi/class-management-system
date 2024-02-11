@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -46,7 +46,11 @@ class AuthController extends Controller
         }
 
        if (Auth::attempt($validator->validated())) {
-            if ( Auth::user()->is_confirm_password) {
+            if (Auth::user()->is_confirm_password) {
+                // Invalidate the current session
+                Auth::logout();
+                $request->session()->invalidate();
+                
                 // Trigger password reset using the same form.
                 return back()->withInput($request->only('id'));
             }
@@ -54,7 +58,7 @@ class AuthController extends Controller
             $request->session()->regenerateToken();
             return redirect()->intended('dashboard');
        }
-        
+
         // User authentication failed.
         return back()->withErrors([
             'status' => 'Credentials provided do not match our records']);

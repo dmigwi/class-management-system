@@ -93,12 +93,12 @@
                             <div class="flex items-end text-xs font-bold">13</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
-                            <div class="flex items-center text-xs">
-                                <button type="submit"
+                            <a href="{{url('attendance')}}" class="flex items-center text-xs">
+                                <button type="text"
                                     class="flex items-center justify-center py-2 text-grays-500 border-1 rounded-lg btn-primary w-32">
                                     <span class="">Follow Up</span>
                                 </button>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

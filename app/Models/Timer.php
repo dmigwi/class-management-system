@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Timer extends Model
 {
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'timer_id',
-        'created_at',
+        'unit_id',
+        'started_at',
+        'stopped_at',
     ];
 }

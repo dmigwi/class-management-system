@@ -14,50 +14,44 @@ class UserUnitSeeder extends Seeder
     public function run(): void {
         DB::table('user_unit')->insert([
             "id" => 1,
-            "unit_id" => 5,
             "user_id" => 3,
+            "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
-            "updated_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('user_unit')->insert([
             "id" => 2,
-            "unit_id" => 5,
             "user_id" => 5,
+            "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
-            "updated_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('user_unit')->insert([
             "id" => 3,
-            "unit_id" => 5,
             "user_id" => 6,
+            "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
-            "updated_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('user_unit')->insert([
             "id" => 4,
-            "unit_id" => 5,
             "user_id" => 7,
+            "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
-            "updated_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('user_unit')->insert([
             "id" => 5,
-            "unit_id" => 5,
             "user_id" => 8,
+            "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
-            "updated_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('user_unit')->insert([
             "id" => 6,
-            "unit_id" => 5,
             "user_id" => 9,
+            "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
-            "updated_at" => "2024-01-30 14:17:24",
         ]);
     }
 }
