@@ -121,19 +121,20 @@ $users = [(object)[
       ]];
 @endphp
 <div id="add-new-user" class="w-full ">
-    <div
-        class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
+    <div class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         <div class="flex items-center justify-between">
             <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Of Users</p>
             <div class="relative flex items-center justify-end w-full pb-4 pr-20 mx-auto text-gray-600">
-                <input
-                    class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 w-full rounded-lg text-sm focus:outline-none"
+                <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 w-full rounded-lg text-sm focus:outline-none"
                     type="search" name="search" placeholder="Search">
                 <svg class="absolute flex items-center justify-end mr-2" xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor" viewBox="0 0 56.966 56.966" width="17px" height="17px">
                     <path
-                        d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                        d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23 
+                        s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92
+                        c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z
+                        M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
                 </svg>
             </div>
         </div>
@@ -142,22 +143,17 @@ $users = [(object)[
                 <div class="p-1.5 min-w-full inline-block align-middle">
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                         <thead>
-                            <tr class="bg-gray-200">
-                                <th class="px-4 py-1 text-start  text-xs font-medium text-gray-500 uppercase">Name
-                                </th>
-                                <th class="px-4 py-1 text-start text-xs font-medium text-gray-500 uppercase">Role
-                                </th>
-                                <th class="px-4 py-1 text-start text-xs font-medium text-gray-500 uppercase">Email
-                                </th>
-                                <th class="px-4 py-1 text-center text-xs font-medium text-gray-500 uppercase">Actions
-                                </th>
+                            <tr class="bg-gray-200 text-xs font-medium text-gray-500 uppercase">
+                                <th class="px-4 py-1 text-start">Name</th>
+                                <th class="px-4 py-1 text-start">Role</th>
+                                <th class="px-4 py-1 text-start">Email</th>
+                                <th class="px-4 py-1 text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($users as $user)
+                        @forelse ($users as $user)
                             <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                <td
-                                    class="flex items-center justify-start space-x-1 px-4 py-1 text-sm font-medium text-gray-800">
+                                <td class="flex items-center justify-start space-x-1 px-4 py-1 text-sm font-medium text-gray-800">
                                     <span>{{$user->title}}</span>
                                     <span>{{$user->firstname}}</span>
                                     <span>{{$user->middlename}}</span>
@@ -166,8 +162,9 @@ $users = [(object)[
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->role}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->email}}</td>
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
-                                    <dialog id="user-{{$user->id}}" class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
-                                        <x-show.user :data="$user"/>
+                                    <dialog id="user-{{$user->id}}"
+                                        class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
+                                        <x-show.user :data="$user" />
                                     </dialog>
                                     <button type="button" onclick="document.getElementById('user-{{$user->id}}').showModal()"
                                         class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
@@ -197,10 +194,10 @@ $users = [(object)[
                                     </button>
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <p class="px-4 py-1 text-sm text-gray-800">No data found! Please modify your search
                                 parameters</p>
-                            @endforelse
+                        @endforelse
                         </tbody>
                     </table>
 
@@ -208,38 +205,38 @@ $users = [(object)[
                         <ul class="flex bg-transparent">
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                      text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">
+                                        text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">
                                     <span
                                         class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                             viewBox="0 0 520 520" fill="currentColor">
                                             <path d="M342 477 134 272c-6-6-6-16 0-22L342 45c6-6 16-6 22 0l22 22c6 6 6 16 0 22L221 250c-6 6-6 
-                            16 0 22l163 161c6 6 6 16 0 22l-22 22c-5 5-14 5-20 0z" />
+                                                        16 0 22l163 161c6 6 6 16 0 22l-22 22c-5 5-14 5-20 0z" />
                                         </svg>
                                     </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-blue-light p-0 text-sm 
-                          text-white shadow-md shadow-pink-500/20 transition duration-150 ease-in-out" href="#">1</a>
+                                        text-white shadow-md shadow-pink-500/20 transition duration-150 ease-in-out" href="#">1</a>
                             </li>
                             <li>
                                 <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                          text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
+                                        text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
                             </li>
                             <li>
                                 <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                            text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
+                                        text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
                             </li>
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                        transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
+                                        transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
                                     <span
                                         class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                             viewBox="0 0 520 520" fill="currentColor">
                                             <path d="m179 44 207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 
-                            6-16 0-22L136 88c-6-6-6-16 0-22l22-22c6-5 15-5 21 0z" />
+                                                    6-16 0-22L136 88c-6-6-6-16 0-22l22-22c6-5 15-5 21 0z" />
                                         </svg>
                                     </span>
                                 </a>

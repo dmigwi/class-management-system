@@ -4,7 +4,7 @@
 @endphp
 
 <div class="z-40 flex items-center justify-between w-full h-16 py-10">
-@auth
+    @auth
     <div class="block ml-6 lg:hidden">
         <button class="flex items-center p-2 text-gray-500 bg-white rounded-full shadow text-md">
             <svg width="20" height="20" class="text-gray-400" fill="currentColor" viewBox="0 0 1792 1792"
@@ -15,17 +15,17 @@
             </svg>
         </button>
     </div>
-  @endauth
-  <img src="{{url('images/cms.png')}}" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
+    @endauth
+    <img src="{{url('images/cms.png')}}" loading="lazy" class="ml-4 w-40" alt="Class Management System logo" />
 
     @auth
     <div class="relative space-x-4 z-20 flex justify-end h-full px-3 w-full" onclick="accountDropdown()">
         <button class="flex items-center justify-end text-black-500 dark:text-white text-md">
             <span class="pr-2">{{$name}}</span>
-            <span  @class([
-                'mx-auto object-cover rounded-full h-10 w-10 pl-2', 
-                'student-account' => ($role === "student"),
-                'lecturer-account' => ($role !== "student"),
+            <span @class([ 
+                    'mx-auto object-cover rounded-full h-10 w-10 pl-2',
+                    'lecturer-account' => ($role !== "student"),
+                    'student-account' => ($role === "student"),
                 ])></span>
             <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
                 xmlns="http://www.w3.org/2000/svg">
@@ -40,9 +40,10 @@
         ring-opacity-5 focus:outline-none h-fit" role="menu" aria-orientation="vertical"
             aria-labelledby="hs-dropdown-btn" tabindex="-1">
             <form id="logout-form" action="{{ route('log.out') }}" method="POST" style="display: none;">
-               @csrf
+                @csrf
             </form>
-            <a href="{{ route('log.out') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a href="{{ route('log.out') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <div class="text-gray-700 block px-4 py-0 text-sm w-full" id="menu-item-0">
                     <div class="flex sm:items-center justify-between py-2 w-fit">
                         <span class="relative flex items-center space-x-4"> Sign out </span>
