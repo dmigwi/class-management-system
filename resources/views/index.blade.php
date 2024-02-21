@@ -4,6 +4,8 @@
     <x-topbar :role="$account->role ?? null" :name="$account->name ?? null"/>
 @endsection
 @section("content")
-    <x-layout :account='$account ?? null' :units='$units ?? null'/>
+    @auth
+        <x-layout :account='$account ?? null' :units='$units ?? null'/>
+    @endauth
     <x-footer/>
 @endsection
