@@ -22,11 +22,13 @@ class AttendanceController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
+
+            // Admin should not have access to attendance page.
+            if ($user->role === "admin") {
+                return redirect('/dashboard');
+            }
+
             $data = (object)[
-                'id' => Auth::id(), 
-                'role' => $user->role, 
-                'name' => $name, 
                 'page' => "Attendance",
             ];
 

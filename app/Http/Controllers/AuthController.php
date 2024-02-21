@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Http\Controllers\HomeController;
 
 class AuthController extends Controller
 {
@@ -17,19 +18,7 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        if (Auth::check()) {
-            $user = Auth::user();
-            
-            $page = "Home";
-            if ($user->role == "admin") {
-                $page = 'Admin';
-            }
-
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            $data = (object)['id' =>  $user->id, 'role' => $user->role, 'name' => $name, 'page' => $page];
-            return view('index', ["account" => $data]);
-        }
-        return view('login');
+       return HomeController::index();
     }
 
     /**

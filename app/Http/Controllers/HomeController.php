@@ -20,8 +20,7 @@ class HomeController extends Controller
                 $page = 'Admin';
             }
 
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            $data = (object)['id' =>  $user->id, 'role' => $user->role, 'name' => $name, 'page' => $page];
+            $data = (object)['page' => $page];
             return view('index', ["account" => $data]);
         }
         return view('login');

@@ -19,7 +19,8 @@
                     </label>
                     <input name="name" id="name" type="text" size="55" placeholder="Computational Mathematics" 
                         class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight 
-                        focus:outline-none focus:bg-white" value="{{$unit->name ?? ''}}" required />
+                        focus:outline-none focus:bg-white" value="{{$unit->name ?? ''}}" 
+                        autocomplete="off" required />
                     <p class="text-gray-600 text-xs italic mb-2">Max characters allowed are 55</p>
                 </div>
                 <div class="w-fit px-3 mb-8 md:mb-0">

@@ -42,12 +42,12 @@ $user = $attributes->get('user')
                         <select id="title" name="title"
                             class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded 
                             leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option @checked(Str::lower($user->title ?? '')==="mr.") value="Mr.">Mr.</option>
-                            <option @checked(Str::lower($user->title ?? '')==="ms.") value="Ms.">Ms.</option>
-                            <option @checked(Str::lower($user->title ?? '')==="dr.") value="Dr.">Dr.</option>
-                            <option @checked(Str::lower($user->title ?? '')==="prof.") value="Prof.">Prof.</option>
-                            <option @checked(Str::lower($user->title ?? '')==="eng.") value="Eng.">Eng.</option>
-                            <option @checked(Str::lower($user->title ?? '')==="sir") value="Sir">Sir</option>
+                            <option @selected(Str::lower($user->title ?? '')==="mr.") value="Mr.">Mr.</option>
+                            <option @selected(Str::lower($user->title ?? '')==="ms.") value="Ms.">Ms.</option>
+                            <option @selected(Str::lower($user->title ?? '')==="dr.") value="Dr.">Dr.</option>
+                            <option @selected(Str::lower($user->title ?? '')==="prof.") value="Prof.">Prof.</option>
+                            <option @selected(Str::lower($user->title ?? '')==="eng.") value="Eng.">Eng.</option>
+                            <option @selected(Str::lower($user->title ?? '')==="sir") value="Sir">Sir</option>
                         </select>
                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -69,7 +69,7 @@ $user = $attributes->get('user')
                             leading-tight focus:outline-none focus:bg-white" required>
                 </div>
                 <div class="w-full md:w-1/4 px-3 mb-8 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="middle-name">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="middlename">
                         Middle Name
                     </label>
                     <input id="middlename" name="middlename" type="text" placeholder="Doe"
@@ -106,10 +106,10 @@ $user = $attributes->get('user')
                         <select id="role" name="role" 
                             class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 
                                 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option value="student" @checked(Str::lower($user->role ?? '')==="student")>Student</option>
-                            <option value="instructor" @checked(Str::lower($user->role ?? '')==="instructor")>Lecturer
+                            <option value="student" @selected(Str::lower($user->role ?? '')==="student")>Student</option>
+                            <option value="instructor" @selected(Str::lower($user->role ?? '')==="instructor")>Lecturer
                             </option>
-                            <option value="admin" @checked(Str::lower($user->role ?? '')==="admin")>Admin</option>
+                            <option value="admin" @selected(Str::lower($user->role ?? '')==="admin")>Admin</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -127,7 +127,7 @@ $user = $attributes->get('user')
                         Email
                     </label>
                     <input id="email" name="email" type="text" placeholder="jane.doe@gmail.com"
-                        value="{{$user->email ?? ''}}"
+                        value="{{$user->email ?? ''}}" autocomplete="off"
                         class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                             leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
@@ -135,31 +135,31 @@ $user = $attributes->get('user')
 
             <div class="flex flex-wrap -mx-3 mb-3">
                 <div class="w-fit px-3 mb-8 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="faculty">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Faculty
                     </label>
                     <div class="relative">
                         <select id="faculty" name="faculty" 
                             class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 
                                 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option @checked(Str::lower($user->faculty ?? '')==="business and international relations")
+                            <option @selected(Str::lower($user->faculty ?? '')==="business and international relations")
                                 value="Business And International Relations">
                                 Business And International Relations
                             </option>
-                            <option @checked(Str::lower($user->faculty ?? '')==="computer engineering, graphics design
+                            <option @selected(Str::lower($user->faculty ?? '')==="computer engineering, graphics design
                                 and architecture")
                                 value="Computer Engineering, Graphics Design And Architecture">
                                 Computer Engineering, Graphics Design And Architecture
                             </option>
-                            <option @checked(Str::lower($user->faculty ?? '')==="philology and journalism")
+                            <option @selected(Str::lower($user->faculty ?? '')==="philology and journalism")
                                 value="Philology And Journalism">
                                 Philology And Journalism
                             </option>
-                            <option @checked(Str::lower($user->faculty ?? '')==="polish and foreign languages")
+                            <option @selected(Str::lower($user->faculty ?? '')==="polish and foreign languages")
                                 value="Polish And Foreign Languages">
                                 Polish And Foreign Languages
                             </option>
-                            <option @checked(Str::lower($user->faculty ?? '')==="administration")
+                            <option @selected(Str::lower($user->faculty ?? '')==="administration")
                                 value="Administration">
                                 Administration
                             </option>
@@ -177,11 +177,11 @@ $user = $attributes->get('user')
                 </div>
 
                 <div class="w-fit px-3 mb-8 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Country Of Origin
                     </label>
                     <div class="relative">
-                        <select id="country" 
+                        <select id="country" autocomplete="country"
                             class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 
                                 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
                             <x-utils.country />
@@ -196,10 +196,10 @@ $user = $attributes->get('user')
                     </div>
                 </div>
                 <div class="w-full md:w-1/6 px-3 mb-8 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="phone-number">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="phone">
                         Phone Number
                     </label>
-                    <input id="phone" name="phone" type="text" placeholder="+48 726 902 210"
+                    <input id="phone" name="phone" type="text" placeholder="+48 726 902 210" autocomplete="phone"
                         value="{{$user->phone ?? ''}}" class="block w-full bg-gray-200 text-gray-700 border border-gray-200
                             rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                 </div>
@@ -207,7 +207,7 @@ $user = $attributes->get('user')
 
             <div class="flex flex-wrap -mx-3 mb-3">
                 <div class="w-full md:w-1/2 px-3 mb-8 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="unit">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Class/Training Course(s)
                     </label>
                     <div class="relative block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 

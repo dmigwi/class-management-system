@@ -1,6 +1,7 @@
 @php
-    $role = $attributes->get('role') ?? null;
-    $name = $attributes->get('name') ?? null;
+    $user = Auth::user();
+    $role = Str::lower($user->role);
+    $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
 @endphp
 
 <div class="z-40 flex items-center justify-between w-full h-16 py-10">

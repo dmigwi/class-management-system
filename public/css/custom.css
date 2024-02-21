@@ -122,9 +122,16 @@ body {
     background-color: #02b0e2;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:enabled {
     opacity: 0.5;
     transition: 0.3s;
+}
+
+.btn-primary:disabled,
+.btn-primary[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 .text-start {
