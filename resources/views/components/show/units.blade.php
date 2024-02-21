@@ -1,74 +1,5 @@
 @php
-$units = [(object)[
-        "id"=>"1",
-        "name"=>"Introduction to Computer Programming",
-        "code"=>"CSE 142",
-        "semester"=>"1",
-        "year"=>"2023/2024",
-      ],
-      (object)[
-        "id"=>"2",
-        "name"=>"Introduction to Computer Systems",
-        "code"=>"CSE 244",
-        "semester"=>"1",
-        "year"=>"2022/2023",
-      ],
-      (object)[
-        "id"=>"3",
-        "name"=>"Data Structures and Algorithms",
-        "code"=>"CSE 235",
-        "semester"=>"2",
-        "year"=>"2023/2024",
-      ],
-      (object)[
-        "id"=>"4",
-        "name"=>"Discrete Structures",
-        "code"=>"CSE 236",
-        "semester"=>"2",
-        "year"=>"2023/2024",
-      ],
-      (object)[
-        "id"=>"5",
-        "name"=>"Advanced Programming Concepts",
-        "code"=>"CSE 240",
-        "semester"=>"1",
-        "year"=>"2023/2024",
-      ],
-      (object)[
-        "id"=>"6",
-        "name"=>"Introduction to Computational Theory",
-        "code"=>"CSE 250",
-        "semester"=>"2",
-        "year"=>"2022/2023",
-      ],
-      (object)[
-        "id"=>"7",
-        "name"=>"Algorithm Design and Analysis",
-        "code"=>"CSE 312",
-        "semester"=>"1",
-        "year"=>"2023/2024",
-      ],
-      (object)[
-        "id"=>"8",
-        "name"=>"Systems Programming",
-        "code"=>"CSE 324",
-        "semester"=>"Summer",
-        "year"=>"2022/2023",
-      ],
-      (object)[
-        "id"=>"9",
-        "name"=>"Software Design",
-        "code"=>"CSE 340",
-        "semester"=>"1",
-        "year"=>"2023/2024",
-      ],
-      (object)[
-        "id"=>"10",
-        "name"=>"Ethics and Computers in Society",
-        "code"=>"CSE 404",
-        "semester"=>"Summer",
-        "year"=>"2023/2024",
-      ]];
+    $units = session('units') ?? $units;
 @endphp
 
 <div id="add-new-user" class="w-full ">
@@ -141,7 +72,9 @@ $units = [(object)[
                                 </td>
                             </tr>
                             @empty
-                                <p class="px-4 py-1 text-sm text-gray-800">No data found! Please modify your search query</p>
+                                <tr>
+                                    <td class="px-4 py-1 text-sm text-red-500">No data found! Please modify your search query</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -150,7 +83,7 @@ $units = [(object)[
                         <ul class="flex bg-transparent">
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                                        text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">
+                                        text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="{{$units->previousPageUrl()}}">
                                     <span class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                             viewBox="0 0 520 520" fill="currentColor">
@@ -160,21 +93,22 @@ $units = [(object)[
                                     </span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-blue-light p-0 text-sm 
-                                    text-white shadow-md shadow-pink-500/20 transition duration-150 ease-in-out" href="#">1</a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                                    text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                                    text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
-                            </li>
+
+                            @foreach ($units->getUrlRange(1, $units->lastPage()) as $pageURL)
+                                <li>
+                                   <a @class([
+                                        'font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm transition duration-150 ease-in-out',
+                                        'border border-blue-light text-gray-500 hover:bg-light-300' => !($loop->iteration === $units->currentPage()),
+                                        'bg-blue-light text-white shadow-md shadow-pink-500/20' => ($loop->iteration === $units->currentPage()),
+                                     ]) href="{{$pageURL}}">
+                                        {{$loop->iteration}}
+                                    </a>
+                                </li>
+                            @endforeach
+                            
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                                    transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
+                                    transition duration-150 ease-in-out hover:bg-light-300" href="{{$units->url($units->lastPage())}}" aria-label="Next">
                                     <span class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                             viewBox="0 0 520 520" fill="currentColor">
@@ -186,6 +120,7 @@ $units = [(object)[
                             </li>
                         </ul>
                     </nav>
+
                 </div>
             </div>
         </div>

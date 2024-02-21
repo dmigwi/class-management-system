@@ -5,7 +5,7 @@
 @endsection
 @section("content")
     @auth
-        <x-layout :account='$account ?? null' :units='$units ?? null'/>
+        <x-layout :account='$account ?? null' :users='$users ?? []' :units='$units ?? []'/>
     @endauth
     <x-footer/>
 @endsection

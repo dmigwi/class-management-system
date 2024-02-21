@@ -1,125 +1,7 @@
 @php
-$users = [(object)[
-        "id"=>"1",
-        "title"=>"Ms.",
-        "firstname"=>"Jane",
-        "middlename"=>"Doe",
-        "lastname"=>"Smith",
-        "role"=>"student",
-        "email"=>"jane.doe@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"U.K",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"2",
-        "title"=>"Dr.",
-        "firstname"=>"John",
-        "middlename"=>"Brown",
-        "lastname"=>"",
-        "role"=>"lecturer",
-        "email"=>"john.brown@gmail.com",
-        "faculty"=>"Languages",
-        "country"=>"U.S.A",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"3",
-        "title"=>"Mr.",
-        "firstname"=>"John",
-        "middlename"=>"Black",
-        "lastname"=>"Smith",
-        "role"=>"student",
-        "email"=>"john.black@gmail.com",
-        "faculty"=>"Tourism",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"4",
-        "title"=>"Prof.",
-        "firstname"=>"Jamie",
-        "middlename"=>"Smith",
-        "lastname"=>"Green",
-        "role"=>"lecturer",
-        "email"=>"jamie.green@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"Germany",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"5",
-        "title"=>"Sir.",
-        "firstname"=>"Edward",
-        "middlename"=>"Woodward",
-        "lastname"=>"King",
-        "role"=>"Lecturer",
-        "email"=>"edward.king@gmail.com",
-        "faculty"=>"Tourism",
-        "country"=>"Ireland",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"6",
-        "title"=>"Ms.",
-        "firstname"=>"Fantasia",
-        "middlename"=>"Jim",
-        "lastname"=>"Red",
-        "role"=>"student",
-        "email"=>"fantasia.red@gmail.com",
-        "faculty"=>"Languages",
-        "country"=>"Belarus",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"7",
-        "title"=>"Dr.",
-        "firstname"=>"Jan",
-        "middlename"=>"Kowalski",
-        "lastname"=>"",
-        "role"=>"Lecturer",
-        "email"=>"jan.kowalski@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"8",
-        "title"=>"Dr.",
-        "firstname"=>"Adam",
-        "middlename"=>"Selcut",
-        "lastname"=>"Cankurt",
-        "role"=>"student",
-        "email"=>"adam.cancurt@gmail.com",
-        "faculty"=>"Marketing",
-        "country"=>"Sweden",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"9",
-        "title"=>"Prof.",
-        "firstname"=>"Mary",
-        "middlename"=>"Jane",
-        "lastname"=>"Austins",
-        "role"=>"Lecturer",
-        "email"=>"mary.jane@gmail.com",
-        "faculty"=>"Architecture",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
-      ],
-      (object)[
-        "id"=>"10",
-        "title"=>"Mr.",
-        "firstname"=>"David",
-        "middlename"=>"Waweru",
-        "lastname"=>"Smith",
-        "role"=>"student",
-        "email"=>"david.waweru@gmail.com",
-        "faculty"=>"Engineering",
-        "country"=>"Poland",
-        "phone"=>"+48 456 789 234",
-      ]];
+    $users = session('users') ?? $users;
 @endphp
+
 <div id="add-new-user" class="w-full ">
     <div class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
@@ -195,44 +77,44 @@ $users = [(object)[
                                 </td>
                             </tr>
                         @empty
-                            <p class="px-4 py-1 text-sm text-gray-800">No data found! Please modify your search
-                                parameters</p>
+                            <tr>
+                                <td class="px-4 py-1 text-sm text-red-500">No data found! Please modify your search query</td>
+                            </tr>
                         @endforelse
                         </tbody>
                     </table>
 
-                    <nav class="flex items-center justify-center">
+                    <nav class="flex items-center justify-center pt-3">
                         <ul class="flex bg-transparent">
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                                        text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">
-                                    <span
-                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                                        text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="{{$users->previousPageUrl()}}">
+                                    <span class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                             viewBox="0 0 520 520" fill="currentColor">
                                             <path d="M342 477 134 272c-6-6-6-16 0-22L342 45c6-6 16-6 22 0l22 22c6 6 6 16 0 22L221 250c-6 6-6 
-                                                        16 0 22l163 161c6 6 6 16 0 22l-22 22c-5 5-14 5-20 0z" />
+                                                    16 0 22l163 161c6 6 6 16 0 22l-22 22c-5 5-14 5-20 0z" />
                                         </svg>
                                     </span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-blue-light p-0 text-sm 
-                                        text-white shadow-md shadow-pink-500/20 transition duration-150 ease-in-out" href="#">1</a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                                        text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">2</a>
-                            </li>
-                            <li>
-                                <a class="font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0 text-sm 
-                                        text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="#">3</a>
-                            </li>
+
+                            @foreach ($users->getUrlRange(1, $users->lastPage()) as $pageURL)
+                                <li>
+                                   <a @class([
+                                        'font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm transition duration-150 ease-in-out',
+                                        'border border-blue-light text-gray-500 hover:bg-light-300' => !($loop->iteration === $users->currentPage()),
+                                        'bg-blue-light text-white shadow-md shadow-pink-500/20' => ($loop->iteration === $users->currentPage()),
+                                     ]) href="{{$pageURL}}">
+                                        {{$loop->iteration}}
+                                    </a>
+                                </li>
+                            @endforeach
+                            
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                                        transition duration-150 ease-in-out hover:bg-light-300" href="#" aria-label="Next">
-                                    <span
-                                        class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                                    transition duration-150 ease-in-out hover:bg-light-300" href="{{$users->url($users->lastPage())}}" aria-label="Next">
+                                    <span class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                             viewBox="0 0 520 520" fill="currentColor">
                                             <path d="m179 44 207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 
@@ -243,6 +125,7 @@ $users = [(object)[
                             </li>
                         </ul>
                     </nav>
+
                 </div>
             </div>
         </div>

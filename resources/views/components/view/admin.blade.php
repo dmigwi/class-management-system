@@ -1,10 +1,22 @@
 <?php
-    $disableAddUser = false;
-    $disableListUsers = true;
-    $disableAddUnit = false;
-    $disableListUnits = false;
-?>
+    $account = session('account') ?? $account;
+    $selectedTab = $account->tab ?? 'list-units';
 
+    $disableAddUser = false;
+    $disableListUsers = $account->tab === 'list-users';
+    $disableAddUnit = false;
+    $disableListUnits = $account->tab === 'list-units';
+
+    $studentsCount = 34;
+    $staffCount = 13;
+    $unitsRegistered = 21;
+    $shortCourses = 10;
+    $issuesFixedThisWeek = 10;
+    $issuesPending = 13;
+
+    $users = session('users') ?? $users;
+    $units = session('units') ?? $units;
+?>
 <div class="flex flex-col w-full md:space-y-4 h-full">
     <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
         <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3 lg:grid-cols-3">
@@ -22,11 +34,11 @@
                         </span>
                         <div class="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
                             <p>Students Registered</p>
-                            <div class="flex items-end text-xs font-bold">34</div>
+                            <div class="flex items-end text-xs font-bold">{{$studentsCount}}</div>
                         </div>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Staff Registered</p>
-                            <div class="flex items-end text-xs font-bold">13</div>
+                            <div class="flex items-end text-xs font-bold">{{$staffCount}}</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
@@ -58,11 +70,11 @@
                         </span>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Classes Registered</p>
-                            <div class="flex items-end text-xs font-bold">21</div>
+                            <div class="flex items-end text-xs font-bold">{{$unitsRegistered}}</div>
                         </div>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Training Courses Registered</p>
-                            <div class="flex items-end text-xs font-bold">10</div>
+                            <div class="flex items-end text-xs font-bold">{{$shortCourses}}</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
@@ -94,11 +106,11 @@
                         </span>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Issues Responded to this Week</p>
-                            <div class="flex items-end text-xs font-bold">34</div>
+                            <div class="flex items-end text-xs font-bold">{{$issuesFixedThisWeek}}</div>
                         </div>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Issues in Progress</p>
-                            <div class="flex items-end text-xs font-bold">13</div>
+                            <div class="flex items-end text-xs font-bold">{{$issuesPending}}</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <a href="{{url('chat')}}" class="flex items-center text-xs">
@@ -118,13 +130,13 @@
                 <x-form.user />
             </span>
             <span id="list-users" @class(['tabs', 'hidden' => !$disableListUsers])>
-                <x-show.users />
+                <x-show.users :users='$users' />
             </span>
             <span id="add-unit" @class(['tabs', 'hidden' => !$disableAddUnit])>
                 <x-form.unit />
             </span>
             <span id="list-units" @class(['tabs', 'hidden' => !$disableListUnits])>
-                <x-show.units />
+                <x-show.units :units='$units' />
             </span>
         </div>
     </div>

@@ -95,7 +95,7 @@
 
     @switch($page)
         @case('admin')
-            <x-view.admin :account='$account' :units='$units' />
+            <x-view.admin :account='$account' :users='$users' :units='$units' />
         @break
         @case('chat')
             <x-view.chat :account='$account' :units='$units' />
