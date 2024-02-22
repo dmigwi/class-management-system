@@ -3,7 +3,7 @@
     $isAdmin = ($unit->name ?? '') === 'Administrator';
 @endphp
 
-<div class="modal flex flex-col bg-white rounded-md h-fit w-11/12 md:w-2/3">
+<div class="modal flex flex-col bg-white rounded-md h-fit w-11/12 md:w-5/6">
     <div class="flex w-full h-auto justify-center items-center">
         <div class="flex w-10/12 h-auto py-2 justify-center items-center text-2xl font-bold text-light-blue">
             @if ($isAdmin)
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="flex items-center justify-between bg-gray-200 rounded text-center">
-        <div class="w-full h-auto py-5 px-5">
+        <div class="w-3/5 h-auto py-5 px-5">
             <div class="flex items-center justify-start">
                 <span class="w-1/4 text-start uppercase">Code:</span>
                 <span>{{$unit->code ?? "Not Set"}}</span>
@@ -35,7 +35,12 @@
             @if (!$isAdmin)
                 <div class="flex items-center justify-start">
                     <span class="w-1/4 text-start uppercase">Instructor:</span>
-                    <span>{{$unit->instructor ?? "Not Set"}}</span>
+                    <span class="flex items-center justify-start space-x-1">
+                        <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
+                        <span>{{$unit->lecturer->firstname ?? ''}}</span>
+                        <span>{{$unit->lecturer->middlename ?? ''}}</span>
+                        <span>{{$unit->lecturer->lastname ?? ''}}</span>
+                    </span>
                 </div>
                 <div class="flex items-center justify-start">
                     <span class="w-1/4 text-start uppercase">Semester:</span>
@@ -53,28 +58,32 @@
                     <span class="w-1/4 text-start uppercase">End Date:</span>
                     <span>{{$unit->end_date ?? "Not Set"}}</span>
                 </div>
+            @endif
+        </div>
+        <div class="w-2/5 h-auto py-5 px-5">
+            @if (!$isAdmin)
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Duration:</span>
+                    <span class="w-1/2 text-start uppercase">Duration:</span>
                     <span>
                         <span>{{$unit->duration ?? "No Set"}}</span>
                         <span>Classes</span>
                     </span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Mid-Term Exam Date:</span>
+                    <span class="w-1/2 text-start uppercase">Mid-Term Exam Date:</span>
                     <span>{{$unit->midterm_exam ?? "Not Set"}}</span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Final Exam Date:</span>
+                    <span class="w-1/2 text-start uppercase">Final Exam Date:</span>
                     <span>{{$unit->final_exam ?? "Not Set"}}</span>
                 </div>
             @endif
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Created On:</span>
+                <span class="w-1/2 text-start uppercase">Created On:</span>
                 <span>{{$unit->created_at ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Updated On:</span>
+                <span class="w-1/2 text-start uppercase">Updated On:</span>
                 <span>{{$unit->updated_at ?? "Not Set"}}</span>
             </div>
         </div>

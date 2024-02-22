@@ -1,39 +1,19 @@
 @php
-     $courses = [
-        (object)[
-                "unit" => "Introduction to Computer Programming",
-                "code" => "CSE-142-2022/2023",
-                ],
-        (object)[
-                "unit" => "Introduction to Computer Systems",
-                "code" => "CSE-204-2022/2023",
-                ],
-        (object)[
-                "unit" => "Advanced Programming Concepts",
-                "code" => "CSE-320-2022/2023",
-                ],
-        (object)[
-                "unit" => "Artificial Intelligence",
-                "code" => "CSE-320-2022/2023",
-                ],
-        (object)[
-                "unit" => "Calculus 1",
-                "code" => "CSE-123-2022/2023",
-                ]];
-
-$user = $attributes->get('user')
+    $courses = $units ?? [];
+    $user = $attributes->get('user')
 @endphp
 
 <div id="add-new-user" class="w-full ">
-    <form  class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
+    <form  class="relative w-full px-5 py-3 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
         w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
     @if (is_null($user))
-        <p class="text-xl font-bold text-gray-800 w-max pb-4">Add New User</p>
+        <p class="text-xl font-bold text-gray-800 w-max pb-2">Add New User</p>
     @else
-        <p class="text-xl font-bold text-gray-800 w-max pb-4">Update User</p>
+        <p class="text-xl font-bold text-gray-800 w-max pb-2">Update User</p>
     @endif
-        <form class="w-fit max-w-lg">
-            <div class="flex flex-wrap -mx-3 mb-3">
+        <form class="w-fit max-w-lg" method="POST" action="/profile">
+            @csrf
+            <div class="flex flex-wrap -mx-3 mb-2">
                 <div class="w-fit px-3 mb-8 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="title">
                         Title
@@ -205,13 +185,17 @@ $user = $attributes->get('user')
                 </div>
             </div>
 
-            <div class="flex flex-wrap -mx-3 mb-3">
-                <div class="w-full md:w-1/2 px-3 mb-8 md:mb-0">
+            <div class="flex flex-wrap -mx-3 mb-2">
+                <div class="w-full md:w-2/3 px-3 mb-8 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                         Class/Training Course(s)
                     </label>
                     <div class="relative block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 
                             px-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                        @if (!empty($courses))
+                            {{ $courses->links() }}
+                        @endif
+
                         <ul class="w-full flex flex-col max-h-32 overflow-scroll">
                         @forelse ($courses as $unit)
                             <li class="inline-flex items-center gap-x-2 py-2 px-2 -mt-px">
@@ -227,17 +211,21 @@ $user = $attributes->get('user')
                                             value="{{$unit->code}}">
                                     @endforelse
                                     </div>
-                                    <label class="ms-3.5 block w-full text-sm text-gray-600">{{$unit->unit}}</label>
+                                    <label class="ms-3.5 block w-full text-sm text-gray-600">{{$unit->name}} - ({{$unit->code}})</label>
                                 </div>
                             </li>
                         @empty
                             No Units Available!
                         @endforelse
                         </ul>
+
+                        @if (!empty($courses))
+                            {{ $courses->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="flex items-center justify-center py-3 space-x-12 text-sm md:space-x-24">
+            <div class="flex items-center justify-center py-2 space-x-12 text-sm md:space-x-24">
                 <div class="flex items-center text-xs">
                     <button type="submit"
                         class="flex items-center justify-center py-3 text-grays-500 border-1 rounded-lg btn-primary w-40">

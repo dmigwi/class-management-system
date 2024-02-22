@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Http\Controllers\HomeController;
 
 class AuthController extends Controller
 {
@@ -18,7 +17,7 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-       return HomeController::index();
+       return redirect()->intended('dashboard');
     }
 
     /**

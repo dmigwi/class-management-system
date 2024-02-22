@@ -184,3 +184,6 @@ dialog[open].modal {
     position: absolute;
 }
 
+.min-h-80 {
+    min-height: 20rem;
+}

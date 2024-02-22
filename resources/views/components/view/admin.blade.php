@@ -136,13 +136,13 @@
 
         <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-1">
             <span id="add-user" @class(['tabs', 'hidden' => !$disableAddUser])>
-                <x-form.user />
+                <x-form.user :units='$units' />
             </span>
             <span id="list-users" @class(['tabs', 'hidden' => !$disableListUsers])>
                 <x-show.users :users='$users' :user='$selectedUser' />
             </span>
             <span id="add-unit" @class(['tabs', 'hidden' => !$disableAddUnit])>
-                <x-form.unit />
+                <x-form.unit :users='$users' />
             </span>
             <span id="list-units" @class(['tabs', 'hidden' => !$disableListUnits])>
                 <x-show.units :units='$units' :unit='$selectedUnit' />

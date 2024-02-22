@@ -9,7 +9,7 @@
     }
 @endphp
 
-<div id="add-new-unit" class="w-full ">
+<div id="add-new-unit" class="w-full min-h-80">
     <div
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
@@ -42,10 +42,10 @@
                         <tbody>
                             @forelse ($units as $unit)
                             <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                <td class="px-4 py-1 text-sm text-gray-800 font-medium">{{$unit->name}}</td>
-                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->code}}</td>
-                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->semester}}</td>
-                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->year}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800 font-medium">{{$unit->name ?? '--'}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->code ?? '--'}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->semester ?? '--'}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->year ?? '--'}}</td>
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
                                     @if ($selectedUnitId === $unit->id)
                                         <dialog id="unit-{{$unit->id}}" class="h-full w-full p-5 backdrop" open>

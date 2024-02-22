@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/startattendance', [AttendanceController::class, 'store'])->name('start.attendance');
     Route::post('/endattendance', [AttendanceController::class, 'update'])->name('end.attendance');
     Route::get('/setattendance', [AttendanceController::class, 'attendance'])->name('set.attendance');
+    Route::post('/insertuser', [HomeController::class, 'storeUser'])->name('insert.user');
+    Route::post('/insertunit', [HomeController::class, 'storeUnit'])->name('insert.unit');
 });
