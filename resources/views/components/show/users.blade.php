@@ -1,5 +1,6 @@
 @php
     $users = session('users') ?? $users;
+    $units = $units ?? [];
     $selectedUser = $user ?? null;
     $selectedUserId = $selectedUser->id ?? '';
 
@@ -9,7 +10,7 @@
     }
 @endphp
 
-<div id="add-new-user" class="w-full ">
+<div id="add-new-user" class="w-full min-h-80">
     <div class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         <div class="flex items-center justify-between">
@@ -53,7 +54,7 @@
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
                                     @if ($selectedUserId === $user->id)
                                         <dialog id="user-{{$user->id}}" class="h-full w-full p-5 backdrop" open>
-                                            <x-show.user :data="$selectedUser" />
+                                            <x-show.user :user="$selectedUser"  :units='$units' />
                                         </dialog>
                                     @endif
                                     

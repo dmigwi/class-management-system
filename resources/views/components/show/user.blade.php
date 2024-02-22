@@ -1,11 +1,11 @@
 
 @php
-    $user = $attributes->get('data');
-    $units = ["Introduction to Computer Programming",
-        "Introduction to Computer Systems",
-        "Advanced Programming Concepts",
-        "Introduction to Computational Theory",
-    ];
+    $user = $user ?? [];
+    $units = $units ?? []; // if instructor there might be data.
+ 
+    if ($user->role === "student") {
+        $units = $user->units ?? [];
+    }
 @endphp
 
 <div class="modal flex flex-col bg-white rounded-md h-fit w-11/12 md:w-5/6">
@@ -26,7 +26,7 @@
     <div class="flex items-center justify-between bg-gray-200 rounded text-center">
         <div class="w-1/2 h-auto py-5 px-5">
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Name:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Name:</span>
                 <span class="flex items-center justify-start space-x-1">
                     <span>{{$user->title}}</span>
                     <span>{{$user->firstname}}</span>
@@ -35,32 +35,32 @@
                 </span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Role:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Role:</span>
                 <span class="capitalize text-start" >{{$user->role ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Dept.:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Dept.:</span>
                 <span class="text-start" >{{$user->faculty ?? "Not Set" }}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Email:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Email:</span>
                 <span class="text-start" >{{$user->email ?? "Not Set" }}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Phone:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Phone:</span>
                 <span class="text-start" >{{$user->phone ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Country:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Country:</span>
                 <span class="text-start" >{{$user->country ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Created On:</span>
-                <span>{{$unit->created_at ?? "Not Set"}}</span>
+                <span class="w-1/4 text-start uppercase font-bold">Created On:</span>
+                <span>{{$user->created_at ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Updated On:</span>
-                <span>{{$unit->updated_at ?? "Not Set"}}</span>
+                <span class="w-1/4 text-start uppercase font-bold">Updated On:</span>
+                <span>{{$user->updated_at ?? "Not Set"}}</span>
             </div>
         </div>
         <div class="w-1/2 text-gray-900 text-sm font-medium flex items-center justify-end py-5 px-5">
@@ -70,10 +70,13 @@
                 </span>
                 <span class="w-full block">
                 @forelse ($units as $unit)
-                    <li class="px-4 text-start py-1">{{$unit}}</li>
+                    <li class="px-4 text-start py-1">{{$unit->name}}</li>
                 @empty
                     No Units Allocated yet!
                 @endforelse
+                @if ($user->role === "instructor")
+                    {{$units->links()}}
+                @endif
                 </span>
             </div>
         </div>

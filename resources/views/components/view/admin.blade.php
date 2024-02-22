@@ -139,7 +139,7 @@
                 <x-form.user :units='$units' />
             </span>
             <span id="list-users" @class(['tabs', 'hidden' => !$disableListUsers])>
-                <x-show.users :users='$users' :user='$selectedUser' />
+                <x-show.users :users='$users' :user='$selectedUser' :units='$units' />
             </span>
             <span id="add-unit" @class(['tabs', 'hidden' => !$disableAddUnit])>
                 <x-form.unit :users='$users' />

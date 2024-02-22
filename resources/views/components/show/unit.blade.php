@@ -1,5 +1,5 @@
 @php
-    $unit = $attributes->get('data');
+    $unit = $unit ?? [];
     $isAdmin = ($unit->name ?? '') === 'Administrator';
 @endphp
 
@@ -25,16 +25,16 @@
     <div class="flex items-center justify-between bg-gray-200 rounded text-center">
         <div class="w-3/5 h-auto py-5 px-5">
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Code:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Code:</span>
                 <span>{{$unit->code ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/4 text-start uppercase">Name:</span>
+                <span class="w-1/4 text-start uppercase font-bold">Name:</span>
                 <span>{{$unit->name ?? "Not Set"}}</span>
             </div>
             @if (!$isAdmin)
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Instructor:</span>
+                    <span class="w-1/4 text-start uppercase font-bold">Instructor:</span>
                     <span class="flex items-center justify-start space-x-1">
                         <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
                         <span>{{$unit->lecturer->firstname ?? ''}}</span>
@@ -43,19 +43,19 @@
                     </span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Semester:</span>
+                    <span class="w-1/4 text-start uppercase font-bold">Semester:</span>
                     <span>{{$unit->semester ?? "Not Set" }}</span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Academic Year:</span>
+                    <span class="w-1/4 text-start uppercase font-bold">Academic Year:</span>
                     <span>{{$unit->year ?? "Not Set" }}</span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">Start Date:</span>
+                    <span class="w-1/4 text-start uppercase font-bold">Start Date:</span>
                     <span>{{$unit->start_date ?? "Not Set"}}</span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/4 text-start uppercase">End Date:</span>
+                    <span class="w-1/4 text-start uppercase font-bold">End Date:</span>
                     <span>{{$unit->end_date ?? "Not Set"}}</span>
                 </div>
             @endif
@@ -63,27 +63,27 @@
         <div class="w-2/5 h-auto py-5 px-5">
             @if (!$isAdmin)
                 <div class="flex items-center justify-start">
-                    <span class="w-1/2 text-start uppercase">Duration:</span>
+                    <span class="w-1/2 text-start uppercase font-bold">Duration:</span>
                     <span>
                         <span>{{$unit->duration ?? "No Set"}}</span>
                         <span>Classes</span>
                     </span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/2 text-start uppercase">Mid-Term Exam Date:</span>
+                    <span class="w-1/2 text-start uppercase font-bold">Mid-Term Exam Date:</span>
                     <span>{{$unit->midterm_exam ?? "Not Set"}}</span>
                 </div>
                 <div class="flex items-center justify-start">
-                    <span class="w-1/2 text-start uppercase">Final Exam Date:</span>
+                    <span class="w-1/2 text-start uppercase font-bold">Final Exam Date:</span>
                     <span>{{$unit->final_exam ?? "Not Set"}}</span>
                 </div>
             @endif
             <div class="flex items-center justify-start">
-                <span class="w-1/2 text-start uppercase">Created On:</span>
+                <span class="w-1/2 text-start uppercase font-bold">Created On:</span>
                 <span>{{$unit->created_at ?? "Not Set"}}</span>
             </div>
             <div class="flex items-center justify-start">
-                <span class="w-1/2 text-start uppercase">Updated On:</span>
+                <span class="w-1/2 text-start uppercase font-bold">Updated On:</span>
                 <span>{{$unit->updated_at ?? "Not Set"}}</span>
             </div>
         </div>

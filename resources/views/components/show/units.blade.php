@@ -10,8 +10,7 @@
 @endphp
 
 <div id="add-new-unit" class="w-full min-h-80">
-    <div
-        class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
+    <div class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         <div class="flex items-center justify-between">
             <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Of Units</p>
@@ -49,7 +48,7 @@
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
                                     @if ($selectedUnitId === $unit->id)
                                         <dialog id="unit-{{$unit->id}}" class="h-full w-full p-5 backdrop" open>
-                                            <x-show.unit :data="$selectedUnit" />
+                                            <x-show.unit :unit="$selectedUnit" />
                                         </dialog>
                                     @endif
 

@@ -21,42 +21,55 @@ class HomeController extends Controller
             $page = "Home";
             $users = [];
             $units = [];
-            $tab = $request->tab ?? 'list-users';
-            $data = (object)['tab' => $tab ];
-
+            $data = (object)[];
+            
             if ($user->role == "admin") {
+                $tab = $request->tab ?? 'list-users';
+                $data->tab = $tab;
                 $page = 'Admin';
 
-                if ($tab ===  'list-units') {
-                    $units = Unit::paginate(
-                        $perPage = 10,
-                        $columns = ['id', 'name', 'code', 'semester', 'year'],
-                        $pageName = 'page'
-                    )->appends(['tab' => $tab]);
-                }
+                switch ($tab) {
+                    case 'list-units':
+                        $units = Unit::orderBy('updated_at', 'desc')->paginate(
+                            $perPage = 10,
+                            $columns = ['id', 'name', 'code', 'semester', 'year'],
+                            $pageName = 'page'
+                        )->appends(['tab' => $tab]);
+                        break;
+                    
+                    case 'add-user':
+                        $units = Unit::orderBy('updated_at', 'desc')->paginate(
+                            $perPage = 10,
+                            $columns = ['id', 'name', 'code'],
+                            $pageName = 'page'
+                        )->appends(['tab' => $tab]);
+                        break;
 
-                if ($tab ===  'list-users') {
-                    $users = User::paginate(
-                        $perPage = 10,
-                        $columns = ['id', 'title', 'firstname', 'middlename', 'lastname', 'role', 'email'],
-                        $pageName = 'page'
-                    )->appends(['tab' => $tab]);
-                }
+                    case 'add-unit':
+                        $users = User::where('role', 'instructor')->orderBy('updated_at', 'desc')->paginate(
+                            $perPage = 10,
+                            $columns = ['id', 'title', 'firstname', 'middlename', 'lastname'],
+                            $pageName = 'page'
+                        )->appends(['tab' => $tab]);
+                        break;
+                    
+                    default: #'list-users'
+                        $users = User::orderBy('updated_at', 'desc')->paginate(
+                            $perPage = 10,
+                            $columns = ['id', 'title', 'firstname', 'middlename', 'lastname', 'role', 'email'],
+                            $pageName = 'page'
+                        )->appends(['tab' => $tab]);
 
-                if ($tab ===  'add-user') {
-                    $units = Unit::paginate(
-                        $perPage = 10,
-                        $columns = ['id', 'name', 'code'],
-                        $pageName = 'page'
-                    )->appends(['tab' => $tab]);
-                }
-
-                if ($tab ===  'add-unit') {
-                    $users = User::where('role', 'instructor')->paginate(
-                        $perPage = 10,
-                        $columns = ['id', 'title', 'firstname', 'middlename', 'lastname'],
-                        $pageName = 'page'
-                    )->appends(['tab' => $tab]);
+                        $instructor_id = (int)($request->user ?? '0');
+                        if ($instructor_id > 0) {
+                            // returns classes assigned to the current instructor.
+                            $units = Unit::where('instructor', $instructor_id)->orderBy('updated_at', 'desc')->paginate(
+                                $perPage = 10,
+                                $columns = ['id', 'name', 'code'],
+                                $pageName = 'view'
+                            )->appends(['tab' => $tab]);
+                        }
+                        break;
                 }
 
                 $unit = $request->unit ?? null;
@@ -96,7 +109,7 @@ class HomeController extends Controller
                 'name' => 'required|min:5|max:55',
                 'code' => 'required|min:5|max:55',
                 'semester'=> 'exclude_if:semester,null',
-                'year'=> 'exclude_if:year,null',
+                'year'=> 'exclude_if:year,null|min:5|max:55',
                 'start_date' => 'exclude_if:start_date,null',
                 'end_date' => 'exclude_if:end_date,null',
                 'duration' => 'exclude_if:duration,null',
@@ -105,19 +118,17 @@ class HomeController extends Controller
             ]);
            
             if ($validator->fails()) {
-                return back()->withErrors(['status' => 'Unit name/code should be (min-5 & max-55 chars)']);
+                return back()->withErrors(['status' => $validator->errors()->first()]);
             }
 
             if (!Unit::create($validator->validated())->save()) {
                 return back()->withErrors(['status' => 'failed to insert the unit data into the db. Try again!']);
             }
 
-            $request = new Request(['tab' => 'list-units']);
-            return $this->index($request);
+            return to_route('dashboard', ['tab' => 'list-units']);
         }
         return view('login');
     }
-
 
     /**
      * Stores a newly created user in storage.
@@ -126,8 +137,47 @@ class HomeController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
-            $request = new Request(['tab' => 'list-users']);
-            return $this->index($request);
+            $validator = Validator::make($request->all(), [
+                'title'=> 'required',
+                'firstname' => 'required|min:1|max:55',
+                'middlename' => 'exclude_if:middlename,null|min:1|max:55',
+                'lastname' => 'required|min:1|max:55',
+                'password'=> 'required|min:5',
+                'role'=> 'required',
+                'email' => 'required|email:rfc,dns',
+                'phone' => 'required|min:9|max:15',
+                'faculty' => 'required',
+                'country' => 'required',
+            ]);
+           
+            if ($validator->fails()) {
+                return back()->withErrors(['status' => $validator->errors()->first()]);
+            }
+
+            $input = array_merge($validator->validated(), ['is_confirm_password' => true]);
+            $user = User::create($input);
+            if (!$user->save()) {
+                return back()->withErrors(['status' => 'failed to insert the user data into the db. Try again!']);
+            }
+
+            $role = $request->get('role');
+            // Add the units assigned to a given person
+            $assignedUnits = $request->only(['classes']);
+
+            foreach(head($assignedUnits) as $unit_id) {
+                $network = Unit::find((int)($unit_id));
+
+                if (!empty($network)) {
+                    if ($role === "student" ) {
+                        $user->units()->save($network);
+                    } elseif ($role === "instructor" ) {
+                        $network->fill(["instructor" => $user->id]);
+                        $network->save();
+                    }
+                }
+            }
+
+            return to_route('dashboard', ['tab' => 'list-users']);
         }
         return view('login');
     }

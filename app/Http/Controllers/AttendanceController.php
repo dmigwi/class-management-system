@@ -143,7 +143,7 @@ class AttendanceController extends Controller
             }
 
             $id = Auth::id();
-            $unitAssignment = DB::table('user_unit')->where('user_id', $id)
+            $unitAssignment = DB::table('unit_user')->where('user_id', $id)
                     ->where('unit_id', $timer->unit_id)->first();
             if (empty($unitAssignment)) {
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
