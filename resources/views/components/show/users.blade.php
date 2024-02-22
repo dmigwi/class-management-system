@@ -1,5 +1,12 @@
 @php
     $users = session('users') ?? $users;
+    $selectedUser = $user ?? null;
+    $selectedUserId = $selectedUser->id ?? '';
+
+    if(empty($users ?? [])) {
+        // Do not process this page since it is not on display.
+        return;
+    }
 @endphp
 
 <div id="add-new-user" class="w-full ">
@@ -35,8 +42,8 @@
                         <tbody>
                         @forelse ($users as $user)
                             <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                <td class="flex items-center justify-start space-x-1 px-4 py-1 text-sm font-medium text-gray-800">
-                                    <span>{{$user->title}}</span>
+                                <td class="flex h-fit items-center justify-start space-x-1 px-4 text-sm font-medium text-gray-800">
+                                    <span class="font-bold" >{{$user->title}}</span>
                                     <span>{{$user->firstname}}</span>
                                     <span>{{$user->middlename}}</span>
                                     <span>{{$user->lastname}}</span>
@@ -44,18 +51,21 @@
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->role}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$user->email}}</td>
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
-                                    <dialog id="user-{{$user->id}}"
-                                        class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md ">
-                                        <x-show.user :data="$user" />
-                                    </dialog>
-                                    <button type="button" onclick="document.getElementById('user-{{$user->id}}').showModal()"
+                                    @if ($selectedUserId === $user->id)
+                                        <dialog id="user-{{$user->id}}" class="h-full w-full p-5 backdrop" open>
+                                            <x-show.user :data="$selectedUser" />
+                                        </dialog>
+                                    @endif
+                                    
+                                    <a href="{{ request()->fullUrlWithQuery(['tab' => 'list-users', 'page' => $users->currentPage(), 'user' => $user->id]) }}"
                                         class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
                                             viewBox="0 0 520 520" fill="currentColor">
                                             <path
                                                 d="M518 251a288 288 0 0 0-516 0 20 20 0 0 0 0 18 288 288 0 0 0 516 0 20 20 0 0 0 0-18zM260 370c-61 0-110-49-110-110s49-110 110-110 110 49 110 110-49 110-110 110zm0-180c-39 0-70 31-70 70s31 70 70 70 70-31 70-70-31-70-70-70z" />
                                         </svg>
-                                    </button>
+                                    </a>
+ 
                                     <button type="button"
                                         class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <?xml version="1.0" ?><svg class="feather feather-edit" fill="none" height="24"
@@ -99,17 +109,17 @@
                                 </a>
                             </li>
 
-                            @foreach ($users->getUrlRange(1, $users->lastPage()) as $pageURL)
+                            @for ($i = 1; $i < $users->lastPage()+1; $i++)
                                 <li>
                                    <a @class([
                                         'font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm transition duration-150 ease-in-out',
-                                        'border border-blue-light text-gray-500 hover:bg-light-300' => !($loop->iteration === $users->currentPage()),
-                                        'bg-blue-light text-white shadow-md shadow-pink-500/20' => ($loop->iteration === $users->currentPage()),
-                                     ]) href="{{$pageURL}}">
-                                        {{$loop->iteration}}
+                                        'border border-blue-light text-gray-500 hover:bg-light-300' => !($i === $users->currentPage()),
+                                        'bg-blue-light text-white shadow-md shadow-pink-500/20' => ($i === $users->currentPage()),
+                                     ]) href="{{ request()->fullUrlWithQuery(['tab' => 'list-users', 'page' => $users->currentPage()]) }}">
+                                        {{$i}}
                                     </a>
                                 </li>
-                            @endforeach
+                            @endfor
                             
                             <li>
                                 <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0

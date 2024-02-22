@@ -17,17 +17,43 @@ class HomeController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             
-            $units = [];
-            $users = [];
             $page = "Home";
+            $users = [];
+            $units = [];
             $tab = request()->tab ?? 'list-users';
+            $data = (object)['tab' => $tab ];
+
             if ($user->role == "admin") {
                 $page = 'Admin';
-                $units = Unit::paginate(10)->appends(['tab' => 'list-units']);
-                $users = User::paginate(10)->appends(['tab' => 'list-users']);
+
+                if ($tab ===  'list-units') {
+                    $units = Unit::paginate(
+                        $perPage = 10,
+                        $columns = ['id', 'name', 'code', 'semester', 'year'],
+                        $pageName = 'page'
+                    )->appends(['tab' => $tab]);
+                }
+
+                if ($tab ===  'list-users') {
+                    $users = User::paginate(
+                        $perPage = 10,
+                        $columns = ['id', 'title', 'firstname', 'middlename', 'lastname', 'role', 'email'],
+                        $pageName = 'page'
+                    )->appends(['tab' => $tab]);
+                }
+
+                $unit = request()->unit ?? null;
+                if (!is_null($unit)) {
+                    $data->unit = Unit::where('id', $unit) -> select('*') -> first();
+                }
+
+                $user = request()->user ?? null;
+                if (!is_null($user)) {
+                    $data->user = User::where('id', $user) -> select('*') -> first();
+                }
             }
 
-            $data = (object)['page' => $page, 'tab' => $tab];
+            $data->page = $page;
             return view('index', ["account" => $data,  "users" => $users, "units" => $units]);
         }
         return view('login');

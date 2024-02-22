@@ -1,11 +1,13 @@
 <?php
-    $account = session('account') ?? $account;
-    $selectedTab = $account->tab ?? 'list-units';
+    $account = $account ?? session('account');
+    $selectedTab = $account->tab ?? 'list-users';
+    $selectedUser = $account->user ?? null;
+    $selectedUnit = $account->unit ?? null;
 
-    $disableAddUser = false;
-    $disableListUsers = $account->tab === 'list-users';
-    $disableAddUnit = false;
-    $disableListUnits = $account->tab === 'list-units';
+    $disableAddUser = $selectedTab === 'add-user';
+    $disableAddUnit = $selectedTab === 'add-unit';
+    $disableListUsers = $selectedTab === 'list-users';
+    $disableListUnits = $selectedTab === 'list-units';
 
     $studentsCount = 34;
     $staffCount = 13;
@@ -17,6 +19,7 @@
     $users = session('users') ?? $users;
     $units = session('units') ?? $units;
 ?>
+
 <div class="flex flex-col w-full md:space-y-4 h-full">
     <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
         <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3 lg:grid-cols-3">
@@ -42,14 +45,17 @@
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
-                                <button id="btn-add-user" type="button" {{ $disableAddUser ? ' disabled' :'' }}
-                                    class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-l-lg btn-primary w-20">
-                                    <span class="">Add</span>
-                                </button>
-                                <button id="btn-list-users" type="button" {{ $disableListUsers ? ' disabled' :'' }}
-                                    class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-r-lg btn-primary w-20">
+                                <a class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-l-lg btn-primary w-20"
+                                    href="{{ $disableAddUser ? '#' : '?'.http_build_query(['tab' => 'add-user']) }}"
+                                        {{ $disableAddUser ? ' disabled' :'' }} >
+                                        <span class="">Add</span>
+                                </a>
+
+                                <a class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-r-lg btn-primary w-20"
+                                    href="{{ $disableListUsers ? '#' : '?'.http_build_query(['tab' => 'list-users']) }}" 
+                                        {{ $disableListUsers ? ' disabled' :'' }} >
                                     <span class="">List</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -78,14 +84,17 @@
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
-                                <button id="btn-add-unit" type="button" {{ $disableAddUnit ? ' disabled' :'' }}
-                                    class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-l-lg btn-primary w-20">
+                                <a class="flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-l-lg btn-primary w-20"
+                                    href="{{ $disableAddUnit ? '#' : '?'.http_build_query(['tab' => 'add-unit']) }}"
+                                        {{ $disableAddUnit ? ' disabled' :'' }} >
                                     <span class="">Add</span>
-                                </button>
-                                <button id="btn-list-units" type="button" {{ $disableListUnits ? ' disabled' :'' }}
-                                    class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-r-lg btn-primary w-20">
+                                </a>
+
+                                <a class="flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-r-lg btn-primary w-20"
+                                    href="{{ $disableListUnits ? '#' : '?'.http_build_query(['tab' => 'list-units']) }}" 
+                                        {{ $disableListUnits ? ' disabled' :'' }}>
                                     <span class="">List</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -130,68 +139,14 @@
                 <x-form.user />
             </span>
             <span id="list-users" @class(['tabs', 'hidden' => !$disableListUsers])>
-                <x-show.users :users='$users' />
+                <x-show.users :users='$users' :user='$selectedUser' />
             </span>
             <span id="add-unit" @class(['tabs', 'hidden' => !$disableAddUnit])>
                 <x-form.unit />
             </span>
             <span id="list-units" @class(['tabs', 'hidden' => !$disableListUnits])>
-                <x-show.units :units='$units' />
+                <x-show.units :units='$units' :unit='$selectedUnit' />
             </span>
         </div>
     </div>
 </div>
-
-<script>
-    function tabsToggle() {
-      const tabs = document.querySelectorAll(".tabs");
-      for (i = 0; i < tabs.length; i++){
-          tabs[i].classList.add("hidden");
-      }
-
-      const btns = document.querySelectorAll(".btn-tab");
-      for (i = 0; i < btns.length; i++){
-        btns[i].disabled = false;
-      }
-    }
-
-    const btn1 = document.getElementById("btn-add-user");
-    btn1.addEventListener( "click", 
-        (event)=>{
-            tabsToggle();
-            document.getElementById("add-user").classList.remove("hidden");
-            btn1.disabled = true;
-            event.preventDefault();
-        }
-    );
-
-    const btn2 = document.getElementById("btn-list-users");
-    btn2.addEventListener( "click", 
-        (event)=>{
-            tabsToggle();
-            document.getElementById("list-users").classList.remove("hidden");
-            btn2.disabled = true;
-            event.preventDefault();
-        }
-    );
-
-    const btn3 = document.getElementById("btn-add-unit");
-    btn3.addEventListener( "click", 
-        (event)=>{
-            tabsToggle();
-            document.getElementById("add-unit").classList.remove("hidden");
-            btn3.disabled = true;
-            event.preventDefault();
-        }
-    );
-
-    const btn4 = document.getElementById("btn-list-units");
-    btn4.addEventListener( "click", 
-        (event)=>{
-            tabsToggle();
-            document.getElementById("list-units").classList.remove("hidden");
-            btn4.disabled = true;
-            event.preventDefault();
-        }
-    );
-</script>

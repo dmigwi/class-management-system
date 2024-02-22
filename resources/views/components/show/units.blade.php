@@ -1,8 +1,15 @@
 @php
     $units = session('units') ?? $units;
+    $selectedUnit = $unit ?? null;
+    $selectedUnitId = $selectedUnit->id ?? '';
+
+    if(empty($units ?? [])) {
+        // Do not process this page since it is not on display.
+        return;
+    }
 @endphp
 
-<div id="add-new-user" class="w-full ">
+<div id="add-new-unit" class="w-full ">
     <div
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
@@ -35,22 +42,25 @@
                         <tbody>
                             @forelse ($units as $unit)
                             <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                                <td class="px-4 py-1 text-sm text-gray-800">{{$unit->name}}</td>
+                                <td class="px-4 py-1 text-sm text-gray-800 font-medium">{{$unit->name}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$unit->code}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$unit->semester}}</td>
                                 <td class="px-4 py-1 text-sm text-gray-800">{{$unit->year}}</td>
                                 <td class="flex items-center justify-between px-4 py-1 text-center text-sm font-medium">
-                                    <dialog id="unit-{{$unit->id}}" class="h-fit w-11/12 md:w-1/2 p-5 bg-white rounded-md">
-                                        <x-show.unit :data="$unit" />
-                                    </dialog>
-                                    <button type="button" onclick="document.getElementById('unit-{{$unit->id}}').showModal()"
+                                    @if ($selectedUnitId === $unit->id)
+                                        <dialog id="unit-{{$unit->id}}" class="h-full w-full p-5 backdrop" open>
+                                            <x-show.unit :data="$selectedUnit" />
+                                        </dialog>
+                                    @endif
+
+                                    <a href="{{ request()->fullUrlWithQuery(['tab' => 'list-units', 'page' => $units->currentPage(), 'unit' => $unit->id]) }}"
                                         class="inline-flex items-center text-xl font-semibold text-light-blue hover:text-blue-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"
                                             viewBox="0 0 520 520" fill="currentColor">
                                             <path
                                                 d="M518 251a288 288 0 0 0-516 0 20 20 0 0 0 0 18 288 288 0 0 0 516 0 20 20 0 0 0 0-18zM260 370c-61 0-110-49-110-110s49-110 110-110 110 49 110 110-49 110-110 110zm0-180c-39 0-70 31-70 70s31 70 70 70 70-31 70-70-31-70-70-70z" />
                                         </svg>
-                                    </button>
+                                    </a>
                                     <button type="button"
                                         class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                         <?xml version="1.0" ?><svg class="feather feather-edit" fill="none" height="24"

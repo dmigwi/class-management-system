@@ -14,9 +14,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
         <!-- Styles -->
-        <link rel="stylesheet" type="text/css" href="{{url('css/app.css')}}">
         <link rel="stylesheet" type="text/css" href="{{url('css/custom.css')}}">
-
+        <link rel="stylesheet" type="text/css" href="{{url('css/app.css')}}">
     </head>
 
     <body @guest class="bg-image bg-clip-content" @endguest>
