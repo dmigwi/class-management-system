@@ -1,16 +1,22 @@
 @php
     $courses = $units ?? [];
-    $user = $attributes->get('user')
+    $user = $user ?? null;
+
+    $userRoute = 'update.user';
+    if (is_null($user)) {
+        $userRoute = 'insert.user';
+    }
 @endphp
 
 <div id="add-new-user" class="w-full ">
-    <form  method="POST" action="{{route('insert.user')}}" 
+    <form  method="POST" action="{{route($userRoute, $user->id ?? '')}}" 
         class="relative w-full px-5 py-3 bg-white shadow-lg dark:bg-gray-700 overflow-scroll rounded-b-lg rounded-tr-lg
         w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
     @if (is_null($user))
         <p class="text-xl font-bold text-gray-800 w-max pb-2">Add New User</p>
     @else
         <p class="text-xl font-bold text-gray-800 w-max pb-2">Update User</p>
+        {{ method_field('PUT') }}
     @endif
         @csrf
         <div class="flex flex-wrap -mx-3 mb-2">
@@ -73,8 +79,7 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
                     Password
                 </label>
-                <input name="password" id="password" type="password" placeholder="*********"
-                    value="{{$user->password ?? ''}}" 
+                <input name="password" id="password" type="password" placeholder="*********" value="" 
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                     leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
                 <p class="text-gray-600 text-xs italic mb-2">Make it as long and as crazy as you'd like</p>
@@ -129,8 +134,7 @@
                             value="Business And International Relations">
                             Business And International Relations
                         </option>
-                        <option @selected(Str::lower($user->faculty ?? '')==="computer engineering, graphics design
-                            and architecture")
+                        <option @selected(Str::lower($user->faculty ?? '')==="computer engineering, graphics design and architecture")
                             value="Computer Engineering, Graphics Design And Architecture">
                             Computer Engineering, Graphics Design And Architecture
                         </option>
@@ -167,6 +171,9 @@
                     <select id="country" name="country" autocomplete="off"
                         class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 
                             rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
+                            @isset($user->country)
+                                <option value="{{$user->country}}" selected>{{$user->country}}</option>
+                            @endisset
                         <x-utils.country />
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -200,14 +207,17 @@
                         <li class="inline-flex items-center gap-x-2 py-2 px-2 -mt-px">
                             <div class="relative flex items-start w-full">
                                 <label class="ms-3.5 block w-full text-sm text-gray-600">
-                                    @forelse ($user->units ?? [] as $assignedUnit)
-                                        @if ($unit->id === $assignedUnit->id)
-                                            <input type="checkbox" name="classes[]" value="{{$unit->id}} checked">
-                                            @break
-                                        @endif
-                                    @empty
-                                        <input type="checkbox" name="classes[]" value="{{$unit->id}}">
-                                    @endforelse
+                                    @php
+                                       $isChecked = false; 
+                                        foreach ($user->units ?? [] as $assignedUnit) {
+                                            if ($unit->id === $assignedUnit->id) {
+                                                $isChecked = true;
+                                                break;
+                                            }
+                                        }
+                                    @endphp
+
+                                    <input type="checkbox" name="classes[]" value="{{$unit->id}}" @checked($isChecked)>
                                
                                     {{$unit->name}} - ({{$unit->code}})
                                 </label>

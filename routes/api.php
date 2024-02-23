@@ -25,9 +25,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/logout', [AuthController::class, 'destroy'])->name('log.out');
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('auth.login');
     Route::put('/passwordreset', [AuthController::class, 'passwordreset'])->name('password.reset');
-    Route::post('/startattendance', [AttendanceController::class, 'store'])->name('start.attendance');
-    Route::post('/endattendance', [AttendanceController::class, 'update'])->name('end.attendance');
-    Route::get('/setattendance', [AttendanceController::class, 'attendance'])->name('set.attendance');
-    Route::post('/insertuser', [HomeController::class, 'storeUser'])->name('insert.user');
-    Route::post('/insertunit', [HomeController::class, 'storeUnit'])->name('insert.unit');
+    Route::post('/startAttendance', [AttendanceController::class, 'store'])->name('start.attendance');
+    Route::post('/endAttendance', [AttendanceController::class, 'update'])->name('end.attendance');
+    Route::get('/setAttendance', [AttendanceController::class, 'attendance'])->name('set.attendance');
+    Route::post('/insertUser', [HomeController::class, 'storeUser'])->name('insert.user');
+    Route::post('/insertUnit', [HomeController::class, 'storeUnit'])->name('insert.unit');
+    Route::put('/updateUser/{id}', [HomeController::class, 'updateUser'])->name('update.user');
+    Route::put('/updateUnit/{id}', [HomeController::class, 'updateUnit'])->name('update.unit');
 });

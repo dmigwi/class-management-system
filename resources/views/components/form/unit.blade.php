@@ -1,10 +1,15 @@
 @php
-    $unit = $attributes->get('unit');
+    $unit = $unit ?? null;
     $instructors = $users ?? [];
+
+    $unitRoute = 'update.unit';
+    if (is_null($unit)) {
+        $unitRoute = 'insert.unit';
+    }
 @endphp
 
 <div class="w-full">
-    <form method="POST" action="{{route('insert.unit')}}"
+    <form method="POST" action="{{route($unitRoute, $unit->id ?? '')}}" 
         class="relative w-full px-4 py-4 bg-white shadow-lg dark:bg-gray-700  rounded-b-lg rounded-tr-lg
              w-80 overflow-scroll scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         @csrf
@@ -12,6 +17,7 @@
             <p class="text-xl font-bold text-gray-800 w-max pb-4">Add New Unit</p>
         @else
             <p class="text-xl font-bold text-gray-800 w-max pb-4">Update Unit</p>
+            {{ method_field('PUT') }}
         @endif
 
         <div class="flex flex-wrap -mx-3 mb-2">

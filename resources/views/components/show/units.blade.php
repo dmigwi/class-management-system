@@ -59,7 +59,7 @@
                                             d="M518 251a288 288 0 0 0-516 0 20 20 0 0 0 0 18 288 288 0 0 0 516 0 20 20 0 0 0 0-18zM260 370c-61 0-110-49-110-110s49-110 110-110 110 49 110 110-49 110-110 110zm0-180c-39 0-70 31-70 70s31 70 70 70 70-31 70-70-31-70-70-70z" />
                                     </svg>
                                 </a>
-                                <button type="button"
+                                <a href="{{ request()->fullUrlWithQuery(['tab' => 'add-unit', 'unit' => $unit->id]) }}"
                                     class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                     <?xml version="1.0" ?><svg class="feather feather-edit" fill="none" height="24"
                                         stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -68,7 +68,7 @@
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                     </svg>
-                                </button>
+                                </a>
                                 <button type="button"
                                     class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
