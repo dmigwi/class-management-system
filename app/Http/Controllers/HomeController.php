@@ -26,16 +26,19 @@ class HomeController extends Controller
             
             if ($user->role == "admin") {
                 $tab = $request->tab ?? 'list-users';
+                $search = $request->search ?? '';
                 $data->tab = $tab;
                 $page = 'Admin';
 
                 switch ($tab) {
                     case 'list-units':
-                        $units = Unit::orderBy('updated_at', 'desc')->paginate(
-                            $perPage = 10,
-                            $columns = ['id', 'name', 'code', 'semester', 'year'],
-                            $pageName = 'page'
-                        )->appends(['tab' => $tab]);
+                        $units = Unit::orderBy('updated_at', 'desc')
+                            ->where('name', 'LIKE', '%'.$search.'%')
+                            ->paginate(
+                                    $perPage = 10,
+                                    $columns = ['id', 'name', 'code', 'semester', 'year'],
+                                    $pageName = 'page'
+                                )->appends(['tab' => $tab]);
                         break;
                     
                     case 'add-user':
@@ -55,11 +58,13 @@ class HomeController extends Controller
                         break;
                     
                     default: #'list-users'
-                        $users = User::orderBy('updated_at', 'desc')->paginate(
-                            $perPage = 10,
-                            $columns = ['id', 'title', 'firstname', 'middlename', 'lastname', 'role', 'email'],
-                            $pageName = 'page'
-                        )->appends(['tab' => $tab]);
+                        $users = User::orderBy('updated_at', 'desc')
+                                ->where('firstname', 'LIKE', '%'.$search.'%')
+                                ->paginate(
+                                        $perPage = 10,
+                                        $columns = ['id', 'title', 'firstname', 'middlename', 'lastname', 'role', 'email'],
+                                        $pageName = 'page'
+                                    )->appends(['tab' => $tab]);
 
                         $instructor_id = (int)($request->user ?? '0');
                         if ($instructor_id > 0) {

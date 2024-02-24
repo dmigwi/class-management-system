@@ -14,16 +14,22 @@
       w-80 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter ring-1 ring-black">
         <div class="flex items-center justify-between">
             <p class="text-xl font-bold text-gray-800 w-1/3 pb-4">List Of Units</p>
-            <div class="relative flex items-center justify-end w-full pb-4 pr-20 mx-auto text-gray-600">
-                <input
-                    class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 w-full rounded-lg text-sm focus:outline-none"
-                    type="search" name="search" placeholder="Search">
-                <svg class="absolute flex items-center justify-end mr-2" xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 56.966 56.966" width="17px" height="17px">
-                    <path
-                        d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-                </svg>
-            </div>
+            <form action="{{ route('dashboard') }}" method="GET"
+                class="relative flex items-center justify-end w-full pb-4 pr-20 mx-auto text-gray-600">
+                <input type="hidden" name="tab" value="list-units">
+                <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 w-full rounded-lg text-sm focus:outline-none"
+                        type="search" name="search" placeholder="Search By Unit Name"/>
+                <button type="submit" class="absolute flex items-center justify-end mr-2">
+                    <svg  xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 56.966 56.966" width="17px" height="17px">
+                        <path
+                            d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23 
+                            s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92
+                            c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z
+                            M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                    </svg>
+                </button>
+            </form>
         </div>
         <div class="flex flex-col">
             <div class="p-1.5 min-w-full inline-block align-middle min-h-80">
