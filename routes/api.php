@@ -32,4 +32,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/insertUnit', [HomeController::class, 'storeUnit'])->name('insert.unit');
     Route::put('/updateUser/{id}', [HomeController::class, 'updateUser'])->name('update.user');
     Route::put('/updateUnit/{id}', [HomeController::class, 'updateUnit'])->name('update.unit');
+    Route::post('/deleteUser/{id}', [HomeController::class, 'destroyUser'])->name('delete.user');
+    Route::post('/deleteUnit/{id}', [HomeController::class, 'destroyUnit'])->name('delete.unit');
 });

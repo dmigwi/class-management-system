@@ -76,7 +76,16 @@
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                     </svg>
                                 </a>
-                                <button type="button"
+
+                                @php
+                                    $modalId = 'delete-user-'.$user->id;
+                                @endphp
+
+                                <x-utils.modal :modalId="$modalId">
+                                    <x-utils.delete :modalId="$modalId" :user='$user'/>
+                                </x-utils.modal>
+
+                                <button type="button" onclick="document.getElementById('{{$modalId}}').showModal();"
                                     class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                         viewBox="0 0 52 52" fill="currentColor">

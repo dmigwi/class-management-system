@@ -272,17 +272,20 @@ class HomeController extends Controller
             }
 
             // Add the units assigned to a given person
-            $assignedUnits = head($request->only(['classes']));
-            
-            foreach($assignedUnits as $unit_id) {
-                $network = Unit::find((int)($unit_id));
+            $assignedUnits = $request->only(['classes']) ?? [];
+            Log::info($assignedUnits);
 
-                if (!empty($network)) {
-                    if ($role === "student" ) {
-                        $user_info->units()->save($network);
-                    } elseif ($role === "instructor" ) {
-                        $network->fill(["instructor" => $user_info->id]);
-                        $network->save();
+            if (!empty($assignedUnits)) {
+                foreach(head($assignedUnits) ?? [] as $unit_id) {
+                    $network = Unit::find((int)($unit_id));
+
+                    if (!empty($network)) {
+                        if ($role === "student" ) {
+                            $user_info->units()->save($network);
+                        } elseif ($role === "instructor" ) {
+                            $network->fill(["instructor" => $user_info->id]);
+                            $network->save();
+                        }
                     }
                 }
             }
@@ -317,10 +320,40 @@ class HomeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Removes the specified unit by its provided id.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroyUnit(string $id) {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->role === "admin") {
+               $unit_info = Unit::find((int)($id));
+
+               if (!is_null($unit_info)) {
+                $unit_info->delete();
+               }
+            }
+            return to_route('dashboard', ['tab' => 'list-units']);
+        }
+        return view('login');
+    }
+
+     /**
+     * Removes the specified User by its provided id.
+     */
+    public function destroyUser(string $id) {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->role === "admin") {
+               $user_info = User::find((int)($id));
+
+               if (!is_null($user_info)) {
+                $user_info->delete();
+               }
+            }
+            return to_route('dashboard', ['tab' => 'list-users']);
+        }
+        return view('login');
     }
 }

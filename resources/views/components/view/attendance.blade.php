@@ -1,13 +1,17 @@
 @php
+    $user = Auth::user();
+    $role = $user->role ?? '';
+    $userId = $user->id ?? '';
+
     $account = session('account') ?? $account;
     $units = session('units') ?? $units;
     $unitSelected = $account->code ?? null;
     $timerId = $account->timer_id ?? -1;
     $isAttendanceOpen = $timerId > 0;
-    $role = $account->role;
-    $userId = $account->id;
-    $courses = $units ?? [];
     $status = $account->status ?? '';
+
+    $courses = $units ?? [];
+
     $fmDiv = 'start-form';
     $fmRoute = 'start.attendance';
     $btnText = 'Start Attendance';
@@ -23,6 +27,26 @@
     <div class="xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
         <div class="grid gap-12 md:gap-6 md:grid-cols-2 lg:gap-12">
             <div class="group space-y-6">
+
+            @if ($role === "student")
+                <x-utils.modal :modalId="'attendance'" :modalOpen="'open'" class="backdrop">
+                    @switch($status)
+                        @case("success")
+                            <span class="text-3xl text-green-500">Congratulations! You are signed in.</span>
+                        @break
+                        @case('already-exists')
+                            <span class="text-3xl text-yellow-500">You are already signed in!</span>
+                        @break
+                        @default
+                            @if (!is_null($errors ?? null) && $errors->first("status"))
+                                <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
+                            @else
+                                <span class="text-3xl text-light-blue">No class to sign in yet!</span>
+                            @endif
+                    @endswitch
+                </x-utils.modal>
+            @endif
+
             @if ($role === "instructor")
                 <span class="flex items-center justify-between space-x-2">
                     <div class="inline-block relative w-full">
@@ -75,38 +99,8 @@
                         </h2>
                     @endif
                 @endif
-            @else
-                <dialog id="attendance" class="h-fit w-11/12 md:w-1/2 p-5 bg-white border-2 border-gray-200 rounded-md"
-                    open>
-                    <div class="flex w-full h-auto justify-center items-center">
-                        <div class="flex w-10/12 h-auto py-3 justify-center items-center text-2xl font-bold">
-                        @switch($status)
-                            @case("success")
-                                <span class="text-3xl text-green-500">Congratulations! You are signed in.</span>
-                            @break
-                            @case('already-exists')
-                                <span class="text-3xl text-yellow-500">You are already signed in!</span>
-                            @break
-                            @default
-                                @if (!is_null($errors ?? null) && $errors->first("status"))
-                                    <span class="text-3xl text-red-500">Oops! Sorry, {{$errors->first("status")}}</span>
-                                @else
-                                    <span class="text-3xl text-gray-500">No class to sign in yet!</span>
-                                @endif
-                        @endswitch
-                        </div>
-                        <div onclick="document.getElementById('attendance').close();"
-                            class="flex w-1/12 h-auto justify-center cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-x">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                        </div>
-                    </div>
-                </dialog>
             @endif
+
             </div>
             <div class="group space-y-6">
                 <h3 class="text-3xl font-semibold items-center text-light-blue dark:text-white">Scan the QR code</h3>
