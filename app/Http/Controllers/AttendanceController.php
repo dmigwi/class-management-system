@@ -91,11 +91,7 @@ class AttendanceController extends Controller
             ]);
 
             $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
-                'id' => Auth::id(),
-                'role' => $user->role, 
-                'name' => $name, 
                 'page' => "Attendance",
                 'code' => $request->code, 
                 'timer_id' => $timer,
@@ -163,12 +159,7 @@ class AttendanceController extends Controller
                 $success = "already-exists";
             }
 
-            $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
-                'id' => $id,
-                'role' => $user->role, 
-                'name' => $name, 
                 'page' => "Attendance",
                 'status' => $success, 
             ];
@@ -211,11 +202,7 @@ class AttendanceController extends Controller
             DB::table('start_stop')->where('id', $timer->id)->update(['stopped_at' => $now]);
 
             $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
-                'id' => $id, 
-                'role' => $user->role,
-                'name' => $name, 
                 'page' => "Attendance",
                 'code' => $request->code, 
                 'stop_time'=> $now,
