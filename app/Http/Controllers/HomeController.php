@@ -27,7 +27,6 @@ class HomeController extends Controller
             if ($user->role == "admin") {
                 $tab = $request->tab ?? 'list-users';
                 $search = $request->search ?? '';
-                $data->tab = $tab;
                 $page = 'Admin';
 
                 switch ($tab) {
@@ -87,6 +86,44 @@ class HomeController extends Controller
                 if (!is_null($user)) {
                     $data->user = User::where('id', $user) -> select('*') -> first();
                 }
+
+                $staffCount = 0;
+                $studentsCount = 0;
+                $countRoles = User::groupBy('role')
+                                ->selectRaw('role, count(*) as total')
+                                ->get();
+                foreach($countRoles as $countData) {
+                    if ($countData->role === "student") {
+                        $studentsCount = $studentsCount + $countData->total;
+                    } else {
+                        $staffCount = $staffCount + $countData->total;
+                    }
+                }
+
+                $shortCourses = 0;
+                $unitsRegistered = 0;
+                $countUnits = Unit::groupBy('semester')
+                                ->selectRaw('semester, count(*) as total')
+                                ->get();
+                foreach($countUnits as $countData) {
+                    if ($countData->semester === "Summer") {
+                        $shortCourses = $shortCourses + $countData->total;
+                    } else {
+                        $unitsRegistered = $unitsRegistered + $countData->total;
+                    }
+                }
+
+                $issuesPending = 0;
+                $issuesFixedThisWeek = 0;
+                // TODO: Compute this stats from the chats table.
+
+                $data->tab = $tab;
+                $data->staffCount = $staffCount;
+                $data->studentsCount = $studentsCount;
+                $data->shortCourses = $shortCourses;
+                $data->unitsRegistered = $unitsRegistered;
+                $data->issuesPending = $issuesPending;
+                $data->issuesFixedThisWeek = $issuesFixedThisWeek;
             }
 
             $data->page = $page;
@@ -104,7 +141,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Validator function for the unit insert and edit functions.
+     * Validator function for the units table insert and edit functions.
      */
     public function unitValidator(Request $request) {
         return Validator::make($request->all(), [
@@ -122,7 +159,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Validator function for the user insert and edit functions.
+     * Validator function for the users table insert and edit functions.
      */
     public function userValidator(Request $request) {
         return Validator::make($request->all(), [

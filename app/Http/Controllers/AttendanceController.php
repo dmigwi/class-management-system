@@ -25,7 +25,7 @@ class AttendanceController extends Controller
 
             // Admin should not have access to attendance page.
             if ($user->role === "admin") {
-                return redirect('/dashboard');
+                return redirect()->intended('dashboard');
             }
 
             $data = (object)[

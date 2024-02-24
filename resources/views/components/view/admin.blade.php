@@ -9,13 +9,6 @@
     $disableListUsers = $selectedTab === 'list-users';
     $disableListUnits = $selectedTab === 'list-units';
 
-    $studentsCount = 34;
-    $staffCount = 13;
-    $unitsRegistered = 21;
-    $shortCourses = 10;
-    $issuesFixedThisWeek = 10;
-    $issuesPending = 13;
-
     $users = session('users') ?? $users;
     $units = session('units') ?? $units;
 ?>
@@ -37,11 +30,11 @@
                         </span>
                         <div class="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
                             <p>Students Registered</p>
-                            <div class="flex items-end text-xs font-bold">{{$studentsCount}}</div>
+                            <div class="flex items-end text-xs font-bold">{{$account->studentsCount ?? 0}}</div>
                         </div>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Staff Registered</p>
-                            <div class="flex items-end text-xs font-bold">{{$staffCount}}</div>
+                            <div class="flex items-end text-xs font-bold">{{$account->staffCount ?? 0}}</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
@@ -76,11 +69,11 @@
                         </span>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Classes Registered</p>
-                            <div class="flex items-end text-xs font-bold">{{$unitsRegistered}}</div>
+                            <div class="flex items-end text-xs font-bold">{{$account->unitsRegistered ?? 0}}</div>
                         </div>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Training Courses Registered</p>
-                            <div class="flex items-end text-xs font-bold">{{$shortCourses}}</div>
+                            <div class="flex items-end text-xs font-bold">{{$account->shortCourses ?? 0}}</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
@@ -115,11 +108,11 @@
                         </span>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Issues Responded to this Week</p>
-                            <div class="flex items-end text-xs font-bold">{{$issuesFixedThisWeek}}</div>
+                            <div class="flex items-end text-xs font-bold">{{$account->issuesFixedThisWeek ?? 0}}</div>
                         </div>
                         <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
                             <p>Issues in Progress</p>
-                            <div class="flex items-end text-xs font-bold">{{$issuesPending}}</div>
+                            <div class="flex items-end text-xs font-bold">{{$account->issuesPending ?? 0}}</div>
                         </div>
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <a href="{{url('chat')}}" class="flex items-center text-xs">
