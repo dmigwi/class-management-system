@@ -17,19 +17,7 @@ class AuthController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        if (Auth::check()) {
-            $user = Auth::user();
-            
-            $page = "Home";
-            if ($user->role == "admin") {
-                $page = 'Admin';
-            }
-
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
-            $data = (object)['id' =>  $user->id, 'role' => $user->role, 'name' => $name, 'page' => $page];
-            return view('index', ["account" => $data]);
-        }
-        return view('login');
+       return redirect()->intended('dashboard');
     }
 
     /**

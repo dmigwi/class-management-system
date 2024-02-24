@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Unit extends Model
 {
@@ -22,7 +23,7 @@ class Unit extends Model
         'final_exam',
     ];
 
-    public function users(){
-        return $this->belongsToMany('App\Models\User');
+    public function lecturer() {
+        return $this->hasOne(User::class, 'id', 'instructor');
     }
 }

@@ -122,9 +122,16 @@ body {
     background-color: #02b0e2;
 }
 
-.btn-primary:hover {
+.btn-primary:hover:enabled {
     opacity: 0.5;
     transition: 0.3s;
+}
+
+.btn-primary:disabled,
+.btn-primary[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 
 .text-start {
@@ -157,4 +164,26 @@ dialog::backdrop {
         opacity: 1;
         transform: translateX(0);
     }
+}
+.backdrop[open] {
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(54, 54, 54, 0.5)) !important;
+    backdrop-filter: blur(3px) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    visibility: visible;
+    overflow: auto;
+    inset-block-start: 0px;
+    inset-block-end: 0px; 
+    max-width: calc(100% - 1em - 6px);
+    max-height: calc(100% - 1em - 6px);
+}
+
+dialog[open].modal {
+    position: absolute;
+}
+
+.min-h-80 {
+    min-height: 20rem;
 }

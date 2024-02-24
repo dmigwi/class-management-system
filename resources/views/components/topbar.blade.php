@@ -1,6 +1,9 @@
 @php
-    $role = $attributes->get('role') ?? null;
-    $name = $attributes->get('name') ?? null;
+    if (Auth::check()) {
+        $user = Auth::user();
+        $role = Str::lower($user->role);
+        $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
+    }
 @endphp
 
 <div class="z-40 flex items-center justify-between w-full h-16 py-10">
@@ -60,9 +63,11 @@
     @endauth
 </div>
 
-<script>
-    function accountDropdown() {
-      const dropdown = document.getElementById("account-dropdown-menu");
-      dropdown.classList.toggle("hidden");
-    }
-</script>
+@auth
+    <script>
+        function accountDropdown() {
+        const dropdown = document.getElementById("account-dropdown-menu");
+        dropdown.classList.toggle("hidden");
+        }
+    </script>
+@endauth

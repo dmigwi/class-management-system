@@ -10,9 +10,8 @@
     }
 @endphp
 
-<div class="m-auto space-y-8 md:w-6/12 lg:w-4/12 xl:w-4/12 bg-gradient-to-tr">
-    <div
-        class="rounded-3xl border border-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700 shadow-2xl shadow-gray-600/10 backdrop-blur-2xl">
+<div class="m-auto space-y-8 md:w-6/12 lg:w-4/12 xl:w-4/12 bg-gradient-to-tr shadow-gray-600/10 backdrop-blur-2xl">
+    <div class="rounded-3xl border border-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700 shadow-2xl">
         <div class="p-8 sm:p-12">
             <div class="relative flex items-center justify-center">
                 <span class="mb-4 text-2xl font-bold text-gray-800 dark:text-white capitalize">

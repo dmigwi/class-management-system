@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('title');
             $table->char('firstname');
-            $table->char('middlename');
+            $table->char('middlename')->nullable();
             $table->char('lastname');
             $table->char('password');
             $table->enum('role', ['admin', 'student', 'instructor']);

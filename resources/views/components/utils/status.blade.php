@@ -1,6 +1,7 @@
 @php
     $status = $attributes->get('status')
 @endphp
+
 <span class='bg-transparent'>
 @switch(Str::lower($status))
     @case("read")

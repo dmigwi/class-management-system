@@ -22,11 +22,13 @@ class AttendanceController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
+
+            // Admin should not have access to attendance page.
+            if ($user->role === "admin") {
+                return redirect()->intended('dashboard');
+            }
+
             $data = (object)[
-                'id' => Auth::id(), 
-                'role' => $user->role, 
-                'name' => $name, 
                 'page' => "Attendance",
             ];
 
@@ -89,11 +91,7 @@ class AttendanceController extends Controller
             ]);
 
             $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
-                'id' => Auth::id(),
-                'role' => $user->role, 
-                'name' => $name, 
                 'page' => "Attendance",
                 'code' => $request->code, 
                 'timer_id' => $timer,
@@ -141,7 +139,7 @@ class AttendanceController extends Controller
             }
 
             $id = Auth::id();
-            $unitAssignment = DB::table('user_unit')->where('user_id', $id)
+            $unitAssignment = DB::table('unit_user')->where('user_id', $id)
                     ->where('unit_id', $timer->unit_id)->first();
             if (empty($unitAssignment)) {
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
@@ -161,12 +159,7 @@ class AttendanceController extends Controller
                 $success = "already-exists";
             }
 
-            $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
-                'id' => $id,
-                'role' => $user->role, 
-                'name' => $name, 
                 'page' => "Attendance",
                 'status' => $success, 
             ];
@@ -209,11 +202,7 @@ class AttendanceController extends Controller
             DB::table('start_stop')->where('id', $timer->id)->update(['stopped_at' => $now]);
 
             $user = Auth::user();
-            $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
             $data = (object)[
-                'id' => $id, 
-                'role' => $user->role,
-                'name' => $name, 
                 'page' => "Attendance",
                 'code' => $request->code, 
                 'stop_time'=> $now,
