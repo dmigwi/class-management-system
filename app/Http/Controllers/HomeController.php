@@ -127,14 +127,13 @@ class HomeController extends Controller
 
             $ClassAttendance = 0;
             $expectedAttendance = 0;
+            $topAttendance = [];
             $start_time = $request->start ?? "2020-01-01 00:00:00";
             $end_time = $request->start ?? date('Y-m-d H:i:s');
             
             // Handle Home page data for the instructor role.
             if ($user->role == "instructor") {
-                $course = $request->unit ?? '';
                 $units = Unit::where('instructor', $user->id)
-                            ->where('id', 'LIKE', '%'.$course.'%')
                             ->orderBy('updated_at', 'desc')
                             ->paginate(
                                     $perPage = 10,
@@ -153,6 +152,15 @@ class HomeController extends Controller
                                     ->where('start_stop.started_at', '>=', $start_time)
                                     ->where('start_stop.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
+                
+                $topAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
+                                    ->where('start_stop.instructor', $user->id)
+                                    ->groupBy('units.name')
+                                    ->selectRaw('name, count(*) as total')
+                                    ->take(3)
+                                    ->get();
             }
 
             // Handle Home page data for the student role.
@@ -175,6 +183,15 @@ class HomeController extends Controller
                                     ->where('start_stop.started_at', '>=', $start_time)
                                     ->where('start_stop.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
+                
+                $topAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
+                                    ->where('attendances.sender', $user->id)
+                                    ->groupBy('units.name')
+                                    ->selectRaw('name, count(*) as total')
+                                    ->take(3)
+                                    ->get();
             }
 
             if (!is_null($unit_id)) {
@@ -199,6 +216,13 @@ class HomeController extends Controller
                 if($user->role == "instructor") {
                     $classesCount = $classesCount *  $data->students;
                     $expectedAttendance = $expectedAttendance * $data->students;
+                }
+
+                $data->topUnitsNames = [];
+                $data->topUnitsAttendances = [];
+                foreach($topAttendance as $attendance) {
+                    array_push($data->topUnitsNames, $attendance->name);
+                    array_push($data->topUnitsAttendances, $attendance->total);
                 }
                 
                 $data->attendance = ($ClassAttendance/$classesCount)*100;

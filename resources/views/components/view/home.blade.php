@@ -10,13 +10,8 @@
     $attendance = $account->attendance ?? 0;
     $missing = $account->missing ?? 0;
     $circumference = $account->circumference ?? 0;
-
-    $topUnitsName = [
-            'Introduction to Computer Systems',
-            'Data Structures and Algorithms',
-            'Discrete Structures',
-        ];  
-    $topUnitsAttendance = [7, 5, 3];
+    $topUnitsNames = $account->topUnitsNames ?? [];  
+    $topUnitsAttendances = $account->topUnitsAttendances ?? [];
 ?>
 
 <div class="flex flex-col w-full md:space-y-4 h-full">
@@ -345,10 +340,10 @@
     new Chart(document.getElementById('top-attendance-chart'), {
     type: 'pie',
     data: {
-        labels: @json($topUnitsName),
+        labels: @json($topUnitsNames),
         datasets: [{
             label: 'Count of Classes',
-            data: @json($topUnitsAttendance),
+            data: @json($topUnitsAttendances),
             backgroundColor: ['#1192e8','#6fdc8c','#a56eff'],
             borderWidth: 1,
             }
