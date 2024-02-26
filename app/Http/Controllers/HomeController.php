@@ -69,7 +69,6 @@ class HomeController extends Controller
                                     )->appends(['tab' => $tab]);
 
                         $instructor_id = (int)($request->user ?? '0');
-
                         if ($instructor_id > 0) {
                             // returns classes assigned to the current instructor.
                             $units = Unit::where('instructor', $instructor_id)->orderBy('updated_at', 'desc')->paginate(
@@ -77,7 +76,6 @@ class HomeController extends Controller
                                 $columns = ['id', 'name', 'code'],
                                 $pageName = 'view'
                             )->appends(['tab' => $tab]);
-                            Log::info($units);
                         }
                         break;
                 }
@@ -153,12 +151,15 @@ class HomeController extends Controller
                                     ->where('start_stop.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
                 
+                // Grouping done by code which is always unique unlike name which can exists as a duplicate.
                 $topAttendance = DB::table('attendances')
                                     ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
                                     ->join('units', 'start_stop.unit_id', '=', 'units.id')
                                     ->where('start_stop.instructor', $user->id)
-                                    ->groupBy('units.name')
-                                    ->selectRaw('name, count(*) as total')
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->groupBy('units.code')
+                                    ->selectRaw('units.code, count(*) as total')
                                     ->take(3)
                                     ->get();
             }
@@ -184,12 +185,15 @@ class HomeController extends Controller
                                     ->where('start_stop.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
                 
+                 // Grouping done by code which is always unique unlike name which can exists as a duplicate.
                 $topAttendance = DB::table('attendances')
                                     ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
                                     ->join('units', 'start_stop.unit_id', '=', 'units.id')
                                     ->where('attendances.sender', $user->id)
-                                    ->groupBy('units.name')
-                                    ->selectRaw('name, count(*) as total')
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->groupBy('units.code')
+                                    ->selectRaw('units.code, count(*) as total')
                                     ->take(3)
                                     ->get();
             }
@@ -218,11 +222,31 @@ class HomeController extends Controller
                     $expectedAttendance = $expectedAttendance * $data->students;
                 }
 
+                $durations = [];
+                $totalDurations = 0;
+                $unitsAttendances = [];
+
                 $data->topUnitsNames = [];
                 $data->topUnitsAttendances = [];
+
+                // This complicated function uses the set class duration as weights when computing proportionality
+                // in class attendance.
+                // TODO: Number of students should be considered too. 
                 foreach($topAttendance as $attendance) {
-                    array_push($data->topUnitsNames, $attendance->name);
-                    array_push($data->topUnitsAttendances, $attendance->total);
+                    $unit_data = Unit::where('code', $attendance->code)->first();
+                    array_push($data->topUnitsNames, $unit_data->name." (".$attendance->code.")");
+
+                    $duration = $unit_data->duration ?? 1;
+                    $totalDurations = $totalDurations + $duration;
+                    array_push($durations, $duration);
+                    array_push($unitsAttendances, $attendance->total);
+                }
+
+                // This attendance proportionality could use some optimization in future to handle some edge cases
+                // i.e. when some units have no attendance.
+                $avgDuration = $totalDurations/count($durations);
+                for($i = 0; $i < count($durations); $i++) {
+                    array_push($data->topUnitsAttendances, ($unitsAttendances[$i]*$durations[$i])/$avgDuration);
                 }
                 
                 $data->attendance = ($ClassAttendance/$classesCount)*100;

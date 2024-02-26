@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Timer;
 
 class Attendance extends Model
 {
@@ -14,8 +13,4 @@ class Attendance extends Model
         'timer_id',
         'created_at',
     ];
-
-    public function timer() {
-        return $this->hasOne(Timer::class, 'id', 'timer_id');
-    }
 }

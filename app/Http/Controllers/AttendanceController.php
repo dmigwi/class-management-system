@@ -138,6 +138,8 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
 
+            // TODO Prevent starting an attendance session unless the class has some pending sessions.
+
             $id = Auth::id();
             $unitAssignment = DB::table('unit_user')->where('user_id', $id)
                     ->where('unit_id', $timer->unit_id)->first();
