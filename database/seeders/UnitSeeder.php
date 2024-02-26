@@ -22,7 +22,7 @@ class UnitSeeder extends Seeder
 
         DB::table('units')->insert([
             "id" => 2,
-            "name" => "Introduction to Computer Systems",
+            "name" => "Discrete Structures",
             "code" => "CSE-244",
             "semester" => "1",
             "year" => "2022/2023",
@@ -33,20 +33,31 @@ class UnitSeeder extends Seeder
         DB::table('units')->insert([
             "id" => 3,
             "name" => "Data Structures and Algorithms",
+            "instructor" => 2,
             "code" => "CSE-235",
             "semester" => "2",
             "year" => "2023/2024",
+            "duration" => 12,
+            "start_date" => "2024-02-23 00:00:00",
+            "end_date" => "2024-03-09 00:00:00",
+            "midterm_exam" => "2024-02-27 00:00:00",
+            "final_exam" => "2024-02-29 00:00:00",
             "created_at" => "2024-01-30 14:17:24",
             "updated_at" => "2024-01-30 14:17:24", 
         ]);
 
         DB::table('units')->insert([
             "id" => 4,
-            "name" => "Discrete Structures",
-            "instructor" => 4,
+            "name" => "Introduction to Computer Systems",
+            "instructor" => 2,
             "code" => "CSE-236",
             "semester" => "2",
             "year" => "2023/2024",
+            "duration" => 12,
+            "start_date" => "2024-02-23 00:00:00",
+            "end_date" => "2024-03-09 00:00:00",
+            "midterm_exam" => "2024-02-27 00:00:00",
+            "final_exam" => "2024-02-29 00:00:00",
             "created_at" => "2024-01-30 14:17:24",
             "updated_at" => "2024-01-30 14:17:24", 
         ]);
@@ -54,10 +65,15 @@ class UnitSeeder extends Seeder
         DB::table('units')->insert([
             "id" => 5,
             "name" => "Advanced Programming Concepts",
-            "instructor" => 4,
+            "instructor" => 2,
             "code" => "CSE-240",
-            "semester" => "1",
+            "semester" => "2",
             "year" => "2023/2024",
+            "duration" => 12,
+            "start_date" => "2024-02-23 00:00:00",
+            "end_date" => "2024-03-09 00:00:00",
+            "midterm_exam" => "2024-02-27 00:00:00",
+            "final_exam" => "2024-02-29 00:00:00",
             "created_at" => "2024-01-30 14:17:24",
             "updated_at" => "2024-01-30 14:17:24", 
         ]);

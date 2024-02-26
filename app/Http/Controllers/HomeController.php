@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Unit;
 use App\Models\User;
@@ -22,8 +22,11 @@ class HomeController extends Controller
             $page = "Home";
             $users = [];
             $units = [];
+            $unit_id = $request->unit ?? null;
+            $user_id = $request->user ?? null;
             $data = (object)[];
             
+            // Handle Admin page data for the admin role.
             if ($user->role == "admin") {
                 $tab = $request->tab ?? 'list-users';
                 $search = $request->search ?? '';
@@ -43,7 +46,7 @@ class HomeController extends Controller
                     case 'add-user':
                         $units = Unit::orderBy('updated_at', 'desc')->paginate(
                             $perPage = 10,
-                            $columns = ['id', 'name', 'code'],
+                            $columns = ['id', 'name', 'code', 'instructor'],
                             $pageName = 'page'
                         )->appends(['tab' => $tab]);
                         break;
@@ -66,6 +69,7 @@ class HomeController extends Controller
                                     )->appends(['tab' => $tab]);
 
                         $instructor_id = (int)($request->user ?? '0');
+
                         if ($instructor_id > 0) {
                             // returns classes assigned to the current instructor.
                             $units = Unit::where('instructor', $instructor_id)->orderBy('updated_at', 'desc')->paginate(
@@ -73,18 +77,9 @@ class HomeController extends Controller
                                 $columns = ['id', 'name', 'code'],
                                 $pageName = 'view'
                             )->appends(['tab' => $tab]);
+                            Log::info($units);
                         }
                         break;
-                }
-
-                $unit = $request->unit ?? null;
-                if (!is_null($unit)) {
-                    $data->unit = Unit::where('id', $unit)->select('*')->first();
-                }
-
-                $user = $request->user ?? null;
-                if (!is_null($user)) {
-                    $data->user = User::where('id', $user) -> select('*') -> first();
                 }
 
                 $staffCount = 0;
@@ -124,6 +119,56 @@ class HomeController extends Controller
                 $data->unitsRegistered = $unitsRegistered;
                 $data->issuesPending = $issuesPending;
                 $data->issuesFixedThisWeek = $issuesFixedThisWeek;
+            }
+
+            // Handle Home page data for the instructor role.
+            if ($user->role == "instructor") {
+                $course = $request->unit ?? '';
+                $units = Unit::where('instructor', $user->id)
+                            ->where('id', 'LIKE', '%'.$course.'%')
+                            ->orderBy('updated_at', 'desc')
+                            ->paginate(
+                                    $perPage = 10,
+                                    $columns = ['id', 'name', 'code'],
+                                    $pageName = 'page'
+                                );
+
+                if(!empty($units->getCollection()) && is_null($unit_id)) {
+                    $unit_id = $units->getCollection()->first()->id ?? null;
+                }
+            }
+
+            // Handle Home page data for the student role.
+            if ($user->role == "student") {
+                $units = $user->units();
+
+                if(!empty($units) && is_null($unit_id)) {
+                    $unit_id = $units->first()->id;
+                }
+            }
+
+            if (!is_null($unit_id)) {
+                $data->unit = Unit::where('id', $unit_id)->select('*')->first();
+                $data->students = DB::table('unit_user')
+                            ->where('unit_id', $unit_id)->distinct()
+                            ->count('user_id');
+            }
+
+            if (!is_null($user_id)) {
+                $data->user = User::where('id', $user_id) -> select('*') -> first();
+            }
+
+
+            // TODO: Use the live data from chats table.
+            if ($user->role == "student" || $user->role == "instructor") {
+                $data->last_message = "Excuse me Sir, My grades on your";
+                $data->sent_at = "13:45 12/Jan/2024";
+                $data->sent_to = "Dr. Jan Kowalski";
+                $data->status = "Read";
+                $data->last_attended = "Introduction To Programming";
+                $data->time_signed_in = " 13:45 12/01/2024";
+                $data->start_time = "13:30 12/01/2024";
+                $data->end_time = "15:30 12/01/2024";
             }
 
             $data->page = $page;

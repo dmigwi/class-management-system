@@ -208,18 +208,21 @@
                             <div class="relative flex items-start w-full">
                                 <label class="ms-3.5 block w-full text-sm text-gray-600">
                                     @php
-                                       $isChecked = false; 
-                                        foreach ($user->units ?? [] as $assignedUnit) {
-                                            if ($unit->id === $assignedUnit->id) {
-                                                $isChecked = true;
-                                                break;
+                                       $isChecked = false;
+                                       if ($user->role === "student") {
+                                            foreach ($user->units ?? [] as $assignedUnit) {
+                                                if ($unit->id === $assignedUnit->id) {
+                                                    $isChecked = true;
+                                                    break;
+                                                }
                                             }
-                                        }
+                                       } elseif ($user->role === "instructor") {
+                                            $isChecked = $user->id === $unit->instructor;
+                                       }
                                     @endphp
 
                                     <input type="checkbox" name="classes[]" value="{{$unit->id}}" @checked($isChecked)>
-                               
-                                    {{$unit->name}} - ({{$unit->code}})
+                                    <span>{{$unit->name}} - ({{$unit->code}})</span>
                                 </label>
                             </div>
                         </li>

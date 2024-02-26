@@ -187,3 +187,9 @@ dialog[open].modal {
 .min-h-80 {
     min-height: 20rem;
 }
+
+.attendanceChart {
+  border: 1px #CCC solid;
+  width: 200px;
+  height: 200px;
+}

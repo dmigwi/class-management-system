@@ -15,20 +15,20 @@ class UnitUserSeeder extends Seeder
         DB::table('unit_user')->insert([
             "id" => 1,
             "user_id" => 3,
-            "unit_id" => 5,
+            "unit_id" => 3,
             "created_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('unit_user')->insert([
             "id" => 2,
-            "user_id" => 5,
-            "unit_id" => 5,
+            "user_id" => 3,
+            "unit_id" => 4,
             "created_at" => "2024-01-30 14:17:24",
         ]);
 
         DB::table('unit_user')->insert([
             "id" => 3,
-            "user_id" => 6,
+            "user_id" => 3,
             "unit_id" => 5,
             "created_at" => "2024-01-30 14:17:24",
         ]);
