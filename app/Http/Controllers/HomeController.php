@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,12 +23,12 @@ class HomeController extends Controller
             $users = [];
             $units = [];
             $unit_id = $request->unit ?? null;
-            $user_id = $request->user ?? null;
             $data = (object)[];
             
             // Handle Admin page data for the admin role.
             if ($user->role == "admin") {
                 $tab = $request->tab ?? 'list-users';
+                $user_id = $request->user ?? null;
                 $search = $request->search ?? '';
                 $page = 'Admin';
 
@@ -108,6 +108,10 @@ class HomeController extends Controller
                     }
                 }
 
+                if (!is_null($user_id)) {
+                    $data->user = User::where('id', $user_id) -> select('*') -> first();
+                }
+
                 $issuesPending = 0;
                 $issuesFixedThisWeek = 0;
                 // TODO: Compute this stats from the chats table.
@@ -121,6 +125,11 @@ class HomeController extends Controller
                 $data->issuesFixedThisWeek = $issuesFixedThisWeek;
             }
 
+            $ClassAttendance = 0;
+            $expectedAttendance = 0;
+            $start_time = $request->start ?? "2020-01-01 00:00:00";
+            $end_time = $request->start ?? date('Y-m-d H:i:s');
+            
             // Handle Home page data for the instructor role.
             if ($user->role == "instructor") {
                 $course = $request->unit ?? '';
@@ -136,31 +145,67 @@ class HomeController extends Controller
                 if(!empty($units->getCollection()) && is_null($unit_id)) {
                     $unit_id = $units->getCollection()->first()->id ?? null;
                 }
+
+                // Returns class attendance for the students assigned that class.
+                $ClassAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->where('start_stop.unit_id', $unit_id)
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->count('attendances.sender');
             }
 
             // Handle Home page data for the student role.
             if ($user->role == "student") {
-                $units = $user->units();
-
-                if(!empty($units) && is_null($unit_id)) {
-                    $unit_id = $units->first()->id;
+                $units = $user->units()->paginate(
+                                            $perPage = 10,
+                                            $columns = ['units.id', 'name', 'code'],
+                                            $pageName = 'page'
+                                        );
+                
+                if(!empty($units->getCollection()) && is_null($unit_id)) {
+                    $unit_id = $units->getCollection()->first()->id ?? null;
                 }
+
+                // Returns class attendance for the current student.
+                $ClassAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->where('attendances.sender', $user->id)
+                                    ->where('start_stop.unit_id', $unit_id)
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->count('attendances.sender');
             }
 
             if (!is_null($unit_id)) {
                 $data->unit = Unit::where('id', $unit_id)->select('*')->first();
                 $data->students = DB::table('unit_user')
-                            ->where('unit_id', $unit_id)->distinct()
-                            ->count('user_id');
+                                    ->where('unit_id', $unit_id)
+                                    ->distinct()
+                                    ->count('user_id');
             }
 
-            if (!is_null($user_id)) {
-                $data->user = User::where('id', $user_id) -> select('*') -> first();
-            }
+            if ($page === "Home") {
+                $classesCount = $data->unit->duration;
+                 // Returns the number of classes each student was expected to attend to achieve 100% attendance.
+                 $expectedAttendance = DB::table('start_stop')
+                                            ->where('instructor', $data->unit->instructor ?? "")
+                                            ->where('unit_id', $unit_id)
+                                            ->where('start_stop.started_at', '>=', $start_time)
+                                            ->where('start_stop.stopped_at', '<=', $end_time)
+                                            ->count('instructor');
+                
+                // Instructor charts data contains information for all students assigned their subjects. 
+                if($user->role == "instructor") {
+                    $classesCount = $classesCount *  $data->students;
+                    $expectedAttendance = $expectedAttendance * $data->students;
+                }
+                
+                $data->attendance = ($ClassAttendance/$classesCount)*100;
+                $data->missing = (($expectedAttendance-$ClassAttendance)/$classesCount)*100;
+                $data->circumference = ($data->attendance + $data->missing)*360/100;
 
-
-            // TODO: Use the live data from chats table.
-            if ($user->role == "student" || $user->role == "instructor") {
+                // TODO: Use the live data from chats table.
                 $data->last_message = "Excuse me Sir, My grades on your";
                 $data->sent_at = "13:45 12/Jan/2024";
                 $data->sent_to = "Dr. Jan Kowalski";

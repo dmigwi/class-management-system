@@ -26,7 +26,7 @@ class AttendanceSeeder extends Seeder
         ]);
         DB::table('attendances')->insert([
             "id" => 3,
-            "timer_id" =>1 ,
+            "timer_id" => 1,
             "sender" => 6,
             "created_at" => "2024-01-30 14:17:24",
         ]);
@@ -264,7 +264,7 @@ class AttendanceSeeder extends Seeder
         DB::table('attendances')->insert([
             "id" => 43,
             "timer_id" => 15,
-            "sender" => 3,
+            "sender" => 6,
             "created_at" => "2024-01-30 14:17:24",
         ]);
         DB::table('attendances')->insert([

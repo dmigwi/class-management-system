@@ -1,5 +1,5 @@
 <?php
-    $courses = $units ?? [];
+    $courses = $units ?? null;
     $selectedUnit = $account->unit ?? null;
     $students = $account->students ?? null;
 
@@ -7,9 +7,9 @@
     $role = Str::lower($user->role);
 
     // Charts data
-    $attendance = 58;
-    $missing = 25;
-    $circumference = (58+25)*360/100;
+    $attendance = $account->attendance ?? 0;
+    $missing = $account->missing ?? 0;
+    $circumference = $account->circumference ?? 0;
 
     $topUnitsName = [
             'Introduction to Computer Systems',
@@ -36,8 +36,7 @@
                     </path>
                 </svg>
                 <span class="mx-1">From:</span>
-                <input id="from-date" class="focus:outline-none bg-inherit md:w-fit text-md" type="date" value="" name="start"
-                    oninput="paramSelect();" required/>
+                <input id="from-date" class="focus:outline-none bg-inherit md:w-fit text-md" type="date" value="" name="start"/>
             </div>
 
             <div class="flex items-center px-2 py-2 text-grays-500 border-2 text-md">
@@ -48,8 +47,7 @@
                     </path>
                 </svg>
                 <span class="mx-1">To:</span>
-                <input id="to-date" class="focus:outline-none bg-inherit md:w-fit text-md" type="date" value="" name="end"
-                    oninput="paramSelect();" required/>
+                <input id="to-date" class="focus:outline-none bg-inherit md:w-fit text-md" type="date" value="" name="end"/>
             </div>
 
             <div class="flex items-center pl-2 py-2 text-grays-500 rounded-r-lg border-2 text-md" type="text">
@@ -58,7 +56,7 @@
                     <path
                         d="M449 20H71a51 51 0 0 0-51 51v377c0 29 23 52 51 52h377c28 0 51-23 51-51V71a50 50 0 0 0-50-51zM157 397c0 9-8 17-17 17h-17c-9 0-17-8-17-17v-94c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V174c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V123c0-9 8-17 17-17h17c9 0 17 8 17 17zm85 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V234c0-9 8-17 17-17h17c9 0 17 8 17 17z" />
                 </svg>
-                <select id="course" class="focus:outline-none bg-inherit mx-1" name="unit" onselectionchange="paramSelect();">
+                <select id="course" class="focus:outline-none bg-inherit mx-1" name="unit">
                     <option value="">--Select a Unit---</option>
                     @forelse ($courses as $course)
                         <option value="{{$course->id}}" @selected($course->id === ($selectedUnit->id ?? ""))>
@@ -71,7 +69,7 @@
             </div>
 
             <button id="search-btn" class="flex items-center justify-center pl-2 py-2 text-grays-500 border-2 rounded-lg text-sm
-                btn-primary w-32 space-x-1" type="text" disabled>
+                btn-primary w-32 space-x-1" type="submit">
                 <span class="">Search</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="border-black-500" height="12"
                     width="12" viewBox="0 0 520 520">
@@ -129,10 +127,14 @@
 
                     <p class="text-xl font-bold text-black dark:text-white">Course Details</p>
                     @if ($role == "student")
-                        <p>
-                            <span class="text-start capitalize">Instructor:</span>
+                        <p class="flex items-center justify-start">
+                            <span class="text-start capitalize pr-1">Instructor:</span>
                             <span class="text-sm text-gray-400 dark:text-neutral-400">
-                                {{$selectedUnit->instructor ?? "Not Found"}}
+                                    <span>{{$selectedUnit->lecturer->title ?? "Not Set"}}</span>
+                                    <span>{{$selectedUnit->lecturer->firstname ?? ''}}</span>
+                                    <span>{{$selectedUnit->lecturer->middlename ?? ''}}</span>
+                                    <span>{{$selectedUnit->lecturer->lastname ?? ''}}</span>
+                                </span>
                             </span>
                         </p>
                     @endif
@@ -317,16 +319,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    function paramSelect() {
-        const from = document.getElementById("from-date");
-        const to = document.getElementById("to-date");
-        const course = document.getElementById("course");
-        const isDisabled = from.value === "" || to.value === "" || course.value === "";
-
-        document.getElementById("search-btn").disabled = isDisabled;
-        console.log(isDisabled);
-    }
-
       new Chart(document.getElementById('attendance-chart'), {
         type: 'doughnut',
         data: {
