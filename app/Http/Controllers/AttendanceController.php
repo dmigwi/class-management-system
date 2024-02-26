@@ -181,7 +181,7 @@ class AttendanceController extends Controller
             ]);
            
             if ($validator->fails()) {
-                return back()->withErrors(['status' => 'Mismatch in required field(s)']);
+                return back()->withErrors(['status' => $validator->errors()->first()]);
             }
 
             $unit = Unit::where('instructor', $request->id)->where('code', $request->code)->first();
