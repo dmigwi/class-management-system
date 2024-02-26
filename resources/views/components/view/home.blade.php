@@ -5,6 +5,18 @@
 
     $user = Auth::user();
     $role = Str::lower($user->role);
+
+    // Charts data
+    $attendance = 58;
+    $missing = 25;
+    $circumference = (58+25)*360/100;
+
+    $topUnitsName = [
+            'Introduction to Computer Systems',
+            'Data Structures and Algorithms',
+            'Discrete Structures',
+        ];  
+    $topUnitsAttendance = [7, 5, 3];
 ?>
 
 <div class="flex flex-col w-full md:space-y-4 h-full">
@@ -304,11 +316,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{{-- <script src="https://preline.co/assets/js/hs-apexcharts-helpers.js"></script>
-<script src="https://preline.co/assets/vendor/apexcharts/dist/apexcharts.min.js"></script>
-<script src="https://preline.co/assets/vendor/lodash/lodash.min.js"></script> --}}
-<script src="{{url('/js/charts.js')}}"></script>
-
 <script>
     function paramSelect() {
         const from = document.getElementById("from-date");
@@ -319,4 +326,49 @@
         document.getElementById("search-btn").disabled = isDisabled;
         console.log(isDisabled);
     }
+
+      new Chart(document.getElementById('attendance-chart'), {
+        type: 'doughnut',
+        data: {
+        labels: ['Attendance (%)', 'Missed (%)'],
+        datasets: [{
+                label: 'Percentage of Classes',
+                data: [@json($attendance), @json($missing)],
+                backgroundColor: ['#6fdc8c', '#fa4d56'],
+                borderWidth: 1,
+                }
+            ]
+        },
+        options: {
+            circumference: @json($circumference),
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Unit Attendance Rate (%)'
+                }
+            }
+        }
+      });
+
+    new Chart(document.getElementById('top-attendance-chart'), {
+    type: 'pie',
+    data: {
+        labels: @json($topUnitsName),
+        datasets: [{
+            label: 'Count of Classes',
+            data: @json($topUnitsAttendance),
+            backgroundColor: ['#1192e8','#6fdc8c','#a56eff'],
+            borderWidth: 1,
+            }
+        ]
+    },
+    options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Top 3 Units by Attendance'
+            }
+        }
+    }
+    })
 </script>

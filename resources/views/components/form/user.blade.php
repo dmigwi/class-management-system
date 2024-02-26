@@ -1,6 +1,7 @@
 @php
     $courses = $units ?? [];
     $user = $user ?? null;
+    $role = $user->role ?? '';
 
     $userRoute = 'update.user';
     if (is_null($user)) {
@@ -209,14 +210,14 @@
                                 <label class="ms-3.5 block w-full text-sm text-gray-600">
                                     @php
                                        $isChecked = false;
-                                       if ($user->role === "student") {
+                                       if ($role === "student") {
                                             foreach ($user->units ?? [] as $assignedUnit) {
                                                 if ($unit->id === $assignedUnit->id) {
                                                     $isChecked = true;
                                                     break;
                                                 }
                                             }
-                                       } elseif ($user->role === "instructor") {
+                                       } elseif ($role === "instructor") {
                                             $isChecked = $user->id === $unit->instructor;
                                        }
                                     @endphp

@@ -93,7 +93,7 @@ class AttendanceSeeder extends Seeder
         DB::table('attendances')->insert([
             "id" => 14,
             "timer_id" => 6,
-            "sender" => 7,
+            "sender" => 3,
             "created_at" => "2024-01-30 14:17:24",
         ]);
         DB::table('attendances')->insert([
