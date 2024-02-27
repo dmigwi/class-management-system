@@ -90,7 +90,7 @@ body {
     height: 40px;
     border: #02b0e2;
     border-style: dotted;
-    background-size: contain;
+    background-size: cover;
     background-image: url('/images/student-account.gif');
 }
 
@@ -103,7 +103,7 @@ body {
     height: 40px;
     border: blue;
     border-style: dotted;
-    background-size: contain;
+    background-size: cover;
     background-image: url('/images/lecturer-account.gif');
 }
 

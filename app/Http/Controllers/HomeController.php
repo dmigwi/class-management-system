@@ -399,6 +399,12 @@ class HomeController extends Controller
             if ($validator->fails()) {
                 return back()->withErrors(['status' => $validator->errors()->first()]);
             }
+
+            // NB: Update on the Administrator special unit is disabled via the interface.
+            // This has been disabled so that all users can use it to send chat to the admin users of the site
+            if ($unit_id === 1) {
+                return back()->withErrors(['status' => 'update on the Administrator special unit is disabled!']);
+            }
             
             $unit_info = Unit::find((int)($unit_id));
             if (empty($unit_info)) {
@@ -507,6 +513,12 @@ class HomeController extends Controller
 
             if ($user->role === "admin") {
                $unit_info = Unit::find((int)($id));
+
+                // Edits or deletions are disabled because consistence needs to be maintain when addressing
+                // admin users via chat messages.
+               if ($unit_info->id === 1) {
+                    return back()->withErrors(['status' => 'deleting the Administrator special unit is disabled!']);
+                }
 
                if (!is_null($unit_info)) {
                 $unit_info->delete();

@@ -96,40 +96,45 @@
                "status" => "Pending",
             ]];
 
-   $selected = (object)[
-               "title" => "Introduction into Programming",
-               "name" => "Dr. Jan Kowalski",
-            ];
+   // $selected = (object)[
+   //             "title" => "Introduction into Programming",
+   //             "name" => "Dr. Jan Kowalski",
+   //             "code" => "CSE-456",
+   //          ];
 
-   $courses = [(object)[
-                  "title" => "Introduction into Programming",
-                  "name" => "Dr. Jan Kowalski",
-               ],
-               (object)[
-                  "title" => "Computational Sampling Methods",
-                  "name" => "Dr. Adam Kowalski",
-               ],
-               (object)[
-                  "title" => "Artificial intelligence",
-                  "name" => "Dr. Selckut Cankurt",
-               ],
-               (object)[
-                  "title" => "Masters Project Diploma",
-                  "name" => "Prof. Edip Senyurek",
-               ],
-               (object)[
-                  "title" => "Calculus 1",
-                  "name" => "Dr. Jan Kowalski",
-               ],
-            ];
+   $courses =  $units ?? [];
+   $selected = $account->unit ?? null;
+   $user = Auth::user();
+   $role = Str::lower($user->role);
+   // $courses = [(object)[
+   //                "title" => "Introduction into Programming",
+   //                "name" => "Dr. Jan Kowalski",
+   //             ],
+   //             (object)[
+   //                "title" => "Computational Sampling Methods",
+   //                "name" => "Dr. Adam Kowalski",
+   //             ],
+   //             (object)[
+   //                "title" => "Artificial intelligence",
+   //                "name" => "Dr. Selckut Cankurt",
+   //             ],
+   //             (object)[
+   //                "title" => "Masters Project Diploma",
+   //                "name" => "Prof. Edip Senyurek",
+   //             ],
+   //             (object)[
+   //                "title" => "Calculus 1",
+   //                "name" => "Dr. Jan Kowalski",
+   //             ],
+   //          ];
 
-   $role = $attributes->get('role');
+   //$role = $attributes->get('role');
    ?>
 
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
-   <div class="hs-dropdown relative inline-block text-left max-w-xs" onclick="toggleDropdown()">
+   <div class="hs-dropdown relative inline-block text-left max-w-fit" onclick="toggleDropdown()">
       <button id="dropdown-btn" type="button"
-         class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
+         class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
          <div class="flex sm:items-center justify-between py-2">
             <div class="relative flex items-center space-x-4">
                <div @class([ 
@@ -138,12 +143,15 @@
                      'lecturer-account' => ($role === "student"),
                   ])></div>
                <div class="flex flex-col leading-tight">
-                  <div class="text-sm flex items-center text-gray-700">{{$selected->title}}</div>
-                  <div @class([
-                        'text-sm flex items-center mr-1',
-                        'text-student'=> ($role !== "student"),
-                        'text-lecturer' => ($role === "student"),
-                     ])>{{$selected->name}}</div>
+                  <div class="text-sm flex items-center font-bold text-gray-500">{{$selected->name}} - {{$selected->code}}</div>
+                  <div class='text-sm flex items-center text-gray-400 dark:text-neutral-400'>
+                     <span class='text-sm flex items-center text-gray-400 dark:text-neutral-400 space-x-1'>
+                        <span>{{$selected->lecturer->title ?? "Not Set"}}</span>
+                        <span>{{$selected->lecturer->firstname ?? ''}}</span>
+                        <span>{{$selected->lecturer->middlename ?? ''}}</span>
+                        <span>{{$selected->lecturer->lastname ?? ''}}</span>
+                     </span>
+                  </div>
                </div>
             </div>
          </div>
@@ -156,17 +164,17 @@
          </div>
       </button>
 
-      <div id="dropdown-menu" class="absolute hidden z-auto mt-2 origin-top-right divide-y divide-gray-100
+      <div id="dropdown-menu" class="absolute hidden z-auto origin-top-right divide-y divide-gray-100
          rounded-md bg-white shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
          scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
-         ring-opacity-5 focus:outline-none h-40" role="menu" aria-orientation="vertical"
+         ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical"
          aria-labelledby="hs-dropdown-btn" tabindex="-1">
       @foreach($courses as $course)
-         @if ($course->title === $selected->title && $course->name === $selected->name)
+         @if ($course->id === $selected->id)
             @continue
          @endif
-         <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" type="button" role="menuitem" tabindex="-1"
-            id="menu-item-0">
+
+         <a class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" href="{{'?'.http_build_query(['unit' => $course->id])}}">
             <div class="flex sm:items-center justify-between py-2 w-fit">
                <div class="relative flex items-center space-x-4">
                   <div @class([
@@ -175,16 +183,22 @@
                         'lecturer-account' => ($role === "student"),
                      ])></div>
                   <div class="flex flex-col leading-tight">
-                     <div class="text-sm flex items-center text-gray-700">{{$course->title}}</div>
-                     <div @class([
-                           'text-sm flex items-center',
-                           'text-student'=> ($role !== "student"),
-                           'text-lecturer' => ($role === "student"),
-                        ])>{{$course->name}}</div>
+                     <div class="text-sm flex items-center font-bold text-gray-500">{{$course->name}} - ({{$course->code}})</div>
+                     <span class='text-sm flex items-center text-gray-400 dark:text-neutral-400 space-x-1'>
+                        <span>{{$course->lecturer->title ?? "Not Set"}}</span>
+                        <span>{{$course->lecturer->firstname ?? ''}}</span>
+                        <span>{{$course->lecturer->middlename ?? ''}}</span>
+                        <span>{{$course->lecturer->lastname ?? ''}}</span>
+                     </span>
                   </div>
                </div>
             </div>
-         </button>
+         </a>
+
+         @isset($courses)
+            {{$courses->links()}}
+         @endisset
+
       @endforeach
       </div>
    </div>
@@ -218,6 +232,7 @@
          <input type="text" placeholder="Write your message!" name="message"
             class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3">
          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+            <!--
             <button type="button" disabled
                class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out
                   text-gray-500 hover:bg-gray-300 focus:outline-none">
@@ -251,6 +266,7 @@
                   </path>
                </svg>
             </button>
+         -->
             <button type="button"
                class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out
                   text-white bg-blue-light hover:bg-blue-400 focus:outline-none">

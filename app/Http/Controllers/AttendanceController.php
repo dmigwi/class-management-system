@@ -84,6 +84,8 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
             }
 
+            // TODO Prevent starting an attendance session unless the class has some pending sessions.
+
             $timer = DB::table('start_stop')->insertGetId([
                 "instructor" => $id,
                 "unit_id" => $unit->id,
@@ -137,8 +139,6 @@ class AttendanceController extends Controller
             if (empty($timer) || $timer->stopped_at != null) {
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
-
-            // TODO Prevent starting an attendance session unless the class has some pending sessions.
 
             $id = Auth::id();
             $unitAssignment = DB::table('unit_user')->where('user_id', $id)
