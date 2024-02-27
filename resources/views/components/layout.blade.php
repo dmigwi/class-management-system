@@ -71,8 +71,8 @@
                             </span>
                             <span class="mx-2 text-sm font-normal capitalize">
                                 <span @class(['hidden' => !$isAdmin])>follow up</span>
-                                <span @class(['hidden' => !$isLecturer])>chat a lecturer</span>
-                                <span @class(['hidden' => !$isStudent])>chat a student</span>
+                                <span @class(['hidden' => !$isStudent])>chat a lecturer</span>
+                                <span @class(['hidden' => !$isLecturer])>chat a student</span>
                             </span>
                             <div class="flex items-center px-2 text-xs bg-blue-light text-white rounded-lg">
                                 {{$notifications}}

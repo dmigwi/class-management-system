@@ -1,6 +1,7 @@
 @php
     $courses = $units ?? [];
     $user = $user ?? null;
+    $role = $user->role ?? '';
 
     $userRoute = 'update.user';
     if (is_null($user)) {
@@ -208,18 +209,21 @@
                             <div class="relative flex items-start w-full">
                                 <label class="ms-3.5 block w-full text-sm text-gray-600">
                                     @php
-                                       $isChecked = false; 
-                                        foreach ($user->units ?? [] as $assignedUnit) {
-                                            if ($unit->id === $assignedUnit->id) {
-                                                $isChecked = true;
-                                                break;
+                                       $isChecked = false;
+                                       if ($role === "student") {
+                                            foreach ($user->units ?? [] as $assignedUnit) {
+                                                if ($unit->id === $assignedUnit->id) {
+                                                    $isChecked = true;
+                                                    break;
+                                                }
                                             }
-                                        }
+                                       } elseif ($role === "instructor") {
+                                            $isChecked = $user->id === $unit->instructor;
+                                       }
                                     @endphp
 
                                     <input type="checkbox" name="classes[]" value="{{$unit->id}}" @checked($isChecked)>
-                               
-                                    {{$unit->name}} - ({{$unit->code}})
+                                    <span>{{$unit->name}} - ({{$unit->code}})</span>
                                 </label>
                             </div>
                         </li>

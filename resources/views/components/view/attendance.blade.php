@@ -12,12 +12,10 @@
 
     $courses = $units ?? [];
 
-    $fmDiv = 'start-form';
     $fmRoute = 'start.attendance';
     $btnText = 'Start Attendance';
 
     if ($isAttendanceOpen) {
-        $fmDiv = 'stop-form';
         $fmRoute = 'end.attendance';
         $btnText = 'Stop Attendance';
     }
@@ -50,35 +48,36 @@
             @if ($role === "instructor")
                 <span class="flex items-center justify-between space-x-2">
                     <div class="inline-block relative w-full">
-                        <form type="hidden" id="{{$fmDiv}}" action="{{route($fmRoute)}}" method="POST">
+                        <form class="flex items-center justify-center" action="{{route($fmRoute)}}" method="POST">
                             @csrf
-                            <input type="hidden" id="sender-id" name="id" value="{{$userId}}">
-                            <input type="hidden" id="course-code" name="code" value="{{$unitSelected}}">
+                            <input type="hidden" name="id" value="{{$userId}}">
+                            <input type="hidden" id="course-selected" name="code" value="{{$unitSelected}}">
+                            <select id="course-code" class="block w-full bg-white border border-gray-400 hover:border-gray-500
+                                px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                                onchange="onSelectChange();" @disabled($isAttendanceOpen || empty($courses))>
+                                    <option value="">--Select a Unit---</option>
+                                    @forelse ($courses as $course)
+                                        <option value="{{$course->code}}" @selected($course->code === $unitSelected)>
+                                            {{$course->name}}
+                                        </option>
+                                    @empty
+                                        <option value="" @selected(true)>--No Units Available---</option>
+                                    @endforelse
+                            </select>
+                   
+                            <div class="flex items-center text-md">
+                            @if (count($courses) > 0)
+                                <button id="attendance-btn" type="submit" disabled class="py-2 text-grays-500 border-1 rounded-lg btn-primary w-40">
+                                        {{$btnText}}
+                                </button>
+                            @endif
+                            </div>
                         </form>
-                        <select id="select-cours" name="code" class="block w-full bg-white border border-gray-400 hover:border-gray-500
-                            px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                            onchange="onSelectChange();" @disabled($isAttendanceOpen)>
-                                <option value="">--Select a Unit---</option>
-                                @forelse ($courses as $course)
-                                    <option value="{{$course->code}}" @selected($course->code === $unitSelected)>
-                                        {{$course->name}}
-                                    </option>
-                                @empty
-                                    <option value="" @selected(true)>--No Units Available---</option>
-                                @endforelse
-                        </select>
-                    </div>
-                    <div class="flex items-center text-md">
-                    @if (count($courses) > 0)
-                        <a href="{{route($fmRoute)}}"
-                            onclick="event.preventDefault(); document.getElementById({{$fmDiv}}).submit();">
-                            <span class="flex items-center justify-center py-2 text-grays-500 border-1 rounded-lg btn-primary w-40">
-                                $btnText
-                            </span>
-                        </a>
-                    @endif
                     </div>
                 </span>
+                @if (!is_null($errors ?? null) && $errors->first("status"))
+                        <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
+                @endif
                 @if ($isAttendanceOpen)
                     <div class="visible-print text-center">
                         {!! QrCode::size(560)->generate(route('sign.attendance', $timerId)); !!}
@@ -87,9 +86,8 @@
                         {{route('sign.attendance', $timerId)}}
                     </div>
                 @else
-                    @if (!is_null($errors ?? null) && $errors->first("status"))
-                        <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
-                    @else
+                    <!--If error not found proceed-->
+                    @if (!(!is_null($errors ?? null) && $errors->first("status"))) 
                         <h2 class="flex items-center justify-center text-xl font-semibold text-light-blue dark:text-white">
                         @if (count($courses) > 0)
                             <span>Class attendance sign in is not yet open!</span>
@@ -127,7 +125,10 @@
 
 <script>
     function onSelectChange() {
-        var e = document.getElementById("select-cours");
-        document.getElementById("course-code").value = e.options[e.selectedIndex].value;
+        const e = document.getElementById("course-code");
+        const selectedUnit = e.options[e.selectedIndex].value;
+        document.getElementById("course-selected").value = selectedUnit;
+        document.getElementById("attendance-btn").disabled = (selectedUnit === "");
     }
+    onSelectChange();
 </script>

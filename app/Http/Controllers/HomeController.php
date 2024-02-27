@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -22,10 +22,13 @@ class HomeController extends Controller
             $page = "Home";
             $users = [];
             $units = [];
+            $unit_id = $request->unit ?? null;
             $data = (object)[];
             
+            // Handle Admin page data for the admin role.
             if ($user->role == "admin") {
                 $tab = $request->tab ?? 'list-users';
+                $user_id = $request->user ?? null;
                 $search = $request->search ?? '';
                 $page = 'Admin';
 
@@ -43,7 +46,7 @@ class HomeController extends Controller
                     case 'add-user':
                         $units = Unit::orderBy('updated_at', 'desc')->paginate(
                             $perPage = 10,
-                            $columns = ['id', 'name', 'code'],
+                            $columns = ['id', 'name', 'code', 'instructor'],
                             $pageName = 'page'
                         )->appends(['tab' => $tab]);
                         break;
@@ -77,16 +80,6 @@ class HomeController extends Controller
                         break;
                 }
 
-                $unit = $request->unit ?? null;
-                if (!is_null($unit)) {
-                    $data->unit = Unit::where('id', $unit)->select('*')->first();
-                }
-
-                $user = $request->user ?? null;
-                if (!is_null($user)) {
-                    $data->user = User::where('id', $user) -> select('*') -> first();
-                }
-
                 $staffCount = 0;
                 $studentsCount = 0;
                 $countRoles = User::groupBy('role')
@@ -113,6 +106,10 @@ class HomeController extends Controller
                     }
                 }
 
+                if (!is_null($user_id)) {
+                    $data->user = User::where('id', $user_id) -> select('*') -> first();
+                }
+
                 $issuesPending = 0;
                 $issuesFixedThisWeek = 0;
                 // TODO: Compute this stats from the chats table.
@@ -124,6 +121,147 @@ class HomeController extends Controller
                 $data->unitsRegistered = $unitsRegistered;
                 $data->issuesPending = $issuesPending;
                 $data->issuesFixedThisWeek = $issuesFixedThisWeek;
+            }
+
+            $ClassAttendance = 0;
+            $expectedAttendance = 0;
+            $topAttendance = [];
+            $start_time = $request->start ?? "2020-01-01 00:00:00";
+            $end_time = $request->start ?? date('Y-m-d H:i:s');
+            
+            // Handle Home page data for the instructor role.
+            if ($user->role == "instructor") {
+                $units = Unit::where('instructor', $user->id)
+                            ->orderBy('updated_at', 'desc')
+                            ->paginate(
+                                    $perPage = 10,
+                                    $columns = ['id', 'name', 'code'],
+                                    $pageName = 'page'
+                                );
+
+                if(!empty($units->getCollection()) && is_null($unit_id)) {
+                    $unit_id = $units->getCollection()->first()->id ?? null;
+                }
+
+                // Returns class attendance for the students assigned that class.
+                $ClassAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->where('start_stop.unit_id', $unit_id)
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->count('attendances.sender');
+                
+                // Grouping done by code which is always unique unlike name which can exists as a duplicate.
+                $topAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
+                                    ->where('start_stop.instructor', $user->id)
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->groupBy('units.code')
+                                    ->selectRaw('units.code, count(*) as total')
+                                    ->take(3)
+                                    ->get();
+            }
+
+            // Handle Home page data for the student role.
+            if ($user->role == "student") {
+                $units = $user->units()->paginate(
+                                            $perPage = 10,
+                                            $columns = ['units.id', 'name', 'code'],
+                                            $pageName = 'page'
+                                        );
+                
+                if(!empty($units->getCollection()) && is_null($unit_id)) {
+                    $unit_id = $units->getCollection()->first()->id ?? null;
+                }
+
+                // Returns class attendance for the current student.
+                $ClassAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->where('attendances.sender', $user->id)
+                                    ->where('start_stop.unit_id', $unit_id)
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->count('attendances.sender');
+                
+                 // Grouping done by code which is always unique unlike name which can exists as a duplicate.
+                $topAttendance = DB::table('attendances')
+                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
+                                    ->where('attendances.sender', $user->id)
+                                    ->where('start_stop.started_at', '>=', $start_time)
+                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->groupBy('units.code')
+                                    ->selectRaw('units.code, count(*) as total')
+                                    ->take(3)
+                                    ->get();
+            }
+
+            if (!is_null($unit_id)) {
+                $data->unit = Unit::where('id', $unit_id)->select('*')->first();
+                $data->students = DB::table('unit_user')
+                                    ->where('unit_id', $unit_id)
+                                    ->distinct()
+                                    ->count('user_id');
+            }
+
+            if ($page === "Home") {
+                $classesCount = $data->unit->duration;
+                 // Returns the number of classes each student was expected to attend to achieve 100% attendance.
+                 $expectedAttendance = DB::table('start_stop')
+                                            ->where('instructor', $data->unit->instructor ?? "")
+                                            ->where('unit_id', $unit_id)
+                                            ->where('start_stop.started_at', '>=', $start_time)
+                                            ->where('start_stop.stopped_at', '<=', $end_time)
+                                            ->count('instructor');
+                
+                // Instructor charts data contains information for all students assigned their subjects. 
+                if($user->role == "instructor") {
+                    $classesCount = $classesCount *  $data->students;
+                    $expectedAttendance = $expectedAttendance * $data->students;
+                }
+
+                $durations = [];
+                $totalDurations = 0;
+                $unitsAttendances = [];
+
+                $data->topUnitsNames = [];
+                $data->topUnitsAttendances = [];
+
+                // This complicated function uses the set class duration as weights when computing proportionality
+                // in class attendance.
+                // TODO: Number of students should be considered too. 
+                foreach($topAttendance as $attendance) {
+                    $unit_data = Unit::where('code', $attendance->code)->first();
+                    array_push($data->topUnitsNames, $unit_data->name." (".$attendance->code.")");
+
+                    $duration = $unit_data->duration ?? 1;
+                    $totalDurations = $totalDurations + $duration;
+                    array_push($durations, $duration);
+                    array_push($unitsAttendances, $attendance->total);
+                }
+
+                // This attendance proportionality could use some optimization in future to handle some edge cases
+                // i.e. when some units have no attendance.
+                $avgDuration = $totalDurations/count($durations);
+                for($i = 0; $i < count($durations); $i++) {
+                    array_push($data->topUnitsAttendances, ($unitsAttendances[$i]*$durations[$i])/$avgDuration);
+                }
+                
+                $data->attendance = ($ClassAttendance/$classesCount)*100;
+                $data->missing = (($expectedAttendance-$ClassAttendance)/$classesCount)*100;
+                $data->circumference = ($data->attendance + $data->missing)*360/100;
+
+                // TODO: Use the live data from chats table.
+                $data->last_message = "Excuse me Sir, My grades on your";
+                $data->sent_at = "13:45 12/Jan/2024";
+                $data->sent_to = "Dr. Jan Kowalski";
+                $data->status = "Read";
+                $data->last_attended = "Introduction To Programming";
+                $data->time_signed_in = " 13:45 12/01/2024";
+                $data->start_time = "13:30 12/01/2024";
+                $data->end_time = "15:30 12/01/2024";
             }
 
             $data->page = $page;

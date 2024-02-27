@@ -138,6 +138,8 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
 
+            // TODO Prevent starting an attendance session unless the class has some pending sessions.
+
             $id = Auth::id();
             $unitAssignment = DB::table('unit_user')->where('user_id', $id)
                     ->where('unit_id', $timer->unit_id)->first();
@@ -181,7 +183,7 @@ class AttendanceController extends Controller
             ]);
            
             if ($validator->fails()) {
-                return back()->withErrors(['status' => 'Mismatch in required field(s)']);
+                return back()->withErrors(['status' => $validator->errors()->first()]);
             }
 
             $unit = Unit::where('instructor', $request->id)->where('code', $request->code)->first();
