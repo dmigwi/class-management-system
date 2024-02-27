@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->text('message');
             $table->unsignedBigInteger('unit_id');
-            $table->unsignedBigInteger('user_id')->nullable();;
+            $table->unsignedBigInteger('sender')->nullable();
             $table->timestamp('read_at')->useCurrentOnUpdate()->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
-            $table->foreign('user_id')->nullable()->constrained()->references('id')->on('users')->onDelete('set null');
+            $table->foreign('sender')->nullable()->constrained()->references('id')->on('users')->onDelete('set null');
         });
     }
 
