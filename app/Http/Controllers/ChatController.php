@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Unit;
-// use App\Models\User;
+use App\Models\Chat;
 
 class ChatController extends Controller
 {
@@ -54,7 +54,15 @@ class ChatController extends Controller
                 $data->unit = Unit::where('id', $unit_id)->select('*')->first();
             }
 
-            return view('index', ["account" => $data, "units" => $units]);
+            $conversation = Chat::where("unit_id", $unit_id)
+                                ->orderBy('created_at', 'desc')
+                                ->paginate(
+                                    $perPage = 25,
+                                    $columns = ['id', 'message', 'user_id', 'read_at', 'created_at'],
+                                    $pageName = 'chat'
+                                );
+
+            return view('index', ["account" => $data, "units" => $units, 'conversation' => $conversation]);
         }
         return view('login');
     }

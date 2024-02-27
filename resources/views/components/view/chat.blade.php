@@ -1,135 +1,10 @@
 <?php 
-   $conversation = [(object)[
-               "role" => "student",
-               "message" => "Can be verified on any platform using docker",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Your error message says permission denied, npm global installs must be given root privileges.",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "Command was run with root privileges. I'm sure about that.",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I've update the description so it's more obviously now",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "FYI https://askubuntu.com/a/700266/510172",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "Check the line above (it ends with a # so, I'm running it as root ) `# npm install -g @vue/devtools`",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Any updates on this issue? I'm getting the same error when trying to install devtools. Thanks",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "Thanks for your message David. I thought I'm alone with this issue. Please, ? the issue to support it :)",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Are you using sudo?",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Run this command sudo chown -R `whoami` /Users/[your_user_profile]/.npm-global/ then install the package globally without using sudo",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "It seems like you are from Mac OS world. There is no /Users/ folder on linux?",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I have no issue with any other packages installed with root permission globally.",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "yes, I have a mac. I never had issues with root permission as well, but this helped me to solve the problem",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I get the same error on Arch Linux (also with sudo)",
-               "timestamp" => "",
-               "status" => "Delivered",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I also have this issue, Here is what I was doing until now: #1076",
-               "timestamp" => "",
-               "status" => "Delivered",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "even i am facing",
-               "timestamp" => "",
-               "status" => "Pending",
-            ]];
-
-   // $selected = (object)[
-   //             "title" => "Introduction into Programming",
-   //             "name" => "Dr. Jan Kowalski",
-   //             "code" => "CSE-456",
-   //          ];
-
-   $courses =  $units ?? [];
-   $selected = $account->unit ?? null;
    $user = Auth::user();
-   $role = Str::lower($user->role);
-   // $courses = [(object)[
-   //                "title" => "Introduction into Programming",
-   //                "name" => "Dr. Jan Kowalski",
-   //             ],
-   //             (object)[
-   //                "title" => "Computational Sampling Methods",
-   //                "name" => "Dr. Adam Kowalski",
-   //             ],
-   //             (object)[
-   //                "title" => "Artificial intelligence",
-   //                "name" => "Dr. Selckut Cankurt",
-   //             ],
-   //             (object)[
-   //                "title" => "Masters Project Diploma",
-   //                "name" => "Prof. Edip Senyurek",
-   //             ],
-   //             (object)[
-   //                "title" => "Calculus 1",
-   //                "name" => "Dr. Jan Kowalski",
-   //             ],
-   //          ];
-
-   //$role = $attributes->get('role');
-   ?>
+   $role = Str::lower($user->role ?? "");
+   $courses =  $units ?? [];
+   $conversation = $conversation ?? [];
+   $unit = $account->unit ?? null;
+?>
 
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
    <div class="hs-dropdown relative inline-block text-left max-w-fit" onclick="toggleDropdown()">
@@ -143,13 +18,13 @@
                      'lecturer-account' => ($role === "student"),
                   ])></div>
                <div class="flex flex-col leading-tight">
-                  <div class="text-sm flex items-center font-bold text-gray-500">{{$selected->name}} - {{$selected->code}}</div>
+                  <div class="text-sm flex items-center font-bold text-gray-500">{{$unit->name}} - {{$unit->code}}</div>
                   <div class='text-sm flex items-center text-gray-400 dark:text-neutral-400'>
                      <span class='text-sm flex items-center text-gray-400 dark:text-neutral-400 space-x-1'>
-                        <span>{{$selected->lecturer->title ?? "Not Set"}}</span>
-                        <span>{{$selected->lecturer->firstname ?? ''}}</span>
-                        <span>{{$selected->lecturer->middlename ?? ''}}</span>
-                        <span>{{$selected->lecturer->lastname ?? ''}}</span>
+                        <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
+                        <span>{{$unit->lecturer->firstname ?? ''}}</span>
+                        <span>{{$unit->lecturer->middlename ?? ''}}</span>
+                        <span>{{$unit->lecturer->lastname ?? ''}}</span>
                      </span>
                   </div>
                </div>
@@ -170,7 +45,7 @@
          ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical"
          aria-labelledby="hs-dropdown-btn" tabindex="-1">
       @foreach($courses as $course)
-         @if ($course->id === $selected->id)
+         @if ($course->id === $unit->id)
             @continue
          @endif
 
@@ -206,23 +81,23 @@
    <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
       scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
    @foreach ($conversation as $data)
-      @if (Str::lower($data->role) === $role)
-      <div class="flex items-end">
-         <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none
-               bg-blue-light text-white">
-            {{ $data->message }}
-         </span>
-      </div>
-      @else
-      <div class="flex justify-end items-end">
-         <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none
-               bg-gray-300 text-gray-600">
-            {{ $data->message }}
-            <span class="flex items-end">
-               <x-utils.status :status='$data->status ?? "Pending"' />
+      @if ($data->user_id === $user->id)
+         <div class="flex items-end">
+            <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none
+                  bg-blue-light text-white">
+               {{ $data->message }}
             </span>
-         </span>
-      </div>
+         </div>
+      @else
+         <div class="flex justify-end items-end">
+            <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none
+                  bg-gray-300 text-gray-600">
+               {{ $data->message }}
+               <span class="flex items-end">
+                  <x-utils.status :status='$data->status ?? "Pending"' />
+               </span>
+            </span>
+         </div>
       @endif
    @endforeach
    </div>

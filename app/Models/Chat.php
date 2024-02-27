@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Unit;
+use App\Models\User;
 
 class Chat extends Model
 {
@@ -16,4 +18,12 @@ class Chat extends Model
         'read_at',
         'created_at',
     ];
+
+    public function sender() {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function unit() {
+        return $this->hasOne(Unit::class, 'id', 'unit_id');
+    }
 }

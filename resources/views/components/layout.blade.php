@@ -98,7 +98,7 @@
             <x-view.admin :account='$account' :users='$users' :units='$units' />
         @break
         @case('chat')
-            <x-view.chat :account='$account' :units='$units' />
+            <x-view.chat :account='$account' :units='$units' :conversation='$conversation' />
         @break
         @case('attendance')
             <x-view.attendance :account='$account' :units='$units' />
