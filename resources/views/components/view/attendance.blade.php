@@ -21,7 +21,10 @@
     }
 @endphp
 
-<div class="py-16 h-full">
+<div @class([
+        'py-16 h-full',
+        $class => true,
+    ])>
     <div class="xl:container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
         <div class="grid gap-12 md:gap-6 md:grid-cols-2 lg:gap-12">
             <div class="group space-y-6">

@@ -6,10 +6,13 @@
    $unit = $account->unit ?? null;
 ?>
 
-<div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
+<div @class([
+      'flex-1 p:2 sm:p-5 justify-between flex flex-col h-full',
+      $class => true,
+   ])>
    <div class="hs-dropdown relative inline-block text-left max-w-fit" onclick="toggleDropdown()">
       <button id="dropdown-btn" type="button"
-         class="flex items-center px-2 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
+         class="flex items-center px-2 py-2  bg-gray-100 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
          <div class="flex sm:items-center justify-between">
             <div class="relative flex items-center space-x-4">
                <div @class([ 
@@ -38,7 +41,7 @@
       </button>
 
       <div id="dropdown-menu" class="absolute hidden z-auto origin-top-right divide-y divide-gray-100
-         rounded-md bg-white shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
+         rounded-md bg-gray-100 shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
          scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
          ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical"
          aria-labelledby="hs-dropdown-btn" tabindex="-1">
@@ -76,34 +79,41 @@
       </div>
    </div>
 
-   <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
+   <div id="messages" class="flex flex-col space-y-1 p-2 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
       scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
    @foreach ($conversation as $data)
-      @if ($data->sender_id === $user->id)
-         <div class="flex items-end">
-            <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none
-                  bg-blue-light text-white">
+      @php
+         $isCurrent = $data->sender_id === $user->id;
+      @endphp
+         <div @class([
+               'flex items-end', 
+               'justify-end' => !$isCurrent,
+            ])>
+            <span @class([
+                  'flex-col space-y-2 text-sm max-w-md mx-2 px-4 py-2 rounded-lg inline-block font-semibold', 
+                  'order-2 rounded-bl-none bg-blue-light text-white' => $isCurrent,
+                  'order-1 rounded-br-none bg-gray-300 text-gray-700' => !$isCurrent,
+               ])>
                {{ $data->message }}
+               @if (!$isCurrent)
+                  @php
+                     $status =  'Read';
+                     if (is_null($data->read_at)) $status = 'Delivered';
+                  @endphp
+                  <span class="flex items-end">
+                     <x-utils.status :status='$status ?? "Pending"' />
+                  </span>
+               @endif
             </span>
          </div>
-      @else
-         <div class="flex justify-end items-end">
-            <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none
-                  bg-gray-300 text-gray-600">
-               {{ $data->message }}
-               <span class="flex items-end">
-                  <x-utils.status :status='$data->status ?? "Pending"' />
-               </span>
-            </span>
-         </div>
-      @endif
    @endforeach
    </div>
 
-   <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-      <div class="relative flex">
-         <input type="text" placeholder="Write your message!" name="message"
-            class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3">
+   <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
+      <form  class="relative flex" method="POST" action="">
+         @csrf
+         <input type="text" placeholder="Write your message!" name="message" required
+            class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-300 rounded-md py-3"/>
          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
             <!--
             <button type="button" disabled
@@ -140,7 +150,7 @@
                </svg>
             </button>
          -->
-            <button type="button"
+            <button type="submit"
                class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out
                   text-white bg-blue-light hover:bg-blue-400 focus:outline-none">
                <span class="font-bold">Send</span>
@@ -152,7 +162,7 @@
                </svg>
             </button>
          </div>
-      </div>
+      </form>
    </div>
 </div>
 

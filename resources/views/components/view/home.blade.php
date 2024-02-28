@@ -14,11 +14,14 @@
     $topUnitsAttendances = $account->topUnitsAttendances ?? [];
 ?>
 
-<div class="flex flex-col w-full md:space-y-4 h-full">
+<div @class([
+        'flex flex-col w-full md:space-y-4 h-full',
+        $class => true,
+    ])>
     <div class="h-screen px-4 pb-24 overflow-auto my-6 md:px-6">
-        <form class="flex items-center space-x-4" method="GET" action="{{url('dashboard')}}">
-            <div class="flex items-center px-2 py-2 text-grays-500 border-2 rounded-l-lg text-md">
-                <svg width="20" height="20" fill="currentColor" class="border-black-500" viewBox="0 0 1792 1792"
+        <form class="flex items-center space-x-1 pb-2" method="GET" action="{{url('dashboard')}}">
+            <div class="flex items-center px-2 py-2 text-grays-500 border-2 border-gray-400 rounded-l-lg text-md">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 
                         0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768
@@ -34,8 +37,8 @@
                 <input id="from-date" class="focus:outline-none bg-inherit md:w-fit text-md" type="date" value="" name="start"/>
             </div>
 
-            <div class="flex items-center px-2 py-2 text-grays-500 border-2 text-md">
-                <svg width="20" height="20" fill="currentColor" class="border-black-500" viewBox="0 0 1792 1792"
+            <div class="flex items-center px-2 py-2 text-grays-500 border-gray-400 border-2 text-md">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 1792 1792"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z">
@@ -45,13 +48,13 @@
                 <input id="to-date" class="focus:outline-none bg-inherit md:w-fit text-md" type="date" value="" name="end"/>
             </div>
 
-            <div class="flex items-center pl-2 py-2 text-grays-500 rounded-r-lg border-2 text-md" type="text">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="border-black-500" height="20"
+            <div class="flex items-center pl-2 py-2.5 text-grays-500 rounded-r-lg border-gray-400 border-2 text-md" type="text">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="20"
                     width="20" viewBox="0 0 520 520">
                     <path
                         d="M449 20H71a51 51 0 0 0-51 51v377c0 29 23 52 51 52h377c28 0 51-23 51-51V71a50 50 0 0 0-50-51zM157 397c0 9-8 17-17 17h-17c-9 0-17-8-17-17v-94c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V174c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V123c0-9 8-17 17-17h17c9 0 17 8 17 17zm85 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V234c0-9 8-17 17-17h17c9 0 17 8 17 17z" />
                 </svg>
-                <select id="course" class="focus:outline-none bg-inherit mx-1" name="unit">
+                <select id="course" class="focus:outline-none bg-inherit md:w-fit" name="unit">
                     <option value="">--Select a Unit---</option>
                     @forelse ($courses as $course)
                         <option value="{{$course->id}}" @selected($course->id === ($selectedUnit->id ?? ""))>
@@ -63,10 +66,10 @@
                 </select>
             </div>
 
-            <button id="search-btn" class="flex items-center justify-center pl-2 py-2 text-grays-500 border-2 rounded-lg text-sm
+            <button id="search-btn" class="flex items-center justify-center pl-2 py-2 border-2 rounded-lg text-sm
                 btn-primary w-32 space-x-1" type="submit">
                 <span class="">Search</span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="border-black-500" height="12"
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="12"
                     width="12" viewBox="0 0 520 520">
                     <path
                         d="M496 453 362 320a189 189 0 1 0-340-92 190 190 0 0 0 298 135l133 133a14 14 0 0 0 21 0l21-21a17

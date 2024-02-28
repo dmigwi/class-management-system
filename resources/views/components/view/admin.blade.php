@@ -13,7 +13,10 @@
     $units = session('units') ?? $units;
 ?>
 
-<div class="flex flex-col w-full md:space-y-4 h-full">
+<div @class([
+        'flex flex-col w-full md:space-y-4 h-full',
+        $class => true,
+    ])>
     <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
         <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-3 lg:grid-cols-3">
             <div class="w-full">
