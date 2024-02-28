@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\Timer;
 use App\Models\Attendance;
@@ -37,7 +36,7 @@ class AttendanceController extends Controller
                $units = Unit::where('instructor', Auth::id())->select('name', 'code')->paginate(10);
 
                // Prevents running timers for more than 1 unit per instructor.
-               $timer_id = DB::table('start_stop')->select('id', 'unit_id')
+               $timer_id = Timer::select('id', 'unit_id')
                                     ->where("instructor", Auth::id())
                                     ->where("stopped_at", null)->first();
 
@@ -86,7 +85,7 @@ class AttendanceController extends Controller
 
             // TODO Prevent starting an attendance session unless the class has some pending sessions.
 
-            $timer = DB::table('start_stop')->insertGetId([
+            $timer = Timer::insertGetId([
                 "instructor" => $id,
                 "unit_id" => $unit->id,
                 "stopped_at" => null,
@@ -135,7 +134,7 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'Missing required field']);
             }
 
-            $timer = DB::table('start_stop')->where("id", $timer_id)->first();
+            $timer = Timer::where("id", $timer_id)->first();
             if (empty($timer) || $timer->stopped_at != null) {
                 return back()->withErrors(['status' => 'signing attendance has been disabled']);
             }
@@ -191,7 +190,7 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'You are not allocated this unit.']);
             }
 
-            $timer = DB::table('start_stop')->where('instructor', $id)
+            $timer = Timer::where('instructor', $id)
                             ->where("unit_id", $unit->id)
                             ->where("stopped_at", null)
                             ->first();
@@ -201,7 +200,7 @@ class AttendanceController extends Controller
             }
 
             $now =date('Y-m-d H:i:s');
-            DB::table('start_stop')->where('id', $timer->id)->update(['stopped_at' => $now]);
+            Timer::where('id', $timer->id)->update(['stopped_at' => $now]);
 
             $user = Auth::user();
             $data = (object)[

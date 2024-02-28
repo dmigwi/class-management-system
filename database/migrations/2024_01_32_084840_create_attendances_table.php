@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('timer_id');
             $table->unsignedBigInteger('sender');
             $table->timestamp('created_at')->useCurrent();
-            $table->foreign('timer_id')->references('id')->on('start_stop')->onDelete('cascade');
+            $table->foreign('timer_id')->references('id')->on('timer')->onDelete('cascade');
             $table->foreign('sender')->references('id')->on('users')->onDelete('cascade');
             $table->unique(['timer_id', 'sender']);
         });

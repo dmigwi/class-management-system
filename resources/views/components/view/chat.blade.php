@@ -9,24 +9,22 @@
 <div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
    <div class="hs-dropdown relative inline-block text-left max-w-fit" onclick="toggleDropdown()">
       <button id="dropdown-btn" type="button"
-         class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
-         <div class="flex sm:items-center justify-between py-2">
+         class="flex items-center px-2 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
+         <div class="flex sm:items-center justify-between">
             <div class="relative flex items-center space-x-4">
                <div @class([ 
-                     'relative flex flex-col leading-tight',
+                     'mx-auto object-cover rounded-full h-10 w-10 pl-2',
                      'student-account'=> ($role !== "student"),
                      'lecturer-account' => ($role === "student"),
                   ])></div>
                <div class="flex flex-col leading-tight">
-                  <div class="text-sm flex items-center font-bold text-gray-500">{{$unit->name}} - {{$unit->code}}</div>
-                  <div class='text-sm flex items-center text-gray-400 dark:text-neutral-400'>
-                     <span class='text-sm flex items-center text-gray-400 dark:text-neutral-400 space-x-1'>
-                        <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
-                        <span>{{$unit->lecturer->firstname ?? ''}}</span>
-                        <span>{{$unit->lecturer->middlename ?? ''}}</span>
-                        <span>{{$unit->lecturer->lastname ?? ''}}</span>
-                     </span>
-                  </div>
+                  <div class="text-sm flex items-center font-bold text-gray-700">{{$unit->name}} - ({{$unit->code}})</div>
+                  <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
+                     <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
+                     <span>{{$unit->lecturer->firstname ?? ''}}</span>
+                     <span>{{$unit->lecturer->middlename ?? ''}}</span>
+                     <span>{{$unit->lecturer->lastname ?? ''}}</span>
+                  </span>
                </div>
             </div>
          </div>
@@ -49,17 +47,17 @@
             @continue
          @endif
 
-         <a class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" href="{{'?'.http_build_query(['unit' => $course->id])}}">
-            <div class="flex sm:items-center justify-between py-2 w-fit">
+         <a class="text-gray-700 block px-2 py-2 text-sm w-full" href="{{'?'.http_build_query(['unit' => $course->id])}}">
+            <div class="flex sm:items-center justify-between w-fit">
                <div class="relative flex items-center space-x-4">
                   <div @class([
-                        'relative flex flex-col leading-tight',
+                        'mx-auto object-cover rounded-full h-10 w-10 pl-2',
                         'student-account'=> ($role !== "student"),
                         'lecturer-account' => ($role === "student"),
                      ])></div>
                   <div class="flex flex-col leading-tight">
-                     <div class="text-sm flex items-center font-bold text-gray-500">{{$course->name}} - ({{$course->code}})</div>
-                     <span class='text-sm flex items-center text-gray-400 dark:text-neutral-400 space-x-1'>
+                     <div class="text-sm flex items-center font-bold text-gray-700">{{$course->name}} - ({{$course->code}})</div>
+                     <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
                         <span>{{$course->lecturer->title ?? "Not Set"}}</span>
                         <span>{{$course->lecturer->firstname ?? ''}}</span>
                         <span>{{$course->lecturer->middlename ?? ''}}</span>
@@ -81,7 +79,7 @@
    <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
       scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
    @foreach ($conversation as $data)
-      @if ($data->user_id === $user->id)
+      @if ($data->sender_id === $user->id)
          <div class="flex items-end">
             <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none
                   bg-blue-light text-white">

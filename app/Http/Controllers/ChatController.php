@@ -24,7 +24,7 @@ class ChatController extends Controller
             
             if ($role === "student") {
                 $units = $user->units()
-                                // ->where('units.id', 1) // Append the Administrator unit
+                                ->orWhere('units.id', 1) // Append the Administrator unit
                                 ->orderBy('updated_at', 'desc')
                                 ->paginate(
                                     $perPage = 10,
@@ -34,7 +34,7 @@ class ChatController extends Controller
 
             } elseif ($role === "instructor") {
                 $units = Unit::where('instructor', $user->id)
-                            ->where('id', 1) // Append the Administrator unit
+                            ->orWhere('id', 1) // Append the Administrator unit
                             ->orderBy('updated_at', 'desc')
                             ->paginate(
                                 $perPage = 10,
@@ -54,11 +54,19 @@ class ChatController extends Controller
                 $data->unit = Unit::where('id', $unit_id)->select('*')->first();
             }
 
+            // This returns the conversation messages the match the current user as
+            // the target recipient and the current unit in question.
+            // The recipient_id exists so that messages tied to a specific unit can
+            // be replied back to the sender.
             $conversation = Chat::where("unit_id", $unit_id)
+                                ->where(function ($query) use ($user) {
+                                    $query->where('sender_id', $user->id)
+                                        ->orWhere('recipient_id', $user->id);
+                                })
                                 ->orderBy('created_at', 'desc')
                                 ->paginate(
                                     $perPage = 25,
-                                    $columns = ['id', 'message', 'user_id', 'read_at', 'created_at'],
+                                    $columns = ['id', 'message', 'sender_id', 'read_at', 'created_at'],
                                     $pageName = 'chat'
                                 );
 

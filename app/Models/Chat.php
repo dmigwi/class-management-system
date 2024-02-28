@@ -14,13 +14,18 @@ class Chat extends Model
     protected $fillable = [
         'message',
         'unit_id',
-        'user_id',
+        'sender_id',
+        'recipient_id',
         'read_at',
         'created_at',
     ];
 
     public function sender() {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'sender_id');
+    }
+
+    public function recipient() {
+        return $this->hasOne(User::class, 'id', 'recipient_id');
     }
 
     public function unit() {

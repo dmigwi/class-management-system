@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\Timer;
 
 class HomeController extends Controller
 {
@@ -145,19 +146,19 @@ class HomeController extends Controller
 
                 // Returns class attendance for the students assigned that class.
                 $ClassAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
-                                    ->where('start_stop.unit_id', $unit_id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->join('timer', 'attendances.timer_id', '=', 'timer.id')
+                                    ->where('timer.unit_id', $unit_id)
+                                    ->where('timer.started_at', '>=', $start_time)
+                                    ->where('timer.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
                 
                 // Grouping done by code which is always unique unlike name which can exists as a duplicate.
                 $topAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
-                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
-                                    ->where('start_stop.instructor', $user->id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->join('timer', 'attendances.timer_id', '=', 'timer.id')
+                                    ->join('units', 'timer.unit_id', '=', 'units.id')
+                                    ->where('timer.instructor', $user->id)
+                                    ->where('timer.started_at', '>=', $start_time)
+                                    ->where('timer.stopped_at', '<=', $end_time)
                                     ->groupBy('units.code')
                                     ->selectRaw('units.code, count(*) as total')
                                     ->take(3)
@@ -178,20 +179,20 @@ class HomeController extends Controller
 
                 // Returns class attendance for the current student.
                 $ClassAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->join('timer', 'attendances.timer_id', '=', 'timer.id')
                                     ->where('attendances.sender', $user->id)
-                                    ->where('start_stop.unit_id', $unit_id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->where('timer.unit_id', $unit_id)
+                                    ->where('timer.started_at', '>=', $start_time)
+                                    ->where('timer.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
                 
                  // Grouping done by code which is always unique unlike name which can exists as a duplicate.
                 $topAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
-                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
+                                    ->join('timer', 'attendances.timer_id', '=', 'timer.id')
+                                    ->join('units', 'timer.unit_id', '=', 'units.id')
                                     ->where('attendances.sender', $user->id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->where('timer.started_at', '>=', $start_time)
+                                    ->where('timer.stopped_at', '<=', $end_time)
                                     ->groupBy('units.code')
                                     ->selectRaw('units.code, count(*) as total')
                                     ->take(3)
@@ -209,11 +210,10 @@ class HomeController extends Controller
             if ($page === "Home") {
                 $classesCount = $data->unit->duration;
                  // Returns the number of classes each student was expected to attend to achieve 100% attendance.
-                 $expectedAttendance = DB::table('start_stop')
-                                            ->where('instructor', $data->unit->instructor ?? "")
+                 $expectedAttendance = Timer::where('instructor', $data->unit->instructor ?? "")
                                             ->where('unit_id', $unit_id)
-                                            ->where('start_stop.started_at', '>=', $start_time)
-                                            ->where('start_stop.stopped_at', '<=', $end_time)
+                                            ->where('timer.started_at', '>=', $start_time)
+                                            ->where('timer.stopped_at', '<=', $end_time)
                                             ->count('instructor');
                 
                 // Instructor charts data contains information for all students assigned their subjects. 
