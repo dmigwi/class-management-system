@@ -199,7 +199,7 @@ class AttendanceController extends Controller
                 return back()->withErrors(['status' => 'Stopping the timer failed.']);
             }
 
-            $now =date('Y-m-d H:i:s');
+            $now = date('Y-m-d H:i:s');
             Timer::where('id', $timer->id)->update(['stopped_at' => $now]);
 
             $user = Auth::user();

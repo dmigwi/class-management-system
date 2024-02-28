@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Unit;
 use App\Models\Chat;
 
@@ -12,8 +13,7 @@ class ChatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         if (Auth::check()) {
             $user = Auth::user();
             $role = $user->role;
@@ -86,9 +86,33 @@ class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $validator = Validator::make($request->all(), [
+                'message' => 'required|min:1|max:500',
+                'unit_id' => 'required',
+                'recipient_id'=> 'exclude_if:recipient_id,null',
+            ]);
+           
+            if ($validator->fails()) {
+                return back()->withErrors(['status' => $validator->errors->first()]);
+            }
+
+            $inputs = $validator->validated();
+            $inputs = array_merge($inputs, ['sender_id' => $user->id, 'created_at' => date('Y-m-d H:i:s')]);
+
+            Chat::insert($inputs);
+
+            $data = [];
+            if (!is_null($request->unit)) {
+                $data = array_merge($data, ['unit' => $request->unit]);
+            }
+
+            return to_route('chat', $data);
+        }
+        return view('login');
     }
 
     /**

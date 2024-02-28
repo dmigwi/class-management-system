@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,5 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('/updateUnit/{id}', [HomeController::class, 'updateUnit'])->name('update.unit');
     Route::post('/deleteUser/{id}', [HomeController::class, 'destroyUser'])->name('delete.user');
     Route::post('/deleteUnit/{id}', [HomeController::class, 'destroyUnit'])->name('delete.unit');
+    Route::post('/chatMessage', [ChatController::class, 'store'])->name('post.message');
 });

@@ -80,22 +80,22 @@
    </div>
 
    <div id="messages" class="flex flex-col space-y-1 p-2 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
-      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch h-full justify-end">
    @foreach ($conversation as $data)
       @php
          $isCurrent = $data->sender_id === $user->id;
       @endphp
          <div @class([
                'flex items-end', 
-               'justify-end' => !$isCurrent,
+               'justify-end' => $isCurrent,
             ])>
             <span @class([
                   'flex-col space-y-2 text-sm max-w-md mx-2 px-4 py-2 rounded-lg inline-block font-semibold', 
-                  'order-2 rounded-bl-none bg-blue-light text-white' => $isCurrent,
-                  'order-1 rounded-br-none bg-gray-300 text-gray-700' => !$isCurrent,
+                  'order-2 rounded-bl-none bg-blue-light text-white' => !$isCurrent,
+                  'order-1 rounded-br-none bg-gray-300 text-gray-700' => $isCurrent,
                ])>
                {{ $data->message }}
-               @if (!$isCurrent)
+               @if ($isCurrent)
                   @php
                      $status =  'Read';
                      if (is_null($data->read_at)) $status = 'Delivered';
@@ -110,8 +110,10 @@
    </div>
 
    <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
-      <form  class="relative flex" method="POST" action="">
+      <form  class="relative flex" method="POST" action="{{route('post.message')}}">
          @csrf
+         <input type="hidden" name="recipient_id" value="">
+         <input type="hidden" name="unit_id" value="{{$unit->id}}">
          <input type="text" placeholder="Write your message!" name="message" required
             class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-300 rounded-md py-3"/>
          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
