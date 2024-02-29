@@ -42,13 +42,13 @@
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
                                 <a class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-l-lg btn-primary w-20"
-                                    href="{{ $disableAddUser ? '#' : '?'.http_build_query(['tab' => 'add-user']) }}"
+                                    href="{{ $disableAddUser ? '#' : route('dashboard').'?'.http_build_query(['tab' => 'add-user']) }}"
                                         {{ $disableAddUser ? ' disabled' :'' }} >
                                         <span class="">Add</span>
                                 </a>
 
                                 <a class="btn-tab flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-r-lg btn-primary w-20"
-                                    href="{{ $disableListUsers ? '#' : '?'.http_build_query(['tab' => 'list-users']) }}" 
+                                    href="{{ $disableListUsers ? '#' : route('dashboard').'?'.http_build_query(['tab' => 'list-users']) }}" 
                                         {{ $disableListUsers ? ' disabled' :'' }} >
                                     <span class="">List</span>
                                 </a>
@@ -81,13 +81,13 @@
                         <div class="flex items-center justify-center space-x-12 text-sm md:space-x-24">
                             <div class="flex items-center text-xs">
                                 <a class="flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-l-lg btn-primary w-20"
-                                    href="{{ $disableAddUnit ? '#' : '?'.http_build_query(['tab' => 'add-unit']) }}"
+                                    href="{{ $disableAddUnit ? '#' : route('dashboard').'?'.http_build_query(['tab' => 'add-unit']) }}"
                                         {{ $disableAddUnit ? ' disabled' :'' }} >
                                     <span class="">Add</span>
                                 </a>
 
                                 <a class="flex items-center justify-center mr-1 py-2 text-grays-500 border-1 rounded-r-lg btn-primary w-20"
-                                    href="{{ $disableListUnits ? '#' : '?'.http_build_query(['tab' => 'list-units']) }}" 
+                                    href="{{ $disableListUnits ? '#' : route('dashboard').'?'.http_build_query(['tab' => 'list-units']) }}" 
                                         {{ $disableListUnits ? ' disabled' :'' }}>
                                     <span class="">List</span>
                                 </a>

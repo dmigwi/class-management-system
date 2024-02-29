@@ -2,88 +2,89 @@
    $user = Auth::user();
    $role = Str::lower($user->role ?? "");
    $courses =  $units ?? [];
+   $contacts =  $users ?? [];
    $conversation = $conversation ?? [];
    $unit = $account->unit ?? null;
+   $selectedUser = $account->user ?? null;
 ?>
 
 <div @class([
       'flex-1 p:2 sm:p-5 justify-between flex flex-col h-full',
       $class => true,
    ])>
-   <div class="hs-dropdown relative inline-block text-left max-w-fit" onclick="toggleDropdown()">
-      <button id="dropdown-btn" type="button"
-         class="flex items-center px-2 py-2  bg-gray-100 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
-         <div class="flex sm:items-center justify-between">
-            <div class="relative flex items-center space-x-4">
-               <div @class([ 
-                     'mx-auto object-cover rounded-full h-10 w-10 pl-2',
-                     'student-account'=> ($role !== "student"),
-                     'lecturer-account' => ($role === "student"),
-                  ])></div>
-               <div class="flex flex-col leading-tight">
-                  <div class="text-sm flex items-center font-bold text-gray-700">{{$unit->name}} - ({{$unit->code}})</div>
-                  <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
-                     <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
-                     <span>{{$unit->lecturer->firstname ?? ''}}</span>
-                     <span>{{$unit->lecturer->middlename ?? ''}}</span>
-                     <span>{{$unit->lecturer->lastname ?? ''}}</span>
-                  </span>
-               </div>
+   <div id="search" class="flex items-center justify-start inline-block text-left max-w-fit space-x-2">
+      @if ($role !== 'admin')
+         <span onclick="toggleUnitsDropdown();">
+            <button type="button"
+               class="flex items-center px-2 py-2  bg-gray-100 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
+               <x-utils.dropdown :role='$role' :course='$unit' />
+               <input type="hidden" name="unit_id" value="{{$unit->id ?? ''}}">
+               <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+                  </path>
+               </svg>
+            </button>
+
+            <div id="dropdown-units-menu" class="absolute z-auto origin-top-right divide-y divide-gray-100
+               rounded-md bg-gray-100 shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
+               scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black ring-opacity-5 focus:outline-none hidden">
+               @foreach($courses as $course)
+                  @if ($course->id !== $unit->id)
+                     <a class="text-gray-700 block px-2 py-2 text-sm w-full" href="{{route('chat').'?'.http_build_query(['unit_id' => $course->id])}}">
+                        <div class="flex sm:items-center justify-between w-fit">
+                           <x-utils.dropdown :role='$role' :course='$course' />
+                        </div>
+                     </a>
+                  @endif
+               @endforeach
+
+               @if(!empty($courses))
+                  {{$courses->links()}}
+               @endif
             </div>
-         </div>
-         <div>
-            <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
-               xmlns="http://www.w3.org/2000/svg">
-               <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
-               </path>
-            </svg>
-         </div>
-      </button>
+         </span>
+      @endif
 
-      <div id="dropdown-menu" class="absolute hidden z-auto origin-top-right divide-y divide-gray-100
-         rounded-md bg-gray-100 shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
-         scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
-         ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical"
-         aria-labelledby="hs-dropdown-btn" tabindex="-1">
-      @foreach($courses as $course)
-         @if ($course->id === $unit->id)
-            @continue
-         @endif
+      @if (($role === 'instructor' && $unit->id > 1) || $role === 'admin')
+         <span class="h-full">
+            <span class="flex flex-col items-center px-2 py-2 bg-gray-100 text-grays-400 border text-md border-b-2
+               border-gray-300 rounded-md w-fit h-full">
+               <select onchange="document.location=this.value"
+                  class="text-sm font-bold text-gray-700 focus:outline-none bg-inherit md:w-fit h-full">
+                  <option value=""><span>--Select Contact--</span></option>
+                  @forelse ($contacts as $contact)
+                     <option value="{{'?'.http_build_query(['unit_id' => $unit->id ?? '', 'recipient_id' => $contact->id ])}}"
+                        @selected($contact->id === ($selectedUser->id ?? ""))>
+                        <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
+                           <span>{{$contact->title ?? "Not Set"}}</span>
+                           <span>{{$contact->firstname ?? ''}}</span>
+                           <span>{{$contact->middlename ?? ''}}</span>
+                           <span>{{$contact->lastname ?? ''}}</span>
+                           <span>- ({{$contact->id ?? ''}})</span>
+                           @if ($role === 'admin')
+                           <span class="">- ({{$contact->role ?? ''}})</span>
+                           @endif
+                        </span>
+                     </option>
+                  @empty
+                     <option value="" @selected(true)>-- No Recipients Available --</option>
+                  @endforelse
+            </select>
 
-         <a class="text-gray-700 block px-2 py-2 text-sm w-full" href="{{'?'.http_build_query(['unit' => $course->id])}}">
-            <div class="flex sm:items-center justify-between w-fit">
-               <div class="relative flex items-center space-x-4">
-                  <div @class([
-                        'mx-auto object-cover rounded-full h-10 w-10 pl-2',
-                        'student-account'=> ($role !== "student"),
-                        'lecturer-account' => ($role === "student"),
-                     ])></div>
-                  <div class="flex flex-col leading-tight">
-                     <div class="text-sm flex items-center font-bold text-gray-700">{{$course->name}} - ({{$course->code}})</div>
-                     <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
-                        <span>{{$course->lecturer->title ?? "Not Set"}}</span>
-                        <span>{{$course->lecturer->firstname ?? ''}}</span>
-                        <span>{{$course->lecturer->middlename ?? ''}}</span>
-                        <span>{{$course->lecturer->lastname ?? ''}}</span>
-                     </span>
-                  </div>
-               </div>
-            </div>
-         </a>
-
-         @isset($courses)
-            {{$courses->links()}}
-         @endisset
-
-      @endforeach
+            @if(!empty($contacts))
+                  {{$contacts->links()}}
+               @endif
+            </span>
+         </span>
+      @endif
       </div>
-   </div>
 
-   <div id="messages" class="flex flex-col space-y-1 p-2 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
-      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch h-full justify-end">
+   <div id="messages" class="flex flex-col h-full space-y-1 p-2 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
+      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
    @foreach ($conversation as $data)
       @php
-         $isCurrent = $data->sender_id === $user->id;
+         $isCurrent = $data->sender_id === ($user->id ?? '');
       @endphp
          <div @class([
                'flex items-end', 
@@ -112,9 +113,9 @@
    <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
       <form  class="relative flex" method="POST" action="{{route('post.message')}}">
          @csrf
-         <input type="hidden" name="recipient_id" value="">
-         <input type="hidden" name="unit_id" value="{{$unit->id}}">
-         <input type="text" placeholder="Write your message!" name="message" required
+         <input type="hidden" name="recipient_id" value="{{$selectedUser->id ?? ''}}">
+         <input type="hidden" name="unit_id" value="{{$unit->id ?? ''}}">
+         <input type="text" placeholder="Write your message!" name="message" required autocomplete="off"
             class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-300 rounded-md py-3"/>
          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
             <!--
@@ -172,8 +173,8 @@
    const el = document.getElementById('messages')
 	el.scrollTop = el.scrollHeight
 
-   function toggleDropdown() {
-      const dropdown = document.getElementById("dropdown-menu");
+   function toggleUnitsDropdown() {
+      const dropdown = document.getElementById("dropdown-units-menu");
       dropdown.classList.toggle("hidden");
    }
 </script>

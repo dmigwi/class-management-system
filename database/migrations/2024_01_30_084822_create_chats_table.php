@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('unit_id');
             $table->unsignedBigInteger('sender_id')->nullable();
             $table->unsignedBigInteger('recipient_id')->nullable();
-            $table->timestamp('read_at')->useCurrentOnUpdate()->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
             $table->foreign('sender_id')->nullable()->constrained()->references('id')->on('users')->onDelete('set null');
