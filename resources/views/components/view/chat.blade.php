@@ -63,7 +63,7 @@
                            <span>{{$contact->lastname ?? ''}}</span>
                            <span>- ({{$contact->id ?? ''}})</span>
                            @if ($role === 'admin')
-                           <span class="">- ({{$contact->role ?? ''}})</span>
+                              <span class="">- ({{$contact->role ?? ''}})</span>
                            @endif
                         </span>
                      </option>
@@ -111,10 +111,13 @@
    </div>
 
    <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
+      @if (!is_null($errors ?? null) && $errors->first("status"))
+            <span class="text-sm text-red-500">{{$errors->first("status")}}</span>
+      @endif
       <form  class="relative flex" method="POST" action="{{route('post.message')}}">
          @csrf
          <input type="hidden" name="recipient_id" value="{{$selectedUser->id ?? ''}}">
-         <input type="hidden" name="unit_id" value="{{$unit->id ?? ''}}">
+         <input type="hidden" name="unit_id" value="{{$unit->id ?? ''}}">  
          <input type="text" placeholder="Write your message!" name="message" required autocomplete="off"
             class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-300 rounded-md py-3"/>
          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
