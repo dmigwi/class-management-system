@@ -10,10 +10,10 @@
           @if (Str::lower($course->name) === "administrator")
              <span>Do you need assistance? Share your concerns!</span>
           @elseif($role !== "instructor")
-             <span>{{$course->lecturer->title ?? "Not Set"}}</span>
-             <span>{{$course->lecturer->firstname ?? ''}}</span>
-             <span>{{$course->lecturer->middlename ?? ''}}</span>
-             <span>{{$course->lecturer->lastname ?? ''}}</span>
+             <span class="capitalize">{{$course->lecturer->title ?? "Not Set"}}</span>
+             <span class="capitalize">{{$course->lecturer->firstname ?? ''}}</span>
+             <span class="capitalize">{{$course->lecturer->middlename ?? ''}}</span>
+             <span class="capitalize">{{$course->lecturer->lastname ?? ''}}</span>
           @endif
        </span>
     </div>

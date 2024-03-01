@@ -46,7 +46,7 @@
                     <tbody class="overflow-x-auto">
                     @forelse ($users as $user)
                         <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 ">
-                            <td class="flex h-fit items-center justify-start space-x-1 px-4 text-sm font-medium text-gray-800">
+                            <td class="flex h-fit items-center justify-start space-x-1 px-4 text-sm font-medium text-gray-800 capitalize">
                                 <span class="font-bold" >{{$user->title}}</span>
                                 <span>{{$user->firstname}}</span>
                                 <span>{{$user->middlename}}</span>

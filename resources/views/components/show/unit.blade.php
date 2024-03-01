@@ -35,7 +35,7 @@
             @if (!$isAdmin)
                 <div class="flex items-center justify-start">
                     <span class="w-1/4 text-start uppercase font-bold">Instructor:</span>
-                    <span class="flex items-center justify-start space-x-1">
+                    <span class="flex items-center justify-start space-x-1 capitalize">
                         <span>{{$unit->lecturer->title ?? "Not Set"}}</span>
                         <span>{{$unit->lecturer->firstname ?? ''}}</span>
                         <span>{{$unit->lecturer->middlename ?? ''}}</span>

@@ -55,7 +55,7 @@
                         d="M449 20H71a51 51 0 0 0-51 51v377c0 29 23 52 51 52h377c28 0 51-23 51-51V71a50 50 0 0 0-50-51zM157 397c0 9-8 17-17 17h-17c-9 0-17-8-17-17v-94c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V174c0-9 8-17 17-17h17c9 0 17 8 17 17zm86 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V123c0-9 8-17 17-17h17c9 0 17 8 17 17zm85 0c0 9-8 17-17 17h-17c-9 0-17-8-17-17V234c0-9 8-17 17-17h17c9 0 17 8 17 17z" />
                 </svg>
                 <select id="course" class="focus:outline-none bg-inherit md:w-fit" name="unit">
-                    <option value="">--Select a Unit---</option>
+                    <option value="">-- Select a Unit --</option>
                     @forelse ($courses as $course)
                         <option value="{{$course->id}}" @selected($course->id === ($selectedUnit->id ?? ""))>
                             {{$course->name}} ({{$course->code}})
@@ -67,7 +67,7 @@
             </div>
 
             <button id="search-btn" class="flex items-center justify-center pl-2 py-2 border-2 rounded-lg text-sm
-                btn-primary w-32 space-x-1" type="submit">
+                btn-primary w-32 space-x-1" type="submit" @disabled(is_null($selectedUnit))>
                 <span class="">Search</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="12"
                     width="12" viewBox="0 0 520 520">
@@ -127,7 +127,7 @@
                     @if ($role == "student")
                         <p class="flex items-center justify-start">
                             <span class="text-start capitalize pr-1">Instructor:</span>
-                            <span class="text-sm text-gray-400 dark:text-neutral-400">
+                            <span class="text-sm text-gray-400 dark:text-neutral-400 capitalize">
                                     <span>{{$selectedUnit->lecturer->title ?? "Not Set"}}</span>
                                     <span>{{$selectedUnit->lecturer->firstname ?? ''}}</span>
                                     <span>{{$selectedUnit->lecturer->middlename ?? ''}}</span>

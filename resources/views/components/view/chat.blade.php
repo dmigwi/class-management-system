@@ -56,7 +56,7 @@
                   @forelse ($contacts as $contact)
                      <option value="{{'?'.http_build_query(['unit_id' => $unit->id ?? '', 'recipient_id' => $contact->id ])}}"
                         @selected($contact->id === ($selectedUser->id ?? ""))>
-                        <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
+                        <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1 capitalize'>
                            <span>{{$contact->title ?? "Not Set"}}</span>
                            <span>{{$contact->firstname ?? ''}}</span>
                            <span>{{$contact->middlename ?? ''}}</span>
