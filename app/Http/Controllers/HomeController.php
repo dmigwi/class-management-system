@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\User;
+use App\Models\Timer;
 
 class HomeController extends Controller
 {
@@ -145,19 +146,19 @@ class HomeController extends Controller
 
                 // Returns class attendance for the students assigned that class.
                 $ClassAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
-                                    ->where('start_stop.unit_id', $unit_id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->join('timers', 'attendances.timer_id', '=', 'timers.id')
+                                    ->where('timers.unit_id', $unit_id)
+                                    ->where('timers.started_at', '>=', $start_time)
+                                    ->where('timers.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
                 
                 // Grouping done by code which is always unique unlike name which can exists as a duplicate.
                 $topAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
-                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
-                                    ->where('start_stop.instructor', $user->id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->join('timers', 'attendances.timer_id', '=', 'timers.id')
+                                    ->join('units', 'timers.unit_id', '=', 'units.id')
+                                    ->where('timers.instructor', $user->id)
+                                    ->where('timers.started_at', '>=', $start_time)
+                                    ->where('timers.stopped_at', '<=', $end_time)
                                     ->groupBy('units.code')
                                     ->selectRaw('units.code, count(*) as total')
                                     ->take(3)
@@ -178,20 +179,20 @@ class HomeController extends Controller
 
                 // Returns class attendance for the current student.
                 $ClassAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
+                                    ->join('timers', 'attendances.timer_id', '=', 'timers.id')
                                     ->where('attendances.sender', $user->id)
-                                    ->where('start_stop.unit_id', $unit_id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->where('timers.unit_id', $unit_id)
+                                    ->where('timers.started_at', '>=', $start_time)
+                                    ->where('timers.stopped_at', '<=', $end_time)
                                     ->count('attendances.sender');
                 
                  // Grouping done by code which is always unique unlike name which can exists as a duplicate.
                 $topAttendance = DB::table('attendances')
-                                    ->join('start_stop', 'attendances.timer_id', '=', 'start_stop.id')
-                                    ->join('units', 'start_stop.unit_id', '=', 'units.id')
+                                    ->join('timers', 'attendances.timer_id', '=', 'timers.id')
+                                    ->join('units', 'timers.unit_id', '=', 'units.id')
                                     ->where('attendances.sender', $user->id)
-                                    ->where('start_stop.started_at', '>=', $start_time)
-                                    ->where('start_stop.stopped_at', '<=', $end_time)
+                                    ->where('timers.started_at', '>=', $start_time)
+                                    ->where('timers.stopped_at', '<=', $end_time)
                                     ->groupBy('units.code')
                                     ->selectRaw('units.code, count(*) as total')
                                     ->take(3)
@@ -209,11 +210,10 @@ class HomeController extends Controller
             if ($page === "Home") {
                 $classesCount = $data->unit->duration;
                  // Returns the number of classes each student was expected to attend to achieve 100% attendance.
-                 $expectedAttendance = DB::table('start_stop')
-                                            ->where('instructor', $data->unit->instructor ?? "")
+                 $expectedAttendance = Timer::where('instructor', $data->unit->instructor ?? "")
                                             ->where('unit_id', $unit_id)
-                                            ->where('start_stop.started_at', '>=', $start_time)
-                                            ->where('start_stop.stopped_at', '<=', $end_time)
+                                            ->where('timers.started_at', '>=', $start_time)
+                                            ->where('timers.stopped_at', '<=', $end_time)
                                             ->count('instructor');
                 
                 // Instructor charts data contains information for all students assigned their subjects. 
@@ -399,6 +399,12 @@ class HomeController extends Controller
             if ($validator->fails()) {
                 return back()->withErrors(['status' => $validator->errors()->first()]);
             }
+
+            // NB: Update on the Administrator special unit is disabled via the interface.
+            // This has been disabled so that all users can use it to send chat to the admin users of the site
+            if ($unit_id === 1) {
+                return back()->withErrors(['status' => 'update on the Administrator special unit is disabled!']);
+            }
             
             $unit_info = Unit::find((int)($unit_id));
             if (empty($unit_info)) {
@@ -507,6 +513,12 @@ class HomeController extends Controller
 
             if ($user->role === "admin") {
                $unit_info = Unit::find((int)($id));
+
+                // Edits or deletions are disabled because consistence needs to be maintain when addressing
+                // admin users via chat messages.
+               if ($unit_info->id === 1) {
+                    return back()->withErrors(['status' => 'deleting the Administrator special unit is disabled!']);
+                }
 
                if (!is_null($unit_info)) {
                 $unit_info->delete();

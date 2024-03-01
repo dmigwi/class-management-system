@@ -23,7 +23,7 @@
 
     @auth
     <div class="relative space-x-4 z-20 flex justify-end h-full px-3 w-full" onclick="accountDropdown()">
-        <button class="flex items-center justify-end text-black-500 dark:text-white text-md">
+        <button class="flex items-center justify-end text-sm font-bold text-gray-700 dark:text-white text-md">
             <span class="pr-2">{{$name}}</span>
             <span @class([ 
                     'mx-auto object-cover rounded-full h-10 w-10 pl-2',

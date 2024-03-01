@@ -1,223 +1,124 @@
 <?php 
-   $conversation = [(object)[
-               "role" => "student",
-               "message" => "Can be verified on any platform using docker",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Your error message says permission denied, npm global installs must be given root privileges.",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "Command was run with root privileges. I'm sure about that.",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I've update the description so it's more obviously now",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "FYI https://askubuntu.com/a/700266/510172",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "Check the line above (it ends with a # so, I'm running it as root ) `# npm install -g @vue/devtools`",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Any updates on this issue? I'm getting the same error when trying to install devtools. Thanks",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "Thanks for your message David. I thought I'm alone with this issue. Please, ? the issue to support it :)",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Are you using sudo?",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "Run this command sudo chown -R `whoami` /Users/[your_user_profile]/.npm-global/ then install the package globally without using sudo",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "It seems like you are from Mac OS world. There is no /Users/ folder on linux?",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I have no issue with any other packages installed with root permission globally.",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "lecturer",
-               "message" => "yes, I have a mac. I never had issues with root permission as well, but this helped me to solve the problem",
-               "timestamp" => "",
-               "status" => "Read",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I get the same error on Arch Linux (also with sudo)",
-               "timestamp" => "",
-               "status" => "Delivered",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "I also have this issue, Here is what I was doing until now: #1076",
-               "timestamp" => "",
-               "status" => "Delivered",
-            ],
-            (object)[
-               "role" => "student",
-               "message" => "even i am facing",
-               "timestamp" => "",
-               "status" => "Pending",
-            ]];
+   $user = Auth::user();
+   $role = Str::lower($user->role ?? "");
+   $courses =  $units ?? [];
+   $contacts =  $users ?? [];
+   $conversation = $conversation ?? [];
+   $unit = $account->unit ?? null;
+   $selectedUser = $account->user ?? null;
+?>
 
-   $selected = (object)[
-               "title" => "Introduction into Programming",
-               "name" => "Dr. Jan Kowalski",
-            ];
+<div @class([
+      'flex-1 p:2 sm:p-5 justify-between flex flex-col h-full',
+      $class => true,
+   ])>
+   <div id="search" class="flex items-center justify-start inline-block text-left max-w-fit space-x-2">
+      @if ($role !== 'admin')
+         <span onclick="toggleUnitsDropdown();">
+            <button type="button"
+               class="flex items-center px-2 py-2  bg-gray-100 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-fit">
+               <x-utils.dropdown :role='$role' :course='$unit' />
+               <input type="hidden" name="unit_id" value="{{$unit->id ?? ''}}">
+               <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
+                  </path>
+               </svg>
+            </button>
 
-   $courses = [(object)[
-                  "title" => "Introduction into Programming",
-                  "name" => "Dr. Jan Kowalski",
-               ],
-               (object)[
-                  "title" => "Computational Sampling Methods",
-                  "name" => "Dr. Adam Kowalski",
-               ],
-               (object)[
-                  "title" => "Artificial intelligence",
-                  "name" => "Dr. Selckut Cankurt",
-               ],
-               (object)[
-                  "title" => "Masters Project Diploma",
-                  "name" => "Prof. Edip Senyurek",
-               ],
-               (object)[
-                  "title" => "Calculus 1",
-                  "name" => "Dr. Jan Kowalski",
-               ],
-            ];
+            <div id="dropdown-units-menu" class="absolute z-auto origin-top-right divide-y divide-gray-100
+               rounded-md bg-gray-100 shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
+               scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black ring-opacity-5 focus:outline-none hidden">
+               @foreach($courses as $course)
+                  @if ($course->id !== $unit->id)
+                     <a class="text-gray-700 block px-2 py-2 text-sm w-full" href="{{route('chat').'?'.http_build_query(['unit_id' => $course->id])}}">
+                        <div class="flex sm:items-center justify-between w-fit">
+                           <x-utils.dropdown :role='$role' :course='$course' />
+                        </div>
+                     </a>
+                  @endif
+               @endforeach
 
-   $role = $attributes->get('role');
-   ?>
-
-<div class="flex-1 p:2 sm:p-5 justify-between flex flex-col h-full">
-   <div class="hs-dropdown relative inline-block text-left max-w-xs" onclick="toggleDropdown()">
-      <button id="dropdown-btn" type="button"
-         class="flex items-center px-4 py-2 text-grays-400 border text-md border-b-2 border-gray-300 rounded-md w-full">
-         <div class="flex sm:items-center justify-between py-2">
-            <div class="relative flex items-center space-x-4">
-               <div @class([ 
-                     'relative flex flex-col leading-tight',
-                     'student-account'=> ($role !== "student"),
-                     'lecturer-account' => ($role === "student"),
-                  ])></div>
-               <div class="flex flex-col leading-tight">
-                  <div class="text-sm flex items-center text-gray-700">{{$selected->title}}</div>
-                  <div @class([
-                        'text-sm flex items-center mr-1',
-                        'text-student'=> ($role !== "student"),
-                        'text-lecturer' => ($role === "student"),
-                     ])>{{$selected->name}}</div>
-               </div>
+               @if(!empty($courses))
+                  {{$courses->links()}}
+               @endif
             </div>
-         </div>
-         <div>
-            <svg width="20" height="20" class="ml-2 text-black-400" fill="currentColor" viewBox="0 0 1792 1792"
-               xmlns="http://www.w3.org/2000/svg">
-               <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
-               </path>
-            </svg>
-         </div>
-      </button>
-
-      <div id="dropdown-menu" class="absolute hidden z-auto mt-2 origin-top-right divide-y divide-gray-100
-         rounded-md bg-white shadow-lg overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded
-         scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch ring-1 ring-black
-         ring-opacity-5 focus:outline-none h-40" role="menu" aria-orientation="vertical"
-         aria-labelledby="hs-dropdown-btn" tabindex="-1">
-      @foreach($courses as $course)
-         @if ($course->title === $selected->title && $course->name === $selected->name)
-            @continue
-         @endif
-         <button class="text-gray-700 block px-4 py-2 text-sm py-1 w-full" type="button" role="menuitem" tabindex="-1"
-            id="menu-item-0">
-            <div class="flex sm:items-center justify-between py-2 w-fit">
-               <div class="relative flex items-center space-x-4">
-                  <div @class([
-                        'relative flex flex-col leading-tight',
-                        'student-account'=> ($role !== "student"),
-                        'lecturer-account' => ($role === "student"),
-                     ])></div>
-                  <div class="flex flex-col leading-tight">
-                     <div class="text-sm flex items-center text-gray-700">{{$course->title}}</div>
-                     <div @class([
-                           'text-sm flex items-center',
-                           'text-student'=> ($role !== "student"),
-                           'text-lecturer' => ($role === "student"),
-                        ])>{{$course->name}}</div>
-                  </div>
-               </div>
-            </div>
-         </button>
-      @endforeach
-      </div>
-   </div>
-
-   <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
-      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-   @foreach ($conversation as $data)
-      @if (Str::lower($data->role) === $role)
-      <div class="flex items-end">
-         <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-2 px-4 py-2 rounded-lg inline-block rounded-bl-none
-               bg-blue-light text-white">
-            {{ $data->message }}
          </span>
-      </div>
-      @else
-      <div class="flex justify-end items-end">
-         <span class="flex-col space-y-2 text-sm max-w-xs mx-2 order-1 px-4 py-2 rounded-lg inline-block rounded-br-none
-               bg-gray-300 text-gray-600">
-            {{ $data->message }}
-            <span class="flex items-end">
-               <x-utils.status :status='$data->status ?? "Pending"' />
+      @endif
+
+      @if (($role === 'instructor' && $unit->id > 1) || $role === 'admin')
+         <span class="h-full">
+            <span class="flex flex-col items-center px-2 py-2 bg-gray-100 text-grays-400 border text-md border-b-2
+               border-gray-300 rounded-md w-fit h-full">
+               <select onchange="document.location=this.value"
+                  class="text-sm font-bold text-gray-700 focus:outline-none bg-inherit md:w-fit h-full">
+                  <option value=""><span>--Select Contact--</span></option>
+                  @forelse ($contacts as $contact)
+                     <option value="{{'?'.http_build_query(['unit_id' => $unit->id ?? '', 'recipient_id' => $contact->id ])}}"
+                        @selected($contact->id === ($selectedUser->id ?? ""))>
+                        <span class='text-xs flex items-center text-gray-500 dark:text-neutral-500 space-x-1'>
+                           <span>{{$contact->title ?? "Not Set"}}</span>
+                           <span>{{$contact->firstname ?? ''}}</span>
+                           <span>{{$contact->middlename ?? ''}}</span>
+                           <span>{{$contact->lastname ?? ''}}</span>
+                           <span>- ({{$contact->id ?? ''}})</span>
+                           @if ($role === 'admin')
+                           <span class="">- ({{$contact->role ?? ''}})</span>
+                           @endif
+                        </span>
+                     </option>
+                  @empty
+                     <option value="" @selected(true)>-- No Recipients Available --</option>
+                  @endforelse
+            </select>
+
+            @if(!empty($contacts))
+                  {{$contacts->links()}}
+               @endif
             </span>
          </span>
-      </div>
       @endif
+      </div>
+
+   <div id="messages" class="flex flex-col h-full space-y-1 p-2 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded 
+      scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+   @foreach ($conversation as $data)
+      @php
+         $isCurrent = $data->sender_id === ($user->id ?? '');
+      @endphp
+         <div @class([
+               'flex items-end', 
+               'justify-end' => $isCurrent,
+            ])>
+            <span @class([
+                  'flex-col space-y-2 text-sm max-w-md mx-2 px-4 py-2 rounded-lg inline-block font-semibold', 
+                  'order-2 rounded-bl-none bg-blue-light text-white' => !$isCurrent,
+                  'order-1 rounded-br-none bg-gray-300 text-gray-700' => $isCurrent,
+               ])>
+               {{ $data->message }}
+               @if ($isCurrent)
+                  @php
+                     $status =  'Read';
+                     if (is_null($data->read_at)) $status = 'Delivered';
+                  @endphp
+                  <span class="flex items-end">
+                     <x-utils.status :status='$status ?? "Pending"' />
+                  </span>
+               @endif
+            </span>
+         </div>
    @endforeach
    </div>
 
-   <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-      <div class="relative flex">
-         <input type="text" placeholder="Write your message!" name="message"
-            class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-200 rounded-md py-3">
+   <div class="border-t-2 border-gray-300 px-4 pt-4 mb-2 sm:mb-0">
+      <form  class="relative flex" method="POST" action="{{route('post.message')}}">
+         @csrf
+         <input type="hidden" name="recipient_id" value="{{$selectedUser->id ?? ''}}">
+         <input type="hidden" name="unit_id" value="{{$unit->id ?? ''}}">
+         <input type="text" placeholder="Write your message!" name="message" required autocomplete="off"
+            class="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-4 bg-gray-300 rounded-md py-3"/>
          <div class="absolute right-0 items-center inset-y-0 hidden sm:flex">
+            <!--
             <button type="button" disabled
                class="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out
                   text-gray-500 hover:bg-gray-300 focus:outline-none">
@@ -251,7 +152,8 @@
                   </path>
                </svg>
             </button>
-            <button type="button"
+         -->
+            <button type="submit"
                class="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out
                   text-white bg-blue-light hover:bg-blue-400 focus:outline-none">
                <span class="font-bold">Send</span>
@@ -263,7 +165,7 @@
                </svg>
             </button>
          </div>
-      </div>
+      </form>
    </div>
 </div>
 
@@ -271,8 +173,8 @@
    const el = document.getElementById('messages')
 	el.scrollTop = el.scrollHeight
 
-   function toggleDropdown() {
-      const dropdown = document.getElementById("dropdown-menu");
+   function toggleUnitsDropdown() {
+      const dropdown = document.getElementById("dropdown-units-menu");
       dropdown.classList.toggle("hidden");
    }
 </script>

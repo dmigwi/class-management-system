@@ -86,11 +86,11 @@ body {
 }
 
 .student-account {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border: #02b0e2;
     border-style: dotted;
-    background-size: contain;
+    background-size: cover;
     background-image: url('/images/student-account.gif');
 }
 
@@ -99,11 +99,11 @@ body {
 }
 
 .lecturer-account {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border: blue;
     border-style: dotted;
-    background-size: contain;
+    background-size: cover;
     background-image: url('/images/lecturer-account.gif');
 }
 

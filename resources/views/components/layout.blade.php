@@ -17,7 +17,7 @@
     $notifications = "10";
 @endphp
 
-<div class="relative bg-gray-100 dark:bg-gray-800 h-full overflow-scroll">
+<div class="relative h-full overflow-scroll">
     <div class="flex items-start justify-between h-full">
         <div class="relative h-full lg:block w-60">
             <div class="bg-white dark:bg-gray-700 h-full">
@@ -95,16 +95,16 @@
 
     @switch($page)
         @case('admin')
-            <x-view.admin :account='$account' :users='$users' :units='$units' />
+            <x-view.admin :account='$account' :users='$users' :units='$units' class="bg-gray-200"/>
         @break
         @case('chat')
-            <x-view.chat :account='$account' :units='$units' />
+            <x-view.chat :account='$account' :units='$units' :users='$users' :conversation='$conversation' class="bg-gray-200"/>
         @break
         @case('attendance')
-            <x-view.attendance :account='$account' :units='$units' />
+            <x-view.attendance :account='$account' :units='$units' class="bg-gray-200"/>
         @break
         @default
-            <x-view.home :account='$account' :units='$units' />
+            <x-view.home :account='$account' :units='$units' class="bg-gray-200"/>
     @endswitch
     </div>
 </div>
