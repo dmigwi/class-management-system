@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\User;
@@ -208,7 +209,7 @@ class HomeController extends Controller
             }
 
             if ($page === "Home") {
-                $classesCount = $data->unit->duration;
+                $classesCount = $data->unit->duration ?? 0;
                  // Returns the number of classes each student was expected to attend to achieve 100% attendance.
                  $expectedAttendance = Timer::where('instructor', $data->unit->instructor ?? "")
                                             ->where('unit_id', $unit_id)
@@ -218,11 +219,11 @@ class HomeController extends Controller
                 
                 // Instructor charts data contains information for all students assigned their subjects. 
                 if($user->role == "instructor") {
-                    $classesCount = $classesCount *  $data->students;
-                    $expectedAttendance = $expectedAttendance * $data->students;
+                    $classesCount = $classesCount *  ($data->students ?? 0);
+                    $expectedAttendance = $expectedAttendance * ($data->students ?? 0);
                 }
 
-                $durations = [];
+                $durations = []; // duration array for the selected classes
                 $totalDurations = 0;
                 $unitsAttendances = [];
 
@@ -244,15 +245,23 @@ class HomeController extends Controller
 
                 // This attendance proportionality could use some optimization in future to handle some edge cases
                 // i.e. when some units have no attendance.
-                $avgDuration = $totalDurations/count($durations);
+
+                $avgDuration = 1;
+                if (!empty($duration)){
+                    $avgDuration = $totalDurations/count($durations);
+                } 
+                    
                 for($i = 0; $i < count($durations); $i++) {
                     array_push($data->topUnitsAttendances, ($unitsAttendances[$i]*$durations[$i])/$avgDuration);
                 }
-                
-                $data->attendance = ($ClassAttendance/$classesCount)*100;
-                $data->missing = (($expectedAttendance-$ClassAttendance)/$classesCount)*100;
-                $data->circumference = ($data->attendance + $data->missing)*360/100;
 
+                // No class allocation data exists
+                if ($classesCount !== 0) {
+                    $data->attendance = ($ClassAttendance/$classesCount)*100;
+                    $data->missing = (($expectedAttendance-$ClassAttendance)/$classesCount)*100;
+                    $data->circumference = ($data->attendance + $data->missing)*360/100;
+                }
+                
                 // TODO: Use the live data from chats table.
                 $data->last_message = "Excuse me Sir, My grades on your";
                 $data->sent_at = "13:45 12/Jan/2024";
@@ -281,11 +290,16 @@ class HomeController extends Controller
     /**
      * Validator function for the units table insert and edit functions.
      */
-    public function unitValidator(Request $request) {
+    public function unitValidator(Request $request, string $ignoreId) {
         return Validator::make($request->all(), [
             'instructor'=> 'exclude_if:instructor,null',
             'name' => 'required|min:5|max:55',
-            'code' => 'required|min:5|max:55',
+            'code' => [
+                'required', 
+                'min:5',
+                'max:55',
+                Rule::unique('units', 'code')->ignore($ignoreId)
+            ],
             'semester'=> 'exclude_if:semester,null',
             'year'=> 'exclude_if:year,null|min:5|max:55',
             'start_date' => 'exclude_if:start_date,null',
@@ -299,7 +313,7 @@ class HomeController extends Controller
     /**
      * Validator function for the users table insert and edit functions.
      */
-    public function userValidator(Request $request) {
+    public function userValidator(Request $request, string $ignoreId) {
         return Validator::make($request->all(), [
             'title'=> 'required',
             'firstname' => 'required|min:1|max:55',
@@ -307,7 +321,11 @@ class HomeController extends Controller
             'lastname' => 'required|min:1|max:55',
             'password'=> 'required|min:5',
             'role'=> 'required',
-            'email' => 'required|email:rfc,dns',
+            'email' => [
+                        'required', 
+                        'email:rfc,dns',
+                        Rule::unique('users', 'email')->ignore($ignoreId)
+                    ],
             'phone' => 'required|min:9|max:15',
             'faculty' => 'required',
             'country' => 'required',
@@ -325,7 +343,7 @@ class HomeController extends Controller
                 return back()->withErrors(['status' => 'unit insert operation reserved for admins only!']);
             }
 
-            $validator = $this->unitValidator($request);
+            $validator = $this->unitValidator($request, '');
             if ($validator->fails()) {
                 return back()->withErrors(['status' => $validator->errors()->first()]);
             }
@@ -350,7 +368,7 @@ class HomeController extends Controller
                 return back()->withErrors(['status' => 'user insert operation reserved for admins only!']);
             }
 
-            $validator = $this->userValidator($request);
+            $validator = $this->userValidator($request, '');
             if ($validator->fails()) {
                 return back()->withErrors(['status' => $validator->errors()->first()]);
             }
@@ -366,15 +384,17 @@ class HomeController extends Controller
             // Add the units assigned to a given person
             $assignedUnits = $request->only(['classes']);
 
-            foreach(head($assignedUnits) as $unit_id) {
-                $network = Unit::find((int)($unit_id));
+            if (!empty($assignedUnits)) {
+                foreach(head($assignedUnits) as $unit_id) {
+                    $network = Unit::find((int)($unit_id));
 
-                if (!empty($network)) {
-                    if ($role === "student" ) {
-                        $user_info->units()->save($network);
-                    } elseif ($role === "instructor" ) {
-                        $network->fill(["instructor" => $user_info->id]);
-                        $network->save();
+                    if (!empty($network)) {
+                        if ($role === "student" ) {
+                            $user_info->units()->save($network);
+                        } elseif ($role === "instructor" ) {
+                            $network->fill(["instructor" => $user_info->id]);
+                            $network->save();
+                        }
                     }
                 }
             }
@@ -395,7 +415,7 @@ class HomeController extends Controller
                 return back()->withErrors(['status' => 'unit update operation reserved for admins only!']);
             }
 
-            $validator = $this->unitValidator($request);
+            $validator = $this->unitValidator($request, $unit_id);
             if ($validator->fails()) {
                 return back()->withErrors(['status' => $validator->errors()->first()]);
             }
@@ -432,7 +452,7 @@ class HomeController extends Controller
                 return back()->withErrors(['status' => 'user update operation reserved for admins only!']);
             }
 
-            $validator = $this->userValidator($request);
+            $validator = $this->userValidator($request, $user_id);
             if ($validator->fails()) {
                 return back()->withErrors(['status' => $validator->errors()->first()]);
             }

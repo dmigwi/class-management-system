@@ -26,26 +26,34 @@ class ChatController extends Controller
             $admin_id = 1; // The admin special unit has a reserved id 1.
             $unit_id = $request->unit_id ?? null;
             
-            if ($role === "student") {
-                $units =  Unit::leftjoin('unit_user','units.id', 'unit_user.unit_id')
-                                ->where('unit_user.user_id', $user->id)
-                                ->orWhere('units.id', $admin_id) // Append the Administrator unit
+            // Set the units and unit_is fields
+            switch ($role) {
+                case 'student':
+                    $units = Unit::leftjoin('unit_user','units.id', 'unit_user.unit_id')
+                                    ->where('unit_user.user_id', $user->id)
+                                    ->orWhere('units.id', $admin_id) // Append the Administrator unit
+                                    ->orderBy('updated_at', 'desc')
+                                    ->paginate(
+                                        $perPage = 10,
+                                        $columns = ['units.id', 'name', 'code', 'instructor'],
+                                        $pageName = 'units'
+                                    );
+                    break;
+
+                case 'instructor':
+                    $units = Unit::where('instructor', $user->id)
+                                ->orWhere('id', $admin_id) // Append the Administrator unit
                                 ->orderBy('updated_at', 'desc')
                                 ->paginate(
                                     $perPage = 10,
-                                    $columns = ['units.id', 'name', 'code', 'instructor'],
+                                    $columns = ['id', 'name', 'code', 'instructor'],
                                     $pageName = 'units'
                                 );
+                    break;
 
-            } elseif ($role === "instructor") {
-                $units = Unit::where('instructor', $user->id)
-                            ->orWhere('id', $admin_id) // Append the Administrator unit
-                            ->orderBy('updated_at', 'desc')
-                            ->paginate(
-                                $perPage = 10,
-                                $columns = ['id', 'name', 'code', 'instructor'],
-                                $pageName = 'units'
-                            );
+                default:
+                    $unit_id =  $admin_id;
+                    break;
             }
 
             if (is_null($unit_id) && !empty($units)) {
@@ -59,16 +67,16 @@ class ChatController extends Controller
             // query the conversation thread per user role.
             $conversation = [];
             $users = [];
-            $user_id = $request->recipient_id ?? null;
+            $recipient = $request->recipient_id ?? null;
             switch ($role) {
                 case 'student':
-                    $user_id = $user->id;
+                    $recipient = $user->id;
                     break;
 
                 case 'instructor':
                     // Returns a list of all people assigned the selected unit. The unit in question cannot be the
                     // special administrator unit.
-                    if ($unit_id > 1) {
+                    if ($unit_id > $admin_id) {
                         $users = DB::table('unit_user')
                                     ->join('users','users.id', 'unit_user.user_id')
                                     ->where('unit_user.unit_id', $unit_id)
@@ -80,7 +88,7 @@ class ChatController extends Controller
                                     );
                     } else {
                         // When communicating with the admin use the instructor's own id.
-                        $user_id = $user->id;
+                        $recipient = $user->id;
                     }
                     break;
                 
@@ -96,29 +104,38 @@ class ChatController extends Controller
                                         $columns = ['users.id', 'title', 'firstname', 'middlename', 'lastname', 'role'],
                                         $pageName = 'users'
                                     );
-                    $unit_id =  $admin_id;
                     break;
             }
 
             // If a collection of users exists and the user id is still null pick the first user as the selected user.
-            if (is_null($user_id) && !empty($users)) {
-                $user_id = $users->getCollection()->first()->id ?? null;
+            if (is_null($recipient) && !empty($users)) {
+                $recipient = $users->getCollection()->first()->id ?? null;
             }
 
-            if (!is_null($user_id) && $role !== 'student') {
-                $data->user = User::where('id', $user_id)->select('*')->first();
+            // current authenticated user cannot be the sender and also the recipient
+            if (!is_null($recipient) && $role !== 'student' && $recipient != $user->id) {
+                $data->user = User::where('id', $recipient)->select('*')->first();
             }
 
-            // Set the read status
+            // Chat to admin and instructor do not have a recipient field set. 
+            // They are tied to the units each is assigned.
+            // Messages to students must contain the recipient field set.
+
+            // Set the read status on the message sent
             Chat::where("unit_id", $unit_id)
-                ->where('sender_id', $user_id)
+                ->when($role !== "admin", function ($query) use ($user) {
+                    $query ->where('recipient_id', $user->id);
+                })
+                ->when($role === "admin", function ($query) use ($recipient) {
+                    $query ->where('sender_id', $recipient);
+                })
                 ->where('read_at', null)
                 ->update(['read_at' => date('Y-m-d H:i:s')]);
 
             $conversation = Chat::where("unit_id", $unit_id)
-                                ->where(function ($query) use ($user_id) {
-                                    $query->where('sender_id', $user_id)
-                                        ->orWhere('recipient_id', $user_id);
+                                ->where(function ($query) use ($recipient) {
+                                    $query->where('sender_id', $recipient)
+                                        ->orWhere('recipient_id', $recipient);
                                 })
                                 ->orderBy('created_at', 'asc')
                                 ->paginate(
@@ -154,7 +171,7 @@ class ChatController extends Controller
             ]);
            
             if ($validator->fails()) {
-                return back()->withErrors(['status' => $validator->errors->first()]);
+                return back()->withErrors(['status' => $validator->errors()->first()]);
             }
 
             $inputs = $validator->validated();

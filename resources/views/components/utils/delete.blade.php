@@ -23,10 +23,10 @@
         <span class="text-gray-800 p-4">
             <span>Do you want to proceed with deletion of </span>
             @isset($user)
-                <span>"{{$user->title}}</span>
-                <span>{{$user->firstname}}</span>
-                <span>{{$user->middlename}}</span>
-                <span>{{$user->lastname}}"</span>
+                <span class="capitalize">"{{$user->title}}</span>
+                <span class="capitalize">{{$user->firstname}}</span>
+                <span class="capitalize">{{$user->middlename}}</span>
+                <span class="capitalize">{{$user->lastname}}"</span>
             @endisset
             @isset($unit)
                 <span>"{{$unit->name}}"</span>

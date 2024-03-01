@@ -48,7 +48,7 @@
                     <select id="semester" name="semester"
                         class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                        <option value="" >-- 0 --</option>
+                        <option value="" >0</option>
                         <option @selected($unit->semester ?? '' == "1") value="1">1</option>
                         <option @selected($unit->semester ?? '' == "2") value="2">2</option>
                         <option @selected($unit->semester ?? '' == "Summer") value="Summer">Summer</option>
@@ -129,7 +129,7 @@
                     <option value="">-- Select an Instructor --</option>
                     @forelse ($instructors as $instructor)
                         <option value="{{$instructor->id}}" @selected($instructor->id === ($unit->instructor ?? ""))>
-                            <span class="flex items-center justify-start space-x-1">
+                            <span class="flex items-center justify-start space-x-1 capitalize">
                                 <span>{{$instructor->title}}</span>
                                 <span>{{$instructor->firstname}}</span>
                                 <span>{{$instructor->middlename}}</span>

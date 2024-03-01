@@ -2,7 +2,6 @@
     if (Auth::check()) {
         $user = Auth::user();
         $role = Str::lower($user->role);
-        $name = $user->title.' '.$user->firstname.' '.$user->middlename.' '.$user->lastname;
     }
 @endphp
 
@@ -24,7 +23,14 @@
     @auth
     <div class="relative space-x-4 z-20 flex justify-end h-full px-3 w-full" onclick="accountDropdown()">
         <button class="flex items-center justify-end text-sm font-bold text-gray-700 dark:text-white text-md">
-            <span class="pr-2">{{$name}}</span>
+            <span class="pr-2">
+                <span class="flex items-center justify-start space-x-1 capitalize">
+                    <span>{{$user->title}}</span>
+                    <span>{{$user->firstname}}</span>
+                    <span>{{$user->middlename}}</span>
+                    <span>{{$user->lastname}}</span>
+                </span>
+            </span>
             <span @class([ 
                     'mx-auto object-cover rounded-full h-10 w-10 pl-2',
                     'lecturer-account' => ($role !== "student"),

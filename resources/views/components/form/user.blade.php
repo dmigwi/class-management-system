@@ -1,7 +1,9 @@
 @php
     $courses = $units ?? [];
     $user = $user ?? null;
-    $role = $user->role ?? '';
+    $role = Str::lower($user->role ?? '');
+    $title = Str::lower($user->title ?? '');
+    $faculty = Str::lower($user->faculty ?? '');
 
     $userRoute = 'update.user';
     if (is_null($user)) {
@@ -30,12 +32,12 @@
                         class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option value="" > -- Set Title -- </option>
-                        <option @selected(Str::lower($user->title ?? '')==="mr.") value="Mr.">Mr.</option>
-                        <option @selected(Str::lower($user->title ?? '')==="ms.") value="Ms.">Ms.</option>
-                        <option @selected(Str::lower($user->title ?? '')==="dr.") value="Dr.">Dr.</option>
-                        <option @selected(Str::lower($user->title ?? '')==="prof.") value="Prof.">Prof.</option>
-                        <option @selected(Str::lower($user->title ?? '')==="eng.") value="Eng.">Eng.</option>
-                        <option @selected(Str::lower($user->title ?? '')==="sir") value="Sir">Sir</option>
+                        <option @selected($title === "mr.") value="Mr.">Mr.</option>
+                        <option @selected($title === "ms.") value="Ms.">Ms.</option>
+                        <option @selected($title === "dr.") value="Dr.">Dr.</option>
+                        <option @selected($title === "prof.") value="Prof.">Prof.</option>
+                        <option @selected($title === "eng.") value="Eng.">Eng.</option>
+                        <option @selected($title === "sir") value="Sir">Sir</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -94,10 +96,9 @@
                         class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 
                             rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option value="" > -- Set Role -- </option>
-                        <option value="student" @selected(Str::lower($user->role ?? '')==="student")>Student</option>
-                        <option value="instructor" @selected(Str::lower($user->role ?? '')==="instructor")>Lecturer
-                        </option>
-                        <option value="admin" @selected(Str::lower($user->role ?? '')==="admin")>Admin</option>
+                        <option value="student" @selected($role === "student")>Student</option>
+                        <option value="instructor" @selected($role === "instructor")>Lecturer</option>
+                        <option value="admin" @selected($role === "admin")>Admin</option>
                     </select>
                     <div
                         class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -131,23 +132,23 @@
                         class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 
                             rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option value="" > -- Select the Faculty -- </option>
-                        <option @selected(Str::lower($user->faculty ?? '')==="business and international relations")
+                        <option @selected($faculty === "business and international relations")
                             value="Business And International Relations">
                             Business And International Relations
                         </option>
-                        <option @selected(Str::lower($user->faculty ?? '')==="computer engineering, graphics design and architecture")
+                        <option @selected($faculty === "computer engineering, graphics design and architecture")
                             value="Computer Engineering, Graphics Design And Architecture">
                             Computer Engineering, Graphics Design And Architecture
                         </option>
-                        <option @selected(Str::lower($user->faculty ?? '')==="philology and journalism")
+                        <option @selected($faculty === "philology and journalism")
                             value="Philology And Journalism">
                             Philology And Journalism
                         </option>
-                        <option @selected(Str::lower($user->faculty ?? '')==="polish and foreign languages")
+                        <option @selected($faculty === "polish and foreign languages")
                             value="Polish And Foreign Languages">
                             Polish And Foreign Languages
                         </option>
-                        <option @selected(Str::lower($user->faculty ?? '')==="administration")
+                        <option @selected($faculty === "administration")
                             value="Administration">
                             Administration
                         </option>

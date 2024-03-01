@@ -27,7 +27,7 @@
         <div class="w-1/2 h-auto py-5 px-5">
             <div class="flex items-center justify-start">
                 <span class="w-1/4 text-start uppercase font-bold">Name:</span>
-                <span class="flex items-center justify-start space-x-1">
+                <span class="flex items-center justify-start space-x-1 capitalize">
                     <span>{{$user->title}}</span>
                     <span>{{$user->firstname}}</span>
                     <span>{{$user->middlename}}</span>
