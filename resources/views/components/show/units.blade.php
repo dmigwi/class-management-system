@@ -7,6 +7,9 @@
         // Do not process this page since it is not on display.
         return;
     }
+
+    $currentPage = $units->currentPage() ?? -1;
+    $lastPage = $units->lastPage() ?? -1;
 @endphp
 
 <div id="add-new-unit" class="w-full">
@@ -106,9 +109,12 @@
             <nav class="flex items-center justify-center pt-3">
                 <ul class="flex bg-transparent">
                     <li>
-                        <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                                text-sm text-gray-500 transition duration-150 ease-in-out hover:bg-light-300" href="{{$units->previousPageUrl()}}">
-                            <span class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                        <a @class(["mx-1 flex h-9 w-9 items-center justify-center rounded-full border p-0",
+                                'text-light-blue border-blue-light' => ($currentPage !== 1),
+                                'text-gray-500 border-gray-500' => ($currentPage === 1),
+                            ]) 
+                            @if($currentPage !== 1) href="{{$units->previousPageUrl()}}" @endif>
+                            <span class="inline-flex items-center text-sm font-semibold hover:text-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                     viewBox="0 0 520 520" fill="currentColor">
                                     <path d="M342 477 134 272c-6-6-6-16 0-22L342 45c6-6 16-6 22 0l22 22c6 6 6 16 0 22L221 250c-6 6-6 
@@ -118,12 +124,12 @@
                         </a>
                     </li>
 
-                    @foreach ($units->getUrlRange(1, $units->lastPage()) as $pageURL)
+                    @foreach ($units->getUrlRange(1, $lastPage) as $pageURL)
                         <li>
                             <a @class([
                                 'font-semibold mx-1 flex h-9 w-9 items-center justify-center rounded-full p-0 text-sm transition duration-150 ease-in-out',
-                                'border border-blue-light text-gray-500 hover:bg-light-300' => !($loop->iteration === $units->currentPage()),
-                                'bg-blue-light text-white shadow-md shadow-pink-500/20' => ($loop->iteration === $units->currentPage()),
+                                'border border-blue-light text-gray-500 hover:bg-light-300' => ($loop->iteration !== $currentPage),
+                                'bg-blue-light text-white shadow-md shadow-pink-500/20' => ($loop->iteration === $currentPage),
                                 ]) href="{{$pageURL}}">
                                 {{$loop->iteration}}
                             </a>
@@ -131,9 +137,12 @@
                     @endforeach
                     
                     <li>
-                        <a class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-light p-0
-                            transition duration-150 ease-in-out hover:bg-light-300" href="{{$units->url($units->lastPage())}}" aria-label="Next">
-                            <span class="inline-flex items-center text-sm font-semibold text-light-blue hover:text-blue-600">
+                        <a @class(["mx-1 flex h-9 w-9 items-center justify-center rounded-full border p-0",
+                                'text-light-blue border-blue-light' => ($currentPage !== $lastPage),
+                                'text-gray-500 border-gray-500' => ($currentPage === $lastPage),
+                            ]) 
+                            @if($currentPage !== $lastPage)  href="{{$units->url($lastPage)}}" @endif>
+                            <span class="inline-flex items-center text-sm font-semibold hover:text-gray-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
                                     viewBox="0 0 520 520" fill="currentColor">
                                     <path d="m179 44 207 205c6 6 6 16 0 22L179 476c-6 6-16 6-22 0l-22-22c-6-6-6-16 0-22l163-161c6-6 
