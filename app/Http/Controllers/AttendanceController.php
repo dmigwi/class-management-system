@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use App\Models\Unit;
 use App\Models\Timer;
 use App\Models\Attendance;
 use \Illuminate\Database\QueryException;
-
 // use Illuminate\Support\Facades\Log;
 
 class AttendanceController extends Controller
