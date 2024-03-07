@@ -6,6 +6,8 @@
     if (is_null($unit)) {
         $unitRoute = 'insert.unit';
     }
+
+    $isAdminUnit = ($unit->id ?? -1) === 1 || str::lower($unit->name ?? '') === 'administrator';
 @endphp
 
 <div class="w-full">
@@ -28,7 +30,7 @@
                 <input name="name" id="name" type="text" size="55" placeholder="Computational Mathematics" 
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight 
                     focus:outline-none focus:bg-white" value="{{$unit->name ?? ''}}" 
-                    autocomplete="off" required />
+                    autocomplete="off" required @disabled($isAdminUnit)/>
                 <p class="text-gray-600 text-xs italic mb-2">Max characters allowed are 55</p>
             </div>
             <div class="w-fit px-3 mb-8 md:mb-0">
@@ -37,7 +39,7 @@
                 </label>
                 <input id="code" name="code" type="text" placeholder="CME1234/2024" value="{{$unit->code ?? ''}}"
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight 
-                    focus:outline-none focus:bg-white focus:border-gray-500" required />
+                    focus:outline-none focus:bg-white focus:border-gray-500" required  @disabled($isAdminUnit)/>
                 <p class="text-gray-600 text-xs italic mb-2">Must be unique for every entry</p>
             </div>
             <div class="w-fit px-3 mb-8 md:mb-0">
@@ -45,7 +47,7 @@
                     Semester
                 </label>
                 <div class="relative">
-                    <select id="semester" name="semester"
+                    <select id="semester" name="semester" @disabled($isAdminUnit)
                         class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                         <option value="" >0</option>
@@ -67,6 +69,7 @@
                     Academic Year
                 </label>
                 <input id="year" name="year" type="text" placeholder="2023/2024" value="{{$unit->year ?? ''}}"
+                    @disabled($isAdminUnit)
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                     leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
             </div>
@@ -77,7 +80,7 @@
                     Start Date
                 </label>
                 <input id="start_date" name="start_date" type="date" placeholder="7/01/2024"
-                    value="{{$unit->start_date ?? ''}}"
+                    value="{{$unit->start_date ?? ''}}" @disabled($isAdminUnit)
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
             </div>
@@ -86,7 +89,7 @@
                     End Date
                 </label>
                 <input id="end_date" name="end_date" type="date" placeholder="13/02/2024"
-                    value="{{$unit->end_date ?? ''}}"
+                    value="{{$unit->end_date ?? ''}}" @disabled($isAdminUnit)
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
             </div>
@@ -95,6 +98,7 @@
                     Duration
                 </label>
                 <input id="duration" name="duration" type="number" placeholder="12" value="{{$unit->duration ?? 0}}"
+                    @disabled($isAdminUnit)
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
                 <p class="text-gray-600 text-xs italic mb-2">Total lessons to be taught</p>
@@ -105,7 +109,7 @@
                     Mid-Term Exam Date
                 </label>
                 <input id="midterm_exam" name="midterm_exam" type="date" placeholder="7/01/2024"
-                    value="{{$unit->midterm_exam ?? ''}}"
+                    value="{{$unit->midterm_exam ?? ''}}" @disabled($isAdminUnit)
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
             </div>
@@ -114,7 +118,7 @@
                     Final Exam Date
                 </label>
                 <input id="final_exam" name="final_exam" type="date" placeholder="13/02/2024"
-                    value="{{$unit->final_exam ?? ''}}"
+                    value="{{$unit->final_exam ?? ''}}" @disabled($isAdminUnit)
                     class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
                         leading-tight focus:outline-none focus:bg-white focus:border-gray-500" />
             </div>
@@ -124,8 +128,9 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="start_date">
                     Instructor
                 </label>
-                <select  class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
-                    leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="instructor" id="instructor">
+                <select class="block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 
+                    leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="instructor" id="instructor"
+                    @disabled($isAdminUnit)>
                     <option value="">-- Select an Instructor --</option>
                     @forelse ($instructors as $instructor)
                         <option value="{{$instructor->id}}" @selected($instructor->id === ($unit->instructor ?? ""))>
@@ -148,11 +153,14 @@
                 @if (!is_null($errors ?? null) && $errors->first("status"))
                     <span class="-mr-2 p-2 text-sm text-red-500">* {{$errors->first("status")}}</span>
                 @endif
+                @if ($isAdminUnit)
+                    <span class="-mr-2 p-2 text-sm text-red-500">*Updates on the {{$unit->name}} unit are disabled!</span>
+                @endif
             </div>
         </div>
         <div class="flex items-center justify-center py-3 space-x-12 text-sm md:space-x-24">
             <div class="flex items-center text-xs">
-                <button type="submit"
+                <button type="submit" @disabled($isAdminUnit)
                     class="flex items-center justify-center py-3 text-grays-500 border-1 rounded-lg btn-primary w-40">
                     <span class="">Submit</span>
                 </button>
