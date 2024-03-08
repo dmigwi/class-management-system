@@ -11,6 +11,7 @@ class Chat extends Model
 {
     use HasFactory;
 
+    // Prevents the auto filling of the update_at and created_at columns.
     public $timestamps = false;
 
     protected $fillable = [
